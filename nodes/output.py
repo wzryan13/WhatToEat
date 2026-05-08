@@ -40,7 +40,11 @@ async def error_output(state: DietState) -> dict:
         msg = "抱歉，未能获取到您的位置信息，无法为您推荐餐厅，请告知您所在的城市或区域。"
 
     logger.info(f"[error_output] 错误类型: {location_type}")
-    return {"response_message": msg, "error_message": msg}
+    return {
+        "response_message": msg,
+        "error_message": msg,
+        "conversation_history": [{"role": "assistant", "content": msg}],
+    }
 
 
 async def result_formatter(state: DietState) -> dict:
@@ -51,7 +55,10 @@ async def result_formatter(state: DietState) -> dict:
             msg = "抱歉，根据您的条件没有找到符合的餐厅，建议放宽筛选条件再试试。"
         else:
             msg = "抱歉，暂时没有找到合适的餐厅，请换个关键词或位置试试。"
-        return {"response_message": msg}
+        return {
+            "response_message": msg,
+            "conversation_history": [{"role": "assistant", "content": msg}],
+        }
 
     poi_map = {
         poi["id"]: poi
@@ -94,4 +101,7 @@ async def result_formatter(state: DietState) -> dict:
 
     response = "\n".join(lines)
     logger.info(f"[result_formatter] 输出 {len(recs)} 条推荐")
-    return {"response_message": response}
+    return {
+        "response_message": response,
+        "conversation_history": [{"role": "assistant", "content": response}],
+    }

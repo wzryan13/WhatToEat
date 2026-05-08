@@ -102,6 +102,7 @@ async def llm_rerank(state: DietState) -> dict:
         current_time=state.get("current_time", ""),
         negative_conditions=state.get("negative_conditions", []),
         user_input=state["user_input"],
+        profile_summary=state.get("profile_summary_for_rerank", "暂无长期用户画像。"),
         max_recommendations=settings.MAX_RECOMMENDATIONS,
     )
 

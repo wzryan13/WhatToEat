@@ -3,6 +3,7 @@ from langgraph.graph import StateGraph, END
 from langgraph.checkpoint.memory import MemorySaver
 from models.state import DietState
 from nodes import (
+    memory_read,
     intent_parser,
     landmark_resolver,
     keyword_search,
@@ -13,6 +14,7 @@ from nodes import (
     clarify,
     error_output,
     result_formatter,
+    memory_write,
 )
 
 logger = logging.getLogger(__name__)
@@ -47,6 +49,7 @@ def build_graph() -> StateGraph:
     graph = StateGraph(DietState)
 
     # ── 注册节点 ──
+    graph.add_node("memory_read", memory_read)
     graph.add_node("intent_parser", intent_parser)
     graph.add_node("clarify", clarify)
     graph.add_node("error_output", error_output)
@@ -57,9 +60,12 @@ def build_graph() -> StateGraph:
     graph.add_node("precise_filter", precise_filter)
     graph.add_node("llm_rerank", llm_rerank)
     graph.add_node("result_formatter", result_formatter)
+    graph.add_node("memory_write", memory_write)
 
     # ── 入口 ──
-    graph.set_entry_point("intent_parser")
+    graph.set_entry_point("memory_read")
+
+    graph.add_edge("memory_read", "intent_parser")
 
     # ── intent_parser → info_complement（空壳预留）→ route_check ──
     # 目前info_complement暂不实现，直接从intent_parser → route_check
@@ -95,10 +101,11 @@ def build_graph() -> StateGraph:
     graph.add_edge("batch_poi_detail", "precise_filter")
     graph.add_edge("precise_filter", "llm_rerank")
     graph.add_edge("llm_rerank", "result_formatter")
+    graph.add_edge("result_formatter", "memory_write")
+    graph.add_edge("error_output", "memory_write")
 
     # ── 终止 ──
-    graph.add_edge("result_formatter", END)
-    graph.add_edge("error_output", END)
+    graph.add_edge("memory_write", END)
 
     logger.info("[build_graph] Graph构建完成")
     return graph.compile(checkpointer=checkpointer)

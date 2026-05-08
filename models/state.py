@@ -1,9 +1,15 @@
-from typing import TypedDict, Optional, Literal,Annotated
+from typing import Annotated, Optional, TypedDict, Literal
 from models.intent import FilterConditions
 import operator
 
 
 class DietState(TypedDict, total=False):
+
+    # ── 身份与执行链 ──
+    user_id: str
+    session_id: str
+    thread_id: str
+    turn_no: int
 
     # ── 原始输入 ──
     user_input: str
@@ -30,16 +36,18 @@ class DietState(TypedDict, total=False):
     landmark_resolve_failed: bool
     result_insufficient: bool
 
-    # ── 信息补全预留 ──
-    # memory_location: Optional[str]
-    # memory_user_profile: Optional[dict]
-    # user_gps: Optional[str]
-
     # ── 工具调用中间结果 ──
     landmark_location: Optional[str]
     raw_pois: list[dict]
     detailed_pois: list[dict]
     filtered_pois: list[dict]
+
+    # ── 记忆层 ──
+    memory_profile: dict
+    memory_session: dict
+    memory_context_summary: str
+    profile_summary_for_rerank: str
+    memory_write_candidates: dict
 
     # ── 输出 ──
     final_recommendations: list[dict]

@@ -19,6 +19,7 @@ async def intent_parser(state: DietState) -> dict:
         SystemMessage(content=INTENT_PARSER_SYSTEM_PROMPT),
         HumanMessage(content=f"""
 当前时间：{current_time}
+记忆上下文：{state.get('memory_context_summary', '暂无可用记忆上下文。')}
 对话历史：{state.get('conversation_history', [])}
 最新输入：{state['user_input']}
 """)

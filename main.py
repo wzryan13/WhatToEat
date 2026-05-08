@@ -1,8 +1,10 @@
 import asyncio
 import logging
-import uuid
+from memory import init_memory_store
+from memory.store import get_memory_store
 from tools import init_tools
 from graph import build_graph
+from config.settings import settings
 
 logging.basicConfig(
     level=logging.INFO,
@@ -13,11 +15,15 @@ logger = logging.getLogger(__name__)
 
 async def run_conversation():
     await init_tools()
+    await init_memory_store()
     app = build_graph()
-
-    # 每个对话session使用固定thread_id，checkpointer据此恢复state
-    thread_id = str(uuid.uuid4())
-    config = {"configurable": {"thread_id": thread_id}}
+    memory_store = get_memory_store()
+    user_id = await memory_store.get_or_create_user(
+        settings.DEMO_CHANNEL,
+        settings.DEMO_EXTERNAL_ID,
+    )
+    runtime = await memory_store.get_or_create_session(user_id)
+    config = {"configurable": {"thread_id": runtime.thread_id}}
 
     print("饮食管家已启动，输入 q 退出\n")
 
@@ -28,7 +34,13 @@ async def run_conversation():
         if not user_input:
             continue
 
+        turn_no = await memory_store.next_turn(runtime.session_id)
+
         initial_state = {
+            "user_id": runtime.user_id,
+            "session_id": runtime.session_id,
+            "thread_id": runtime.thread_id,
+            "turn_no": turn_no,
             "user_input": user_input,
             "conversation_history": [],
             "clarification_count": 0,
@@ -39,6 +51,11 @@ async def run_conversation():
             "filtered_pois": [],
             "final_recommendations": [],
             "disclaimer_needed": False,
+            "memory_profile": {},
+            "memory_session": {},
+            "memory_context_summary": "",
+            "profile_summary_for_rerank": "",
+            "memory_write_candidates": {},
         }
 
         # 检查当前thread是否处于interrupt状态（等待用户补充位置）
@@ -52,7 +69,7 @@ async def run_conversation():
         if is_interrupted:
             # 处于interrupt状态，resume并传入用户回复
             result = await app.ainvoke(
-                {"user_input": user_input},
+                {"user_input": user_input, "turn_no": turn_no},
                 config=config,
             )
         else:

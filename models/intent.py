@@ -13,6 +13,9 @@ class FilterConditions(BaseModel):
     )
     min_rating: Optional[float] = Field(None, description="最低评分", ge=0, le=5)
 
+    def get(self, key: str, default=None):
+        return getattr(self, key, default)
+
 
 class IntentParserOutput(BaseModel):
     intent_type: Literal["normal", "brand", "scene", "time_based"] = Field(
