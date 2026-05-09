@@ -12,7 +12,12 @@ async def landmark_resolver(state: DietState) -> dict:
             "address": state["location_text"],
             "city": state["city"] or ""
         })
-        location = result['return'][0]["location"]
+        returns = result.get("return") if isinstance(result, dict) else None
+        if not returns or not isinstance(returns, list) or len(returns) == 0:
+            raise ValueError(f"geo API 返回结构异常: {result}")
+        location = returns[0].get("location")
+        if not location:
+            raise ValueError(f"geo API 未返回 location: {returns[0]}")
         logger.info(f"[landmark_resolver] 解析经纬度成功: {location}")
         return {
             "landmark_location": location,

@@ -7,7 +7,7 @@ load_dotenv("/Users/wenzhouzhou/PycharmProjects/PythonProject1/.env")
 class Settings:
     # ── API Keys ─────────────────────────────────────────────
     ANTHROPIC_API_KEY: str = os.getenv("ANTHROPIC_API_KEY", "")
-    AMAP_API_KEY: str = os.getenv("AMAP_API_KEY", os.getenv("GROQ_API_KEY", ""))
+    AMAP_API_KEY: str = os.getenv("AMAP_MAPS_API_KEY", "")
     DATABASE_URL: str = os.getenv("DATABASE_URL", "")
 
     # ── 模型配置 ──────────────────────────────────────────────

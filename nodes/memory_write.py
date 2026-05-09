@@ -88,7 +88,7 @@ def _build_profile_candidate(state: DietState) -> UserProfile | None:
     default_city = None
     if _should_write_default_city(user_input, state.get("city")):
         default_city = MemoryFact(
-            value=state["city"],
+            value=state.get("city", ""),
             confidence=0.8,
             updated_at=timestamp,
             last_seen_at=timestamp,

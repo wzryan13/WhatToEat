@@ -32,11 +32,11 @@ def _dedupe_facts(facts: Iterable[MemoryFact]) -> list[MemoryFact]:
         key = normalize_text(fact.value)
         existing = merged.get(key)
         if existing is None:
-            merged[key] = fact
+            merged[key] = fact.model_copy(deep=True)
             continue
 
         if fact.confidence > existing.confidence:
-            merged[key] = fact
+            merged[key] = fact.model_copy(deep=True)
             continue
 
         existing.last_seen_at = fact.last_seen_at
@@ -44,10 +44,24 @@ def _dedupe_facts(facts: Iterable[MemoryFact]) -> list[MemoryFact]:
     return list(merged.values())
 
 
+def _migrate_profile_data(data: dict) -> dict:
+    version = data.get("schema_version", 1)
+    if version < 2:
+        for fact_list_key in ("dietary_restrictions", "allergies"):
+            for fact in data.get(fact_list_key, []):
+                fact.setdefault("seen_count", 1)
+                fact.setdefault("first_seen_at", fact.get("updated_at", ""))
+        if data.get("default_city") and isinstance(data["default_city"], dict):
+            data["default_city"].setdefault("seen_count", 1)
+            data["default_city"].setdefault("first_seen_at", data["default_city"].get("updated_at", ""))
+    return data
+
+
 def profile_from_dict(data: dict | None) -> UserProfile:
     if not data:
         return UserProfile()
-    return UserProfile.model_validate(data)
+    migrated = _migrate_profile_data(data)
+    return UserProfile.model_validate(migrated)
 
 
 def session_from_dict(data: dict | None) -> SessionMemory:
@@ -62,10 +76,12 @@ def merge_user_profile(existing: UserProfile, candidate: UserProfile) -> UserPro
 
     if candidate.default_city:
         if merged.default_city is None:
-            merged.default_city = candidate.default_city
+            merged.default_city = candidate.default_city.model_copy(deep=True)
         elif merged.default_city.value == candidate.default_city.value:
             merged.default_city.last_seen_at = candidate.default_city.last_seen_at
             merged.default_city.updated_at = candidate.default_city.updated_at
+        elif candidate.default_city.confidence >= 0.8:
+            merged.default_city = candidate.default_city.model_copy(deep=True)
 
     merged.dietary_restrictions = _dedupe_facts(
         [*merged.dietary_restrictions, *candidate.dietary_restrictions]

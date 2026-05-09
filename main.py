@@ -42,20 +42,9 @@ async def run_conversation():
             "thread_id": runtime.thread_id,
             "turn_no": turn_no,
             "user_input": user_input,
-            "conversation_history": [],
             "clarification_count": 0,
             "landmark_resolve_failed": False,
             "result_insufficient": False,
-            "raw_pois": [],
-            "detailed_pois": [],
-            "filtered_pois": [],
-            "final_recommendations": [],
-            "disclaimer_needed": False,
-            "memory_profile": {},
-            "memory_session": {},
-            "memory_context_summary": "",
-            "profile_summary_for_rerank": "",
-            "memory_write_candidates": {},
         }
 
         # 检查当前thread是否处于interrupt状态（等待用户补充位置）

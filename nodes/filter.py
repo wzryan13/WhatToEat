@@ -72,7 +72,8 @@ async def precise_filter(state: DietState) -> dict:
 
 
 async def llm_rerank(state: DietState) -> dict:
-    source = state.get("filtered_pois") or state.get("detailed_pois", [])
+    filtered = state.get("filtered_pois")
+    source = filtered if filtered is not None else state.get("detailed_pois", [])
 
     if not source:
         logger.warning("[llm_rerank] 候选列表为空，跳过 LLM 推理，直接返回空推荐")

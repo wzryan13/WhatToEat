@@ -130,7 +130,10 @@ class BaseMemoryStore:
             },
         )
         payload["user_id"] = user_id
-        payload["expires_at"] = datetime.fromisoformat(memory.expires_at)
+        payload["expires_at"] = (
+            datetime.fromisoformat(memory.expires_at) if memory.expires_at
+            else datetime.now(timezone.utc) + timedelta(hours=settings.SESSION_TTL_HOURS)
+        )
         payload["session_memory"] = memory
 
     async def apply_profile_update(self, user_id: str, candidate: UserProfile) -> None:
@@ -215,6 +218,9 @@ class AsyncpgMemoryStore(BaseMemoryStore):
             await conn.execute(
                 "CREATE INDEX IF NOT EXISTS idx_session_memories_user_id ON session_memories(user_id)"
             )
+            await conn.execute(
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_sessions_user_active ON sessions(user_id) WHERE status = 'active'"
+            )
         finally:
             await conn.close()
 
@@ -252,14 +258,39 @@ class AsyncpgMemoryStore(BaseMemoryStore):
     ) -> SessionRuntime:
         conn = await self._connect()
         try:
-            if requested_session_id:
+            async with conn.transaction():
+                if requested_session_id:
+                    row = await conn.fetchrow(
+                        """
+                        SELECT session_id, thread_id
+                        FROM sessions
+                        WHERE session_id = $1 AND user_id = $2
+                        FOR UPDATE
+                        """,
+                        requested_session_id,
+                        user_id,
+                    )
+                    if row:
+                        thread_id = row["thread_id"] or generate_thread_id(row["session_id"])
+                        if row["thread_id"] is None:
+                            await conn.execute(
+                                "UPDATE sessions SET thread_id = $2 WHERE session_id = $1",
+                                row["session_id"],
+                                thread_id,
+                            )
+                        return SessionRuntime(user_id, row["session_id"], thread_id)
+
                 row = await conn.fetchrow(
                     """
                     SELECT session_id, thread_id
                     FROM sessions
-                    WHERE session_id = $1 AND user_id = $2
+                    WHERE user_id = $1
+                      AND status = 'active'
+                      AND expires_at > NOW()
+                    ORDER BY started_at DESC
+                    LIMIT 1
+                    FOR UPDATE
                     """,
-                    requested_session_id,
                     user_id,
                 )
                 if row:
@@ -272,45 +303,23 @@ class AsyncpgMemoryStore(BaseMemoryStore):
                         )
                     return SessionRuntime(user_id, row["session_id"], thread_id)
 
-            row = await conn.fetchrow(
-                """
-                SELECT session_id, thread_id
-                FROM sessions
-                WHERE user_id = $1
-                  AND status = 'active'
-                  AND expires_at > NOW()
-                ORDER BY started_at DESC
-                LIMIT 1
-                """,
-                user_id,
-            )
-            if row:
-                thread_id = row["thread_id"] or generate_thread_id(row["session_id"])
-                if row["thread_id"] is None:
-                    await conn.execute(
-                        "UPDATE sessions SET thread_id = $2 WHERE session_id = $1",
-                        row["session_id"],
-                        thread_id,
-                    )
-                return SessionRuntime(user_id, row["session_id"], thread_id)
-
-            session_id = generate_session_id(user_id)
-            thread_id = generate_thread_id(session_id)
-            expires_at = datetime.now(timezone.utc) + timedelta(
-                hours=settings.SESSION_TTL_HOURS
-            )
-            await conn.execute(
-                """
-                INSERT INTO sessions (
-                    session_id, user_id, expires_at, thread_id
-                ) VALUES ($1, $2, $3, $4)
-                """,
-                session_id,
-                user_id,
-                expires_at,
-                thread_id,
-            )
-            return SessionRuntime(user_id, session_id, thread_id)
+                session_id = generate_session_id(user_id)
+                thread_id = generate_thread_id(session_id)
+                expires_at = datetime.now(timezone.utc) + timedelta(
+                    hours=settings.SESSION_TTL_HOURS
+                )
+                await conn.execute(
+                    """
+                    INSERT INTO sessions (
+                        session_id, user_id, expires_at, thread_id
+                    ) VALUES ($1, $2, $3, $4)
+                    """,
+                    session_id,
+                    user_id,
+                    expires_at,
+                    thread_id,
+                )
+                return SessionRuntime(user_id, session_id, thread_id)
         finally:
             await conn.close()
 
