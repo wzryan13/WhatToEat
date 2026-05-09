@@ -13,6 +13,22 @@ logger = logging.getLogger(__name__)
 llm = ChatAnthropic(model=settings.MODEL_NAME)
 
 
+def _extract_values(values) -> list[str]:
+    extracted: list[str] = []
+    for value in values or []:
+        if isinstance(value, dict):
+            text = value.get("value")
+            if text:
+                extracted.append(str(text))
+        elif isinstance(value, str):
+            extracted.append(value)
+    return extracted
+
+
+def _contains_any(text: str, candidates: list[str]) -> bool:
+    return any(candidate and candidate in text for candidate in candidates)
+
+
 async def batch_poi_detail(state: DietState) -> dict:
     pois = state.get("raw_pois", [])[:settings.POI_DETAIL_LIMIT]
 
@@ -38,8 +54,29 @@ async def batch_poi_detail(state: DietState) -> dict:
 async def precise_filter(state: DietState) -> dict:
     filters = state["filters"]
     passed = []
+    memory_data = state.get("memory_for_intent_data", {})
+    profile_allergies = _extract_values(memory_data.get("allergies", []))
+    profile_blacklist = _extract_values(memory_data.get("food_blacklist", []))
+    profile_disliked = _extract_values(memory_data.get("disliked_cuisines", []))
 
     for poi in state.get("detailed_pois", []):
+        poi_text = " ".join(
+            str(part)
+            for part in (
+                poi.get("name", ""),
+                poi.get("type", ""),
+                poi.get("address", ""),
+            )
+            if part
+        )
+
+        if _contains_any(poi_text, profile_allergies):
+            continue
+        if _contains_any(poi_text, profile_blacklist):
+            continue
+        if _contains_any(poi_text, profile_disliked):
+            continue
+
         # 人均过滤
         cost = poi.get("cost")
         if cost:
@@ -103,7 +140,7 @@ async def llm_rerank(state: DietState) -> dict:
         current_time=state.get("current_time", ""),
         negative_conditions=state.get("negative_conditions", []),
         user_input=state["user_input"],
-        profile_summary=state.get("profile_summary_for_rerank", "暂无长期用户画像。"),
+        memory_for_rerank=state.get("memory_for_rerank", "暂无用户偏好。"),
         max_recommendations=settings.MAX_RECOMMENDATIONS,
     )
 

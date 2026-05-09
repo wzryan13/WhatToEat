@@ -14,13 +14,14 @@ llm = ChatAnthropic(model=settings.MODEL_NAME)
 
 async def intent_parser(state: DietState) -> dict:
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M %A")
+    conversation_history = state.get("conversation_history", [])[-settings.MAX_HISTORY_MESSAGES :]
 
     messages = [
         SystemMessage(content=INTENT_PARSER_SYSTEM_PROMPT),
         HumanMessage(content=f"""
 当前时间：{current_time}
-记忆上下文：{state.get('memory_context_summary', '暂无可用记忆上下文。')}
-对话历史：{state.get('conversation_history', [])}
+记忆上下文：{state.get('memory_for_intent', '暂无记忆信息。')}
+对话历史：{conversation_history}
 最新输入：{state['user_input']}
 """)
     ]
@@ -38,6 +39,9 @@ async def intent_parser(state: DietState) -> dict:
             "search_mode": "keyword",
             "filters": FilterConditions(),
             "negative_conditions": [],
+            "scene_context": "",
+            "mood_factors": [],
+            "suggested_cuisines": [],
             "current_time": current_time,
             "error_message": f"意图解析失败：{str(e)}",
         }
@@ -55,6 +59,9 @@ async def intent_parser(state: DietState) -> dict:
         "negative_conditions": result.negative_conditions,
         "has_contradiction": result.has_contradiction,
         "contradiction_message": result.contradiction_message,
+        "scene_context": result.scene_context,
+        "mood_factors": result.mood_factors,
+        "suggested_cuisines": result.suggested_cuisines,
         "current_time": current_time,
         "conversation_history": [
             {"role": "user", "content": state["user_input"]}

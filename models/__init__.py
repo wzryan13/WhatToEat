@@ -1,5 +1,12 @@
 from .intent import FilterConditions, IntentParserOutput
-from .memory import BudgetRange, MemoryFact, SessionMemory, UserProfile
+from .memory import (
+    BudgetRange,
+    MemoryFact,
+    ProfileUpdate,
+    ProfileUpdateDecision,
+    SessionMemory,
+    UserProfile,
+)
 from .poi import POIBasic, POIDetail
 from .rerank import LLMRerankOutput, Recommendation
 from .state import DietState
@@ -9,6 +16,8 @@ __all__ = [
     "FilterConditions",
     "BudgetRange",
     "MemoryFact",
+    "ProfileUpdate",
+    "ProfileUpdateDecision",
     "SessionMemory",
     "UserProfile",
     "POIBasic",

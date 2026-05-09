@@ -10,6 +10,10 @@ class Recommendation(BaseModel):
         None,
         description="当前是否营业，无法判断时为None"
     )
+    hook: str = Field(
+        default="",
+        description="对话钩子，用于自然试探用户偏好"
+    )
 
 
 class LLMRerankOutput(BaseModel):

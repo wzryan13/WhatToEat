@@ -34,33 +34,75 @@ async def run_conversation():
         if not user_input:
             continue
 
-        turn_no = await memory_store.next_turn(runtime.session_id)
-
-        initial_state = {
-            "user_id": runtime.user_id,
-            "session_id": runtime.session_id,
-            "thread_id": runtime.thread_id,
-            "turn_no": turn_no,
-            "user_input": user_input,
-            "clarification_count": 0,
-            "landmark_resolve_failed": False,
-            "result_insufficient": False,
-        }
-
         # 检查当前thread是否处于interrupt状态（等待用户补充位置）
         current_state = app.get_state(config)
+        has_checkpoint = bool(current_state and getattr(current_state, "values", None))
         is_interrupted = (
             current_state is not None
             and len(current_state.next) > 0
             and "clarify" in current_state.next
         )
+        turn_no = await memory_store.next_turn(runtime.session_id)
+
+        turn_state = {
+            "user_id": runtime.user_id,
+            "session_id": runtime.session_id,
+            "thread_id": runtime.thread_id,
+            "turn_no": turn_no,
+            "user_input": user_input,
+        }
+
+        initial_state = {
+            **turn_state,
+            "conversation_history": [],
+            "clarification_count": 0,
+            "clarification_message": None,
+            "landmark_resolve_failed": False,
+            "result_insufficient": False,
+            "landmark_location": None,
+            "raw_pois": [],
+            "detailed_pois": [],
+            "filtered_pois": [],
+            "final_recommendations": [],
+            "disclaimer_needed": False,
+            "disclaimer_message": None,
+            "error_message": None,
+            "memory_for_intent": "",
+            "memory_for_rerank": "",
+            "memory_for_intent_data": {},
+            "memory_for_rerank_data": {},
+            "scene_context": "",
+            "mood_factors": [],
+            "suggested_cuisines": [],
+        }
+
+        ongoing_turn_state = {
+            **turn_state,
+            "clarification_count": 0,
+            "clarification_message": None,
+            "landmark_resolve_failed": False,
+            "result_insufficient": False,
+            "landmark_location": None,
+            "raw_pois": [],
+            "detailed_pois": [],
+            "filtered_pois": [],
+            "final_recommendations": [],
+            "disclaimer_needed": False,
+            "disclaimer_message": None,
+            "error_message": None,
+            "scene_context": "",
+            "mood_factors": [],
+            "suggested_cuisines": [],
+        }
 
         if is_interrupted:
             # 处于interrupt状态，resume并传入用户回复
             result = await app.ainvoke(
-                {"user_input": user_input, "turn_no": turn_no},
+                turn_state,
                 config=config,
             )
+        elif has_checkpoint:
+            result = await app.ainvoke(ongoing_turn_state, config=config)
         else:
             # 新一轮对话，重新开始
             result = await app.ainvoke(initial_state, config=config)

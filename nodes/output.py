@@ -74,6 +74,7 @@ async def result_formatter(state: DietState) -> dict:
         address = poi.get("address", "")
         open_time = poi.get("open_time", "")
         reason = rec.get("reason", "")
+        hook = rec.get("hook", "")
         is_open = rec.get("is_open")
 
         open_status = ""
@@ -87,7 +88,8 @@ async def result_formatter(state: DietState) -> dict:
         lines.append(f"   💰 人均：{cost}元  ⭐ 评分：{rating}")
         if open_time:
             lines.append(f"   🕐 营业时间：{open_time}")
-        lines.append(f"   💬 {reason}")
+        combined_reason = f"{reason} {hook}".strip()
+        lines.append(f"   💬 {combined_reason}")
         lines.append("")
 
     if state.get("landmark_resolve_failed"):

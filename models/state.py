@@ -43,11 +43,15 @@ class DietState(TypedDict, total=False):
     filtered_pois: list[dict]
 
     # ── 记忆层 ──
-    memory_profile: dict
-    memory_session: dict
-    memory_context_summary: str
-    profile_summary_for_rerank: str
-    memory_write_candidates: dict
+    memory_for_intent: str
+    memory_for_rerank: str
+    memory_for_intent_data: dict
+    memory_for_rerank_data: dict
+
+    # ── 场景推理 ──
+    scene_context: str
+    mood_factors: list[str]
+    suggested_cuisines: list[str]
 
     # ── 输出 ──
     final_recommendations: list[dict]

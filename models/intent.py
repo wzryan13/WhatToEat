@@ -54,3 +54,15 @@ class IntentParserOutput(BaseModel):
         None,
         description="矛盾条件说明"
     )
+    scene_context: str = Field(
+        default="",
+        description="动态场景描述，如晚餐、放松场景、需要口味刺激"
+    )
+    mood_factors: list[str] = Field(
+        default_factory=list,
+        description="情绪因素，如疲劳、需要安慰食物"
+    )
+    suggested_cuisines: list[str] = Field(
+        default_factory=list,
+        description="推荐搜索的具体菜品或菜系"
+    )

@@ -19,6 +19,7 @@ class Settings:
     SESSION_TTL_HOURS: int = int(os.getenv("SESSION_TTL_HOURS", "4"))
     DEMO_CHANNEL: str = os.getenv("DEMO_CHANNEL", "cli")
     DEMO_EXTERNAL_ID: str = os.getenv("DEMO_EXTERNAL_ID", "local-cli-user")
+    MAX_HISTORY_MESSAGES: int = int(os.getenv("MAX_HISTORY_MESSAGES", "12"))
 
     # ── 搜索参数 ──────────────────────────────────────────────
     POI_DETAIL_LIMIT: int = 15  # 并发查POI详情的上限条数

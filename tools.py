@@ -19,7 +19,7 @@ async def init_tools():
         return
 
     if not settings.AMAP_API_KEY:
-        raise ValueError("AMAP_API_KEY 未配置")
+        raise ValueError("AMAP_MAPS_API_KEY 未配置")
 
     toolkit = AMapMCPToolProvider(api_key=settings.AMAP_API_KEY)
     tools = await toolkit.get_tools()

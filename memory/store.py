@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import asyncio
 import importlib.util
 import logging
 import uuid
@@ -10,13 +9,13 @@ from typing import Any
 
 from config.settings import settings
 from memory.user_profile import (
-    memory_context_summary,
-    merge_user_profile,
+    build_memory_for_intent,
+    build_memory_for_rerank,
+    now_iso,
     profile_from_dict,
-    profile_to_summary,
     session_from_dict,
 )
-from models.memory import SessionMemory, UserProfile
+from models.memory import MemoryFact, ProfileUpdate, SessionMemory, UserProfile
 
 logger = logging.getLogger(__name__)
 
@@ -41,6 +40,129 @@ class SessionRuntime:
     thread_id: str
 
 
+def _fact_values(facts: list[dict] | list[MemoryFact]) -> list[str]:
+    values: list[str] = []
+    for fact in facts:
+        if isinstance(fact, MemoryFact):
+            values.append(fact.value)
+        elif isinstance(fact, dict) and fact.get("value"):
+            values.append(str(fact["value"]))
+    return values
+
+
+def _build_memory_payload(profile: UserProfile, session: SessionMemory) -> dict[str, Any]:
+    profile_dict = profile.model_dump(exclude_none=True)
+    session_dict = session.model_dump(exclude_none=True)
+    intent_data = {
+        "profile": profile_dict,
+        "session": session_dict,
+        "allergies": _fact_values(profile.allergies),
+        "food_blacklist": _fact_values(profile.food_blacklist),
+        "religious_restrictions": _fact_values(profile.religious_restrictions),
+        "disliked_cuisines": _fact_values(profile.disliked_cuisines),
+        "active_city": session.active_city,
+        "active_location_text": session.active_location_text,
+        "active_negative_conditions": session.active_negative_conditions,
+    }
+    rerank_data = {
+        "profile": profile_dict,
+        "session": session_dict,
+        "allergies": _fact_values(profile.allergies),
+        "food_blacklist": _fact_values(profile.food_blacklist),
+        "religious_restrictions": _fact_values(profile.religious_restrictions),
+        "disliked_cuisines": _fact_values(profile.disliked_cuisines),
+        "cuisine_tags": profile.cuisine_tags,
+        "spice_tolerance": profile.spice_tolerance.model_dump(exclude_none=True)
+        if profile.spice_tolerance
+        else None,
+        "sweetness": profile.sweetness.model_dump(exclude_none=True)
+        if profile.sweetness
+        else None,
+        "health_goals": _fact_values(profile.health_goals),
+        "budget_solo": profile.budget_solo.model_dump(exclude_none=True)
+        if profile.budget_solo
+        else None,
+        "budget_group": profile.budget_group.model_dump(exclude_none=True)
+        if profile.budget_group
+        else None,
+        "active_negative_conditions": session.active_negative_conditions,
+    }
+    return {
+        "memory_for_intent": build_memory_for_intent(profile, session),
+        "memory_for_rerank": build_memory_for_rerank(profile, session),
+        "memory_for_intent_data": intent_data,
+        "memory_for_rerank_data": rerank_data,
+    }
+
+
+def _make_memory_fact(value: str, source: str = "LLM推断", confidence: float = 0.8) -> MemoryFact:
+    timestamp = now_iso()
+    return MemoryFact(
+        value=value,
+        source=source,
+        confidence=confidence,
+        updated_at=timestamp,
+        last_seen_at=timestamp,
+    )
+
+
+def _append_unique_fact(facts: list[MemoryFact], value: str, source: str = "LLM推断") -> None:
+    if any(fact.value == value for fact in facts):
+        return
+    facts.append(_make_memory_fact(value=value, source=source))
+
+
+def _apply_profile_updates(profile: UserProfile, updates: list[ProfileUpdate]) -> UserProfile:
+    updated = profile.model_copy(deep=True)
+
+    list_fields = {
+        "allergies",
+        "food_blacklist",
+        "religious_restrictions",
+        "disliked_cuisines",
+        "health_goals",
+        "active_areas",
+    }
+    scalar_fields = {
+        "spice_tolerance",
+        "sweetness",
+        "home_area",
+        "budget_solo",
+        "budget_group",
+        "default_city",
+    }
+
+    for instruction in updates:
+        field_parts = instruction.field.split(".")
+        root_field = field_parts[0]
+
+        if root_field == "cuisine_tags" and len(field_parts) == 2:
+            cuisine = field_parts[1]
+            if instruction.action == "add":
+                updated.cuisine_tags[cuisine] = instruction.tag_level or "liked"
+            elif instruction.action == "remove":
+                updated.cuisine_tags.pop(cuisine, None)
+            elif instruction.action == "set":
+                updated.cuisine_tags[cuisine] = instruction.tag_level or instruction.value or "liked"
+            continue
+
+        if root_field in list_fields:
+            fact_list = getattr(updated, root_field)
+            if instruction.action == "add":
+                _append_unique_fact(fact_list, instruction.value)
+            elif instruction.action == "remove":
+                setattr(updated, root_field, [fact for fact in fact_list if fact.value != instruction.value])
+            continue
+
+        if root_field in scalar_fields:
+            if instruction.action == "remove":
+                setattr(updated, root_field, None)
+            elif instruction.action == "set":
+                setattr(updated, root_field, _make_memory_fact(instruction.value))
+
+    return updated
+
+
 class BaseMemoryStore:
     def __init__(self):
         self._profiles: dict[str, UserProfile] = {}
@@ -56,12 +178,12 @@ class BaseMemoryStore:
     async def get_or_create_session(
         self, user_id: str, requested_session_id: str | None = None
     ) -> SessionRuntime:
+        now = datetime.now(timezone.utc)
         if requested_session_id and requested_session_id in self._sessions:
-            session = self._sessions[requested_session_id]
-            return SessionRuntime(user_id, requested_session_id, session["thread_id"])
+            payload = self._sessions[requested_session_id]
+            return SessionRuntime(user_id, requested_session_id, payload["thread_id"])
 
         active_session_id = None
-        now = datetime.now(timezone.utc)
         for session_id, payload in self._sessions.items():
             if payload["user_id"] != user_id:
                 continue
@@ -81,11 +203,7 @@ class BaseMemoryStore:
                 "session_memory": SessionMemory(),
             },
         )
-        return SessionRuntime(
-            user_id=user_id,
-            session_id=session_id,
-            thread_id=payload["thread_id"],
-        )
+        return SessionRuntime(user_id=user_id, session_id=session_id, thread_id=payload["thread_id"])
 
     async def next_turn(self, session_id: str) -> int:
         payload = self._sessions.setdefault(
@@ -94,61 +212,55 @@ class BaseMemoryStore:
                 "user_id": "",
                 "thread_id": generate_thread_id(session_id),
                 "turn_no": 0,
-                "expires_at": datetime.now(timezone.utc)
-                + timedelta(hours=settings.SESSION_TTL_HOURS),
+                "expires_at": datetime.now(timezone.utc) + timedelta(hours=settings.SESSION_TTL_HOURS),
                 "session_memory": SessionMemory(),
             },
         )
         payload["turn_no"] += 1
         return payload["turn_no"]
 
-    async def load_memory_context(self, user_id: str, session_id: str) -> dict[str, Any]:
-        profile = self._profiles.get(user_id, UserProfile())
-        session = self._sessions.get(session_id, {}).get("session_memory", SessionMemory())
-        return {
-            "profile": profile.model_dump(exclude_none=True),
-            "session": session.model_dump(exclude_none=True),
-            "memory_context_summary": memory_context_summary(profile, session),
-            "profile_summary_for_rerank": profile_to_summary(profile),
-        }
+    async def _load_profile(self, user_id: str) -> UserProfile:
+        return self._profiles.get(user_id, UserProfile())
 
-    async def save_session_memory(
-        self,
-        user_id: str,
-        session_id: str,
-        memory: SessionMemory,
-    ) -> None:
+    async def _save_profile(self, user_id: str, profile: UserProfile) -> None:
+        self._profiles[user_id] = profile
+
+    async def _load_session_memory(self, session_id: str) -> SessionMemory:
+        return self._sessions.get(session_id, {}).get("session_memory", SessionMemory())
+
+    async def load_memory_context(self, user_id: str, session_id: str) -> dict[str, Any]:
+        profile = await self._load_profile(user_id)
+        session = await self._load_session_memory(session_id)
+        return _build_memory_payload(profile, session)
+
+    async def save_session_memory(self, user_id: str, session_id: str, memory: SessionMemory) -> None:
         payload = self._sessions.setdefault(
             session_id,
             {
                 "user_id": user_id,
                 "thread_id": generate_thread_id(session_id),
                 "turn_no": 0,
-                "expires_at": datetime.now(timezone.utc)
-                + timedelta(hours=settings.SESSION_TTL_HOURS),
+                "expires_at": datetime.now(timezone.utc) + timedelta(hours=settings.SESSION_TTL_HOURS),
                 "session_memory": SessionMemory(),
             },
         )
         payload["user_id"] = user_id
         payload["expires_at"] = (
-            datetime.fromisoformat(memory.expires_at) if memory.expires_at
+            datetime.fromisoformat(memory.expires_at)
+            if memory.expires_at
             else datetime.now(timezone.utc) + timedelta(hours=settings.SESSION_TTL_HOURS)
         )
         payload["session_memory"] = memory
 
-    async def apply_profile_update(self, user_id: str, candidate: UserProfile) -> None:
-        existing = self._profiles.get(user_id, UserProfile())
-        self._profiles[user_id] = merge_user_profile(existing, candidate)
-
-    def schedule_profile_update(self, user_id: str, candidate: UserProfile) -> None:
-        async def runner() -> None:
-            await self.apply_profile_update(user_id, candidate)
-
-        asyncio.create_task(runner())
+    async def apply_profile_updates(self, user_id: str, updates: list[ProfileUpdate]) -> None:
+        profile = await self._load_profile(user_id)
+        updated = _apply_profile_updates(profile, updates)
+        await self._save_profile(user_id, updated)
 
 
 class AsyncpgMemoryStore(BaseMemoryStore):
     def __init__(self, dsn: str):
+        super().__init__()
         self.dsn = dsn
 
     async def _connect(self):
@@ -305,9 +417,7 @@ class AsyncpgMemoryStore(BaseMemoryStore):
 
                 session_id = generate_session_id(user_id)
                 thread_id = generate_thread_id(session_id)
-                expires_at = datetime.now(timezone.utc) + timedelta(
-                    hours=settings.SESSION_TTL_HOURS
-                )
+                expires_at = datetime.now(timezone.utc) + timedelta(hours=settings.SESSION_TTL_HOURS)
                 await conn.execute(
                     """
                     INSERT INTO sessions (
@@ -340,10 +450,10 @@ class AsyncpgMemoryStore(BaseMemoryStore):
         finally:
             await conn.close()
 
-    async def load_memory_context(self, user_id: str, session_id: str) -> dict[str, Any]:
+    async def _load_profile(self, user_id: str) -> UserProfile:
         conn = await self._connect()
         try:
-            profile_row = await conn.fetchrow(
+            row = await conn.fetchrow(
                 """
                 SELECT profile_json
                 FROM user_profiles
@@ -351,43 +461,61 @@ class AsyncpgMemoryStore(BaseMemoryStore):
                 """,
                 user_id,
             )
-            session_row = await conn.fetchrow(
+        finally:
+            await conn.close()
+        return profile_from_dict(row["profile_json"] if row else None)
+
+    async def _save_profile(self, user_id: str, profile: UserProfile) -> None:
+        conn = await self._connect()
+        try:
+            await conn.execute(
                 """
-                SELECT memory_json
-                FROM session_memories
-                WHERE session_id = $1
-                  AND user_id = $2
-                  AND expires_at > NOW()
+                INSERT INTO user_profiles (
+                    user_id, profile_version, profile_json, profile_summary
+                ) VALUES ($1, $2, $3::jsonb, $4)
+                ON CONFLICT (user_id)
+                DO UPDATE SET
+                    profile_version = EXCLUDED.profile_version,
+                    profile_json = EXCLUDED.profile_json,
+                    profile_summary = EXCLUDED.profile_summary,
+                    updated_at = NOW()
                 """,
-                session_id,
                 user_id,
+                profile.schema_version,
+                profile.model_dump_json(exclude_none=True),
+                build_memory_for_rerank(profile, SessionMemory()),
             )
         finally:
             await conn.close()
 
-        profile = profile_from_dict(
-            profile_row["profile_json"] if profile_row is not None else None
-        )
-        session = session_from_dict(
-            session_row["memory_json"] if session_row is not None else None
-        )
-        return {
-            "profile": profile.model_dump(exclude_none=True),
-            "session": session.model_dump(exclude_none=True),
-            "memory_context_summary": memory_context_summary(profile, session),
-            "profile_summary_for_rerank": profile_to_summary(profile),
-        }
-
-    async def save_session_memory(
-        self,
-        user_id: str,
-        session_id: str,
-        memory: SessionMemory,
-    ) -> None:
+    async def _load_session_memory(self, session_id: str) -> SessionMemory:
         conn = await self._connect()
         try:
-            expires_at = datetime.fromisoformat(memory.expires_at) if memory.expires_at else (
-                datetime.now(timezone.utc) + timedelta(hours=settings.SESSION_TTL_HOURS)
+            row = await conn.fetchrow(
+                """
+                SELECT memory_json
+                FROM session_memories
+                WHERE session_id = $1
+                  AND expires_at > NOW()
+                """,
+                session_id,
+            )
+        finally:
+            await conn.close()
+        return session_from_dict(row["memory_json"] if row else None)
+
+    async def load_memory_context(self, user_id: str, session_id: str) -> dict[str, Any]:
+        profile = await self._load_profile(user_id)
+        session = await self._load_session_memory(session_id)
+        return _build_memory_payload(profile, session)
+
+    async def save_session_memory(self, user_id: str, session_id: str, memory: SessionMemory) -> None:
+        conn = await self._connect()
+        try:
+            expires_at = (
+                datetime.fromisoformat(memory.expires_at)
+                if memory.expires_at
+                else datetime.now(timezone.utc) + timedelta(hours=settings.SESSION_TTL_HOURS)
             )
             await conn.execute(
                 """
@@ -418,48 +546,10 @@ class AsyncpgMemoryStore(BaseMemoryStore):
         finally:
             await conn.close()
 
-    async def apply_profile_update(self, user_id: str, candidate: UserProfile) -> None:
-        conn = await self._connect()
-        try:
-            row = await conn.fetchrow(
-                """
-                SELECT profile_version, profile_json
-                FROM user_profiles
-                WHERE user_id = $1
-                """,
-                user_id,
-            )
-            existing = profile_from_dict(row["profile_json"] if row else None)
-            merged = merge_user_profile(existing, candidate)
-            summary = profile_to_summary(merged)
-            await conn.execute(
-                """
-                INSERT INTO user_profiles (
-                    user_id, profile_version, profile_json, profile_summary
-                ) VALUES ($1, $2, $3::jsonb, $4)
-                ON CONFLICT (user_id)
-                DO UPDATE SET
-                    profile_version = EXCLUDED.profile_version,
-                    profile_json = EXCLUDED.profile_json,
-                    profile_summary = EXCLUDED.profile_summary,
-                    updated_at = NOW()
-                """,
-                user_id,
-                merged.schema_version,
-                merged.model_dump_json(exclude_none=True),
-                summary,
-            )
-        finally:
-            await conn.close()
-
-    def schedule_profile_update(self, user_id: str, candidate: UserProfile) -> None:
-        async def runner() -> None:
-            try:
-                await self.apply_profile_update(user_id, candidate)
-            except Exception as exc:  # pragma: no cover - background path
-                logger.exception("[memory] 异步写入用户画像失败: %s", exc)
-
-        asyncio.create_task(runner())
+    async def apply_profile_updates(self, user_id: str, updates: list[ProfileUpdate]) -> None:
+        profile = await self._load_profile(user_id)
+        updated = _apply_profile_updates(profile, updates)
+        await self._save_profile(user_id, updated)
 
 
 _memory_store: BaseMemoryStore | None = None
