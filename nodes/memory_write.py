@@ -107,7 +107,8 @@ async def memory_write(state: DietState) -> dict:
     session_memory = _build_session_memory(state)
     await store.save_session_memory(user_id, session_id, session_memory)
 
-    old_profile = state.get("memory_for_rerank_data", {}).get("profile", {})
+    old_profile_obj = await store.load_profile(user_id)
+    old_profile = old_profile_obj.model_dump(exclude_none=True)
     history = state.get("conversation_history", [])[-settings.MAX_HISTORY_MESSAGES :]
     recommendations = state.get("final_recommendations", [])
 

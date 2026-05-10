@@ -219,7 +219,7 @@ class BaseMemoryStore:
         payload["turn_no"] += 1
         return payload["turn_no"]
 
-    async def _load_profile(self, user_id: str) -> UserProfile:
+    async def load_profile(self, user_id: str) -> UserProfile:
         return self._profiles.get(user_id, UserProfile())
 
     async def _save_profile(self, user_id: str, profile: UserProfile) -> None:
@@ -229,7 +229,7 @@ class BaseMemoryStore:
         return self._sessions.get(session_id, {}).get("session_memory", SessionMemory())
 
     async def load_memory_context(self, user_id: str, session_id: str) -> dict[str, Any]:
-        profile = await self._load_profile(user_id)
+        profile = await self.load_profile(user_id)
         session = await self._load_session_memory(session_id)
         return _build_memory_payload(profile, session)
 
@@ -253,7 +253,7 @@ class BaseMemoryStore:
         payload["session_memory"] = memory
 
     async def apply_profile_updates(self, user_id: str, updates: list[ProfileUpdate]) -> None:
-        profile = await self._load_profile(user_id)
+        profile = await self.load_profile(user_id)
         updated = _apply_profile_updates(profile, updates)
         await self._save_profile(user_id, updated)
 
@@ -450,7 +450,7 @@ class AsyncpgMemoryStore(BaseMemoryStore):
         finally:
             await conn.close()
 
-    async def _load_profile(self, user_id: str) -> UserProfile:
+    async def load_profile(self, user_id: str) -> UserProfile:
         conn = await self._connect()
         try:
             row = await conn.fetchrow(
@@ -505,7 +505,7 @@ class AsyncpgMemoryStore(BaseMemoryStore):
         return session_from_dict(row["memory_json"] if row else None)
 
     async def load_memory_context(self, user_id: str, session_id: str) -> dict[str, Any]:
-        profile = await self._load_profile(user_id)
+        profile = await self.load_profile(user_id)
         session = await self._load_session_memory(session_id)
         return _build_memory_payload(profile, session)
 
@@ -547,7 +547,7 @@ class AsyncpgMemoryStore(BaseMemoryStore):
             await conn.close()
 
     async def apply_profile_updates(self, user_id: str, updates: list[ProfileUpdate]) -> None:
-        profile = await self._load_profile(user_id)
+        profile = await self.load_profile(user_id)
         updated = _apply_profile_updates(profile, updates)
         await self._save_profile(user_id, updated)
 

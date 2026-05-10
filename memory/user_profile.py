@@ -94,17 +94,11 @@ def build_memory_for_intent(profile: UserProfile, session: SessionMemory) -> str
         lines.append(f"当前城市: {session.active_city}")
     if session.active_location_text:
         lines.append(f"当前位置: {session.active_location_text}")
-    if session.active_budget_range and (
-        session.active_budget_range.min is not None
-        or session.active_budget_range.max is not None
-    ):
-        budget_parts: list[str] = []
-        if session.active_budget_range.min is not None:
-            budget_parts.append(f"最低{session.active_budget_range.min:g}元")
+    if session.active_budget_range:
         if session.active_budget_range.max is not None:
-            budget_parts.append(f"最高{session.active_budget_range.max:g}元")
-        if budget_parts:
-            lines.append("当前预算: " + ", ".join(budget_parts))
+            lines.append(f"人均参考: {session.active_budget_range.max:g}元以内")
+        elif session.active_budget_range.min is not None:
+            lines.append(f"人均参考: {session.active_budget_range.min:g}元以上")
     return "\n".join(lines) if lines else "暂无记忆信息。"
 
 
@@ -134,5 +128,11 @@ def build_memory_for_rerank(profile: UserProfile, session: SessionMemory) -> str
     if profile.budget_group:
         lines.append(f"聚餐预算: {profile.budget_group.value}")
     if session.active_negative_conditions:
-        lines.append("本轮排除: " + "、".join(session.active_negative_conditions))
+        disliked_values = {f.value for f in profile.disliked_cuisines}
+        session_negatives = [
+            c for c in session.active_negative_conditions
+            if c not in disliked_values
+        ]
+        if session_negatives:
+            lines.append("本轮排除: " + "、".join(session_negatives))
     return "\n".join(lines) if lines else "暂无用户偏好。"
