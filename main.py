@@ -5,6 +5,7 @@ from memory.store import get_memory_store
 from tools import init_tools
 from graph import build_graph
 from config.settings import settings
+from langgraph.types import Command
 
 logging.basicConfig(
     level=logging.INFO,
@@ -55,7 +56,7 @@ async def run_conversation():
 
         if is_interrupted:
             result = await app.ainvoke(
-                {"user_input": user_input},
+                Command(resume=user_input),
                 config=config,
             )
         elif has_checkpoint:
@@ -66,8 +67,22 @@ async def run_conversation():
         else:
             result = await app.ainvoke(initial_state, config=config)
 
-        response = result.get("response_message", "")
-        print(f"\n管家：{response}\n")
+        # 检查 ainvoke 后是否处于 interrupt 状态
+        state_after = app.get_state(config)
+        if state_after.next:
+            # 被 interrupt 暂停了，从 tasks 中读取追问消息
+            interrupt_msg = None
+            if hasattr(state_after, "tasks"):
+                for task in state_after.tasks:
+                    if hasattr(task, "interrupts") and task.interrupts:
+                        interrupt_msg = task.interrupts[0].value
+                        break
+            if not interrupt_msg:
+                interrupt_msg = "请补充更多信息。"
+            print(f"\n管家：{interrupt_msg}\n")
+        else:
+            response = result.get("response_message", "")
+            print(f"\n管家：{response}\n")
 
 
 if __name__ == "__main__":

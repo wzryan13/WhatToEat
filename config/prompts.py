@@ -112,46 +112,66 @@ RERANK_SYSTEM_PROMPT = """你是专业的饮食推荐助手，根据用户需求
 不要生硬追问，要自然融入推荐理由中。
 
 【输出要求】
-- 最多推荐{max_recommendations}家
+- 推荐{max_recommendations}家左右，最少6家，最多15家
+- 每家标注所属品类category（使用用户搜索关键词作为分类名）
+- 各品类数量尽量均衡，不要全推同一种
+- 如果候选餐厅中有重复店铺（同一家店被不同关键词搜到），只保留一次
+- 用户画像中有"最爱菜系"时：如果该菜系属于用户本轮想吃的范围（或用户未指定具体品类），可适当提高该菜系的推荐数量
 - 每家给出一句推荐理由
 - 若当前不营业需在推荐理由中注明
 - 若有忌口相关免责提示则填入disclaimer"""
 
 
-PROFILE_UPDATE_PROMPT = """你是用户画像分析师。根据以下信息判断是否需要更新用户的长期画像。
-
-## 当前用户画像
+PROFILE_UPDATE_PROMPT = “””## 当前用户画像
 {old_profile}
 
-## 本轮对话
+## 本轮对话记录
 {conversation_history}
 
-## 本轮推荐结果
-{recommendations}
+## 可更新的画像字段
+| 字段 | 类型 | 说明 | action |
+|------|------|------|--------|
+| allergies | 列表 | 过敏原，如花生、海鲜 | add / remove |
+| food_blacklist | 列表 | 不吃的食材，如香菜、内脏 | add / remove |
+| religious_restrictions | 列表 | 宗教饮食限制，如清真 | add / remove |
+| disliked_cuisines | 列表 | 不吃的菜系，如烧烤 | add / remove |
+| spice_tolerance | 标量 | 辣度接受度：不吃辣/微辣/中辣/重辣 | set |
+| sweetness | 标量 | 甜度偏好：不吃甜/微甜/正常/嗜甜 | set |
+| cuisine_tags.{{菜系名}} | 标签 | 菜系偏好，需同时填tag_level为liked或loved | set |
+| health_goals | 列表 | 健康目标，如减脂、低碳水 | add / remove |
+| budget_solo | 标量 | 一人食预算描述 | set |
+| budget_group | 标量 | 聚餐预算描述 | set |
+| default_city | 标量 | 常驻城市 | set |
 
-## 判断规则
+## 关键判断标准：长期偏好 vs 临时状态
 
-### 应该更新的情况:
-- 用户明确声明偏好：“我喜欢日料” → cuisine_tags.日料 = liked
-- 用户明确拒绝：“我不吃烧烤” → disliked_cuisines add 烧烤
-- 用户声明过敏：“我对花生过敏” → allergies add 花生
-- 用户回应对话钩子确认了偏好：“能吃微辣” → spice_tolerance = 微辣
-- 用户强烈/反复表达：“最爱日料了” → cuisine_tags.日料 = loved
+只更新【长期偏好】，不更新【临时状态】。
 
-### 宗教饮食习惯的特殊规则:
-- 当用户声明宗教饮食习惯时，同时更新 religious_restrictions 和对应的 food_blacklist
-- 例：“回族” → religious_restrictions add 回族 + food_blacklist add 猪肉
+### 长期偏好（应该更新）：
+- 身份性陈述，无时间限定：”我不吃辣” “我对花生过敏” “我是回族”
+- 能力边界确认：”能吃微辣” “吃不了太甜的”
+- 反复/强烈表达：”最爱日料了” “我一直都喜欢吃粤菜”
+- 对话钩子的确认回复：Agent问”你能吃辣吗？”用户答”可以，微辣没问题”
 
-### 不应该更新的情况:
-- 一次性的场景：“今天想吃火锅” （不代表长期喜欢火锅）
-- 临时条件：“现在在公司” （不更新 home_area）
-- 用户没回复/直接问下一个问题 （不做任何推断）
-- 模糊表达：“随便吧” （无法确定偏好）
+### 临时状态（不应该更新）：
+- 带时间限定词：”今天不想吃辣” “这次来点清淡的” “现在想吃火锅”
+- 场景描述：”在公司附近” “出差中”
+- 模糊表达：”随便吧” “都行”
+- 用户未回应/直接换话题
 
-### 置信度参考:
-- 明确声明：0.9~1.0
-- 对话钩子确认：0.7~0.8
-- 间接推断：0.5~0.6
+### 宗教饮食的特殊规则：
+用户声明宗教身份时，同时更新 religious_restrictions 和 food_blacklist。
+例：”我是回族” → religious_restrictions add “回族” + food_blacklist add “猪肉”
 
-输出你的判断。如果不需要更新，说明原因。
-"""
+## 输出示例
+
+用户说”我不吃辣”：
+updates: [{{“field”: “spice_tolerance”, “action”: “set”, “value”: “不吃辣”, “reason”: “用户使用身份性陈述'不吃辣'，无时间限定，属于长期偏好”}}]
+
+用户说”今天不想吃辣的”：
+updates: []
+no_update_reason: “'今天不想'带有时间限定词，属于临时状态，不更新长期画像”
+
+用户说”我喜欢吃日料”：
+updates: [{{“field”: “cuisine_tags.日料”, “action”: “set”, “value”: “日料”, “tag_level”: “liked”, “reason”: “用户明确声明喜欢日料”}}]
+“””

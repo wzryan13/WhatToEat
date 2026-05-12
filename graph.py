@@ -67,7 +67,7 @@ def build_graph() -> StateGraph:
 
     graph.add_edge("memory_read", "intent_parser")
 
-    # ── intent_parser → info_complement（空壳预留）→ route_check ──
+    # ── intent_parser → info_complement（长记忆查询补充location）→ route_check ──
     # 目前info_complement暂不实现，直接从intent_parser → route_check
     graph.add_conditional_edges(
         "intent_parser",

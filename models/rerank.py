@@ -5,6 +5,7 @@ from typing import Optional
 class Recommendation(BaseModel):
     id: str = Field(description="餐厅POI ID")
     name: str = Field(description="餐厅名称")
+    category: str = Field(description="所属品类，使用用户搜索的关键词分类，如麻辣烫、冒菜")
     reason: str = Field(description="推荐理由，一句话")
     is_open: Optional[bool] = Field(
         None,

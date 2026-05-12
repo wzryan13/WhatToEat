@@ -1,7 +1,7 @@
 import logging
 from datetime import datetime
 from langchain_core.messages import HumanMessage, SystemMessage
-from langchain_anthropic import ChatAnthropic
+from langchain_deepseek import ChatDeepSeek
 
 from models.intent import IntentParserOutput, FilterConditions
 from models.state import DietState
@@ -9,7 +9,7 @@ from config.prompts import INTENT_PARSER_SYSTEM_PROMPT
 from config.settings import settings
 
 logger = logging.getLogger(__name__)
-llm = ChatAnthropic(model=settings.MODEL_NAME)
+llm = ChatDeepSeek(model=settings.MODEL_NAME)
 
 
 async def intent_parser(state: DietState) -> dict:

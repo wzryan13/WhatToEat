@@ -50,11 +50,25 @@ class SessionMemory(BaseModel):
 
 
 class ProfileUpdate(BaseModel):
-    field: str
-    action: Literal["add", "remove", "set"]
-    value: str
-    tag_level: str = ""
-    reason: str = ""
+    field: str = Field(
+        description="要更新的画像字段。可选值：allergies, food_blacklist, "
+        "religious_restrictions, disliked_cuisines, spice_tolerance, sweetness, "
+        "cuisine_tags.{菜系名}, health_goals, home_area, budget_solo, budget_group, default_city"
+    )
+    action: Literal["add", "remove", "set"] = Field(
+        description="操作类型。add: 向列表字段追加新值; remove: 从列表字段移除; set: 设置/覆盖标量字段的值"
+    )
+    value: str = Field(
+        description="具体的值，如'花生'、'微辣'、'日料'"
+    )
+    tag_level: str = Field(
+        default="",
+        description="仅 cuisine_tags 字段使用，可选 'liked' 或 'loved'"
+    )
+    reason: str = Field(
+        default="",
+        description="更新理由，简述为什么判断这是长期偏好而非临时状态"
+    )
 
 
 class ProfileUpdateDecision(BaseModel):

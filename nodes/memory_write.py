@@ -6,7 +6,7 @@ import logging
 from datetime import datetime, timedelta, timezone
 
 from langchain_core.messages import HumanMessage, SystemMessage
-from langchain_anthropic import ChatAnthropic
+from langchain_deepseek import ChatDeepSeek
 
 from config.prompts import PROFILE_UPDATE_PROMPT
 from config.settings import settings
@@ -16,7 +16,7 @@ from models.memory import ProfileUpdateDecision, SessionMemory
 from models.state import DietState
 
 logger = logging.getLogger(__name__)
-llm = ChatAnthropic(model=settings.MODEL_NAME)
+llm = ChatDeepSeek(model=settings.MODEL_NAME)
 
 
 def _filters_to_budget_range(filters):
@@ -64,7 +64,6 @@ async def _async_profile_update(
     user_id: str,
     old_profile: dict,
     conversation_history: list[dict],
-    recommendations: list[dict],
 ) -> None:
     if not conversation_history:
         return
@@ -73,14 +72,13 @@ async def _async_profile_update(
     prompt = PROFILE_UPDATE_PROMPT.format(
         old_profile=json.dumps(old_profile, ensure_ascii=False),
         conversation_history=json.dumps(conversation_history, ensure_ascii=False),
-        recommendations=json.dumps(recommendations, ensure_ascii=False),
     )
     structured_llm = llm.with_structured_output(ProfileUpdateDecision)
 
     try:
         result: ProfileUpdateDecision = await structured_llm.ainvoke(
             [
-                SystemMessage(content="你负责分析长期用户画像更新。"),
+                SystemMessage(content="你是餐饮推荐系统的长期记忆分析员。根据对话记录判断是否需要更新用户的长期画像。只更新长期偏好，忽略临时状态。"),
                 HumanMessage(content=prompt),
             ]
         )
@@ -110,14 +108,12 @@ async def memory_write(state: DietState) -> dict:
     old_profile_obj = await store.load_profile(user_id)
     old_profile = old_profile_obj.model_dump(exclude_none=True)
     history = state.get("conversation_history", [])[-settings.MAX_HISTORY_MESSAGES :]
-    recommendations = state.get("final_recommendations", [])
 
     asyncio.create_task(
         _async_profile_update(
             user_id=user_id,
             old_profile=old_profile,
             conversation_history=history,
-            recommendations=recommendations,
         )
     )
 

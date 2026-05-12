@@ -6,12 +6,12 @@ load_dotenv("/Users/wenzhouzhou/PycharmProjects/PythonProject1/.env")
 
 class Settings:
     # ── API Keys ─────────────────────────────────────────────
-    ANTHROPIC_API_KEY: str = os.getenv("ANTHROPIC_API_KEY", "")
+    DEEPSEEK_API_KE: str = os.getenv("DEEPSEEK_API_KEY", "")
     AMAP_API_KEY: str = os.getenv("AMAP_MAPS_API_KEY", "")
     DATABASE_URL: str = os.getenv("DATABASE_URL", "")
 
     # ── 模型配置 ──────────────────────────────────────────────
-    LLM_MODEL: str = os.getenv("LLM_MODEL", "openai/gpt-oss-120b")
+    LLM_MODEL: str = os.getenv("LLM_MODEL", "deepseek-chat")
     MODEL_NAME: str = LLM_MODEL
 
     # ── 记忆系统 ──────────────────────────────────────────────
@@ -25,7 +25,7 @@ class Settings:
     POI_DETAIL_LIMIT: int = 15  # 并发查POI详情的上限条数
     DEFAULT_RADIUS: int = 1000  # 周边搜默认半径（米）
     MAX_CLARIFICATION: int = 10  # 最多追问次数
-    MAX_RECOMMENDATIONS: int = 2  # 最终推荐数量上限
+    MAX_RECOMMENDATIONS: int = 10  # 最终推荐数量上限（6-15家）
 
 
 settings = Settings()

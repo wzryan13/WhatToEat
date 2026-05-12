@@ -6,13 +6,7 @@ logger = logging.getLogger(__name__)
 
 
 async def clarify(state: DietState) -> dict:
-    keywords = state.get("keywords", [])
-    keywords_str = "、".join(state.get("keywords", [])) if state.get("keywords") else "美食"
-
-    if keywords:
-        message = f"您想吃{keywords_str}，请问您在哪个城市或具体位置呢？"
-    else:
-        message = "请问您目前在哪个城市或具体位置呢？这样我才能为您推荐附近的美食哦。"
+    message = "请问您在哪个城市呢？"
 
     logger.info(f"[clarify] 追问用户，当前追问次数: {state.get('clarification_count', 0) + 1}")
 
@@ -65,31 +59,42 @@ async def result_formatter(state: DietState) -> dict:
         for poi in (state.get("filtered_pois") or state.get("detailed_pois", []))
     }
 
+    # 按 category 分组
+    from collections import OrderedDict
+    groups: OrderedDict[str, list] = OrderedDict()
+    for rec in recs:
+        cat = rec.get("category", "其他")
+        groups.setdefault(cat, []).append(rec)
+
     lines = ["为您推荐以下餐厅：\n"]
-    for i, rec in enumerate(recs, 1):
-        poi = poi_map.get(rec.get("id"), {})
-        name = rec.get("name") or poi.get("name", "")
-        cost = poi.get("cost", "未知")
-        rating = poi.get("rating", "暂无")
-        address = poi.get("address", "")
-        open_time = poi.get("open_time", "")
-        reason = rec.get("reason", "")
-        hook = rec.get("hook", "")
-        is_open = rec.get("is_open")
+    idx = 1
+    for category, group_recs in groups.items():
+        lines.append(f"🍽️ {category}：")
+        for rec in group_recs:
+            poi = poi_map.get(rec.get("id"), {})
+            name = rec.get("name") or poi.get("name", "")
+            cost = poi.get("cost", "未知")
+            rating = poi.get("rating", "暂无")
+            address = poi.get("address", "")
+            open_time = poi.get("open_time", "")
+            reason = rec.get("reason", "")
+            hook = rec.get("hook", "")
+            is_open = rec.get("is_open")
 
-        open_status = ""
-        if is_open is False:
-            open_status = " ⚠️ 当前可能未营业"
-        elif is_open is True:
-            open_status = " ✅ 当前营业中"
+            open_status = ""
+            if is_open is False:
+                open_status = " ⚠️ 当前可能未营业"
+            elif is_open is True:
+                open_status = " ✅ 当前营业中"
 
-        lines.append(f"{i}. {name}{open_status}")
-        lines.append(f"   📍 {address}")
-        lines.append(f"   💰 人均：{cost}元  ⭐ 评分：{rating}")
-        if open_time:
-            lines.append(f"   🕐 营业时间：{open_time}")
-        combined_reason = f"{reason} {hook}".strip()
-        lines.append(f"   💬 {combined_reason}")
+            lines.append(f"  {idx}. {name}{open_status}")
+            lines.append(f"     📍 {address}")
+            lines.append(f"     💰 人均：{cost}元  ⭐ 评分：{rating}")
+            if open_time:
+                lines.append(f"     🕐 营业时间：{open_time}")
+            combined_reason = f"{reason} {hook}".strip()
+            lines.append(f"     💬 {combined_reason}")
+            idx += 1
         lines.append("")
 
     if state.get("landmark_resolve_failed"):
@@ -102,7 +107,7 @@ async def result_formatter(state: DietState) -> dict:
         lines.append("（提示：符合全部条件的餐厅较少，以上为最接近的推荐）")
 
     response = "\n".join(lines)
-    logger.info(f"[result_formatter] 输出 {len(recs)} 条推荐")
+    logger.info(f"[result_formatter] 输出 {len(recs)} 条推荐，{len(groups)} 个品类")
     return {
         "response_message": response,
         "conversation_history": [{"role": "assistant", "content": response}],

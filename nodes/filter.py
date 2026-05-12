@@ -1,7 +1,7 @@
 import asyncio
 import logging
 from langchain_core.messages import HumanMessage, SystemMessage
-from langchain_anthropic import ChatAnthropic
+from langchain_deepseek import ChatDeepSeek
 
 from models.state import DietState
 from models.rerank import LLMRerankOutput
@@ -10,7 +10,7 @@ from config.settings import settings
 from tools import _tools
 
 logger = logging.getLogger(__name__)
-llm = ChatAnthropic(model=settings.MODEL_NAME)
+llm = ChatDeepSeek(model=settings.MODEL_NAME)
 
 
 async def batch_poi_detail(state: DietState) -> dict:
