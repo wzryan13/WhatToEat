@@ -6,7 +6,7 @@ logger = logging.getLogger(__name__)
 
 
 async def clarify(state: DietState) -> dict:
-    message = "请问您在哪个城市呢？"
+    message = "请问您在哪个位置呢？"
 
     logger.info(f"[clarify] 追问用户，当前追问次数: {state.get('clarification_count', 0) + 1}")
 
@@ -78,7 +78,6 @@ async def result_formatter(state: DietState) -> dict:
             address = poi.get("address", "")
             open_time = poi.get("open_time", "")
             reason = rec.get("reason", "")
-            hook = rec.get("hook", "")
             is_open = rec.get("is_open")
 
             open_status = ""
@@ -92,8 +91,7 @@ async def result_formatter(state: DietState) -> dict:
             lines.append(f"     💰 人均：{cost}元  ⭐ 评分：{rating}")
             if open_time:
                 lines.append(f"     🕐 营业时间：{open_time}")
-            combined_reason = f"{reason} {hook}".strip()
-            lines.append(f"     💬 {combined_reason}")
+            lines.append(f"     💬 {reason}")
             idx += 1
         lines.append("")
 
@@ -105,6 +103,9 @@ async def result_formatter(state: DietState) -> dict:
         lines.append(f"（{state.get('disclaimer_message', '')}）")
     if state.get("result_insufficient"):
         lines.append("（提示：符合全部条件的餐厅较少，以上为最接近的推荐）")
+
+    if state.get("hook_message"):
+        lines.append(f"\n💬 {state['hook_message']}")
 
     response = "\n".join(lines)
     logger.info(f"[result_formatter] 输出 {len(recs)} 条推荐，{len(groups)} 个品类")

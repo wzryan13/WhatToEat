@@ -30,9 +30,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from langchain_core.documents import Document
 
+from pymilvus import MilvusClient, DataType, CollectionSchema, FieldSchema
+
 from config.settings import settings
 from rag.embeddings.embedding_factory import get_embedding_model
-from rag.vector_stores.vector_store_factory import get_vector_store
 from rag.pipeline.document_processor import document_processor
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
@@ -173,29 +174,124 @@ def main():
 
     # 3. 初始化 embedding 模型
     logger.info(f"加载 embedding 模型: {settings.EMBEDDING_MODEL}")
-    embeddings = get_embedding_model(settings.EMBEDDING_MODEL)
+    embedding_model = get_embedding_model(settings.EMBEDDING_MODEL)
 
     # 4. 确保 Milvus 数据目录存在
     milvus_dir = Path(settings.MILVUS_URI).parent
     milvus_dir.mkdir(parents=True, exist_ok=True)
 
-    # 5. 创建/重建 Milvus 集合并索引
-    logger.info(f"索引到 Milvus 集合: {settings.MILVUS_COLLECTION}")
-    vectorstore = get_vector_store(
-        uri=settings.MILVUS_URI,
-        collection_name=settings.MILVUS_COLLECTION,
-        embeddings=embeddings,
-        chunks=all_chunks,
-        force_rebuild=args.force_rebuild,
-    )
+    # 5. 生成 embeddings
+    logger.info("生成 embeddings（可能需要几分钟）...")
+    texts = [chunk.page_content for chunk in all_chunks]
+    # 分批 embed 避免内存问题
+    batch_size = 64
+    all_embeddings = []
+    for i in range(0, len(texts), batch_size):
+        batch = texts[i:i + batch_size]
+        batch_emb = embedding_model.embed_documents(batch)
+        all_embeddings.extend(batch_emb)
+        if (i // batch_size) % 5 == 0:
+            logger.info(f"  已处理 {min(i + batch_size, len(texts))}/{len(texts)} 个文本")
+
+    dim = len(all_embeddings[0])
+    logger.info(f"Embedding 维度: {dim}, 共 {len(all_embeddings)} 个向量")
+
+    # 6. 使用 MilvusClient 直接创建集合并插入
+    uri = settings.MILVUS_URI
+    collection_name = settings.MILVUS_COLLECTION
+
+    if args.force_rebuild and os.path.exists(uri):
+        import shutil
+        logger.warning(f"强制重建: 删除数据库 {uri}")
+        if os.path.isdir(uri):
+            shutil.rmtree(uri)
+        else:
+            os.remove(uri)
+
+    logger.info(f"连接 Milvus Lite: {uri}")
+    client = MilvusClient(uri=uri)
+
+    # 如果集合已存在且 force_rebuild，先删除
+    if client.has_collection(collection_name):
+        if args.force_rebuild:
+            client.drop_collection(collection_name)
+            logger.info(f"已删除旧集合: {collection_name}")
+        else:
+            logger.info(f"集合已存在: {collection_name}，追加数据")
+
+    # 创建集合 schema
+    if not client.has_collection(collection_name):
+        schema = client.create_schema(auto_id=True, enable_dynamic_field=True)
+        schema.add_field("id", DataType.INT64, is_primary=True)
+        schema.add_field("text", DataType.VARCHAR, max_length=65535)
+        schema.add_field("dense_vector", DataType.FLOAT_VECTOR, dim=dim)
+        # 元数据字段
+        schema.add_field("category", DataType.VARCHAR, max_length=128)
+        schema.add_field("difficulty", DataType.VARCHAR, max_length=64)
+        schema.add_field("dish_name", DataType.VARCHAR, max_length=256)
+        schema.add_field("user_id", DataType.VARCHAR, max_length=64)
+        schema.add_field("parent_id", DataType.VARCHAR, max_length=64)
+        schema.add_field("data_source", DataType.VARCHAR, max_length=64)
+        schema.add_field("source_type", DataType.VARCHAR, max_length=64)
+
+        # 创建集合
+        client.create_collection(
+            collection_name=collection_name,
+            schema=schema,
+        )
+
+        # 创建向量索引
+        index_params = client.prepare_index_params()
+        index_params.add_index(
+            field_name="dense_vector",
+            index_type="FLAT",
+            metric_type="COSINE",
+        )
+        client.create_index(collection_name, index_params)
+        logger.info(f"集合 '{collection_name}' 创建成功")
+
+    # 7. 批量插入数据
+    logger.info("开始批量插入...")
+    insert_batch_size = 100
+    total_inserted = 0
+
+    for i in range(0, len(all_chunks), insert_batch_size):
+        batch_chunks = all_chunks[i:i + insert_batch_size]
+        batch_vectors = all_embeddings[i:i + insert_batch_size]
+
+        data = []
+        for chunk, vector in zip(batch_chunks, batch_vectors):
+            row = {
+                "text": chunk.page_content[:65535],
+                "dense_vector": vector,
+                "category": chunk.metadata.get("category", ""),
+                "difficulty": chunk.metadata.get("difficulty", ""),
+                "dish_name": chunk.metadata.get("dish_name", ""),
+                "user_id": chunk.metadata.get("user_id", ""),
+                "parent_id": chunk.metadata.get("parent_id", ""),
+                "data_source": chunk.metadata.get("data_source", ""),
+                "source_type": chunk.metadata.get("source_type", ""),
+            }
+            data.append(row)
+
+        client.insert(collection_name=collection_name, data=data)
+        total_inserted += len(data)
+        if (i // insert_batch_size) % 3 == 0:
+            logger.info(f"  已插入 {total_inserted}/{len(all_chunks)}")
+
+    # 8. 加载集合到内存（供搜索）
+    client.load_collection(collection_name)
 
     logger.info("=" * 50)
     logger.info(f"数据灌入完成!")
     logger.info(f"  菜谱数: {len(recipes)}")
     logger.info(f"  Chunk 数: {len(all_chunks)}")
-    logger.info(f"  集合: {settings.MILVUS_COLLECTION}")
-    logger.info(f"  存储: {settings.MILVUS_URI}")
+    logger.info(f"  已插入: {total_inserted}")
+    logger.info(f"  集合: {collection_name}")
+    logger.info(f"  存储: {uri}")
     logger.info("=" * 50)
+
+    client.close()
 
 
 if __name__ == "__main__":

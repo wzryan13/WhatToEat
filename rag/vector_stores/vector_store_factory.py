@@ -2,9 +2,11 @@
 """Milvus 向量存储工厂 — 创建/连接 Milvus 集合，支持混合搜索（dense + BM25）。"""
 
 import logging
+import os
+import shutil
 from typing import List, Dict, Any
 
-from pymilvus import utility, connections, DataType
+from pymilvus import DataType
 from langchain_milvus import Milvus, BM25BuiltInFunction
 from langchain_core.documents import Document
 from langchain_core.embeddings import Embeddings
@@ -29,7 +31,7 @@ def get_vector_store(
     uri: str,
     collection_name: str,
     embeddings: Embeddings,
-    chunks: List[Document],
+    chunks: List[Document] = None,
     force_rebuild: bool = False,
 ) -> Milvus:
     """
@@ -42,8 +44,8 @@ def get_vector_store(
         uri: Milvus Lite 数据库路径（如 "./milvus_data/milvus.db"）
         collection_name: 集合名称
         embeddings: embedding 模型实例
-        chunks: 待索引的文档列表（为空时创建空集合）
-        force_rebuild: 是否强制重建集合
+        chunks: 待索引的文档列表（None 时连接已有集合）
+        force_rebuild: 是否强制重建集合（drop_old）
 
     Returns:
         Milvus 向量存储实例（支持 hybrid search）
@@ -52,67 +54,29 @@ def get_vector_store(
 
     logger.info(f"Milvus Lite 连接: {uri}, 集合: {collection_name}")
 
-    # 检查集合是否存在（Milvus Lite 通过 uri 直接连接）
-    try:
-        connections.connect(alias="default", uri=uri)
-        if force_rebuild and utility.has_collection(collection_name, using="default"):
-            logger.warning(f"强制重建: 删除集合 {collection_name}")
-            utility.drop_collection(collection_name, using="default")
-
-        collection_exists = utility.has_collection(collection_name, using="default")
-    finally:
-        if connections.has_connection("default"):
-            connections.disconnect("default")
-
-    if not collection_exists:
-        logger.info(f"集合 '{collection_name}' 不存在，正在创建...")
-
-        if chunks:
-            vector_store = Milvus.from_documents(
-                documents=chunks,
-                embedding=embeddings,
-                collection_name=collection_name,
-                connection_args=connection_args,
-                text_field="text",
-                vector_field=["dense", "sparse"],
-                builtin_function=BM25BuiltInFunction(),
-                metadata_schema=METADATA_SCALAR_SCHEMA,
-            )
+    # force_rebuild: 直接删除 db 目录/文件（langchain_milvus 的 drop_old 有 async bug）
+    if force_rebuild and os.path.exists(uri):
+        logger.warning(f"强制重建: 删除数据库 {uri}")
+        if os.path.isdir(uri):
+            shutil.rmtree(uri)
         else:
-            # 用占位文档创建集合以确保 schema 建立
-            placeholder_doc = Document(
-                page_content="__placeholder__",
-                metadata={
-                    "category": "__placeholder__",
-                    "difficulty": "__placeholder__",
-                    "dish_name": "__placeholder__",
-                    "user_id": "__placeholder__",
-                    "parent_id": "__placeholder__",
-                    "source": "__placeholder__",
-                    "data_source": "__placeholder__",
-                    "source_type": "__placeholder__",
-                    "is_dish_index": False,
-                },
-            )
-            vector_store = Milvus.from_documents(
-                documents=[placeholder_doc],
-                embedding=embeddings,
-                collection_name=collection_name,
-                connection_args=connection_args,
-                text_field="text",
-                vector_field=["dense", "sparse"],
-                builtin_function=BM25BuiltInFunction(),
-                metadata_schema=METADATA_SCALAR_SCHEMA,
-            )
-            try:
-                vector_store.col.delete(expr='text == "__placeholder__"')
-                logger.info("占位文档已删除，空集合就绪")
-            except Exception as e:
-                logger.warning(f"删除占位文档失败: {e}")
+            os.remove(uri)
 
-        logger.info(f"集合 '{collection_name}' 创建成功")
+    if chunks:
+        # 有数据要灌入：创建集合并索引
+        vector_store = Milvus.from_documents(
+            documents=chunks,
+            embedding=embeddings,
+            collection_name=collection_name,
+            connection_args=connection_args,
+            text_field="text",
+            vector_field=["dense", "sparse"],
+            builtin_function=BM25BuiltInFunction(),
+            metadata_schema=METADATA_SCALAR_SCHEMA,
+        )
+        logger.info(f"集合 '{collection_name}' 创建成功，索引 {len(chunks)} 个文档")
     else:
-        logger.info(f"连接已有集合: {collection_name}")
+        # 无数据：连接已有集合
         vector_store = Milvus(
             embedding_function=embeddings,
             collection_name=collection_name,
@@ -122,5 +86,6 @@ def get_vector_store(
             builtin_function=BM25BuiltInFunction(),
             metadata_schema=METADATA_SCALAR_SCHEMA,
         )
+        logger.info(f"连接已有集合: {collection_name}")
 
     return vector_store

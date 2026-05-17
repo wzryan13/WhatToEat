@@ -11,10 +11,6 @@ class Recommendation(BaseModel):
         None,
         description="当前是否营业，无法判断时为None"
     )
-    hook: str = Field(
-        default="",
-        description="对话钩子，用于自然试探用户偏好"
-    )
 
 
 class LLMRerankOutput(BaseModel):
@@ -24,4 +20,8 @@ class LLMRerankOutput(BaseModel):
     disclaimer: Optional[str] = Field(
         None,
         description="需要附加的免责提示，如忌口类推荐的不确定性说明"
+    )
+    hook: Optional[str] = Field(
+        None,
+        description="对话钩子，整体推荐后自然试探用户的一个偏好维度"
     )
