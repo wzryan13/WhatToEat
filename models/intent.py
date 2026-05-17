@@ -18,8 +18,8 @@ class FilterConditions(BaseModel):
 
 
 class IntentParserOutput(BaseModel):
-    intent_type: Literal["normal", "brand", "scene", "time_based"] = Field(
-        description="意图类型"
+    intent_type: Literal["normal", "brand", "scene", "time_based", "recipe"] = Field(
+        description="意图类型: normal(餐厅), brand(品牌), scene(场景), time_based(时段), recipe(菜谱做法)"
     )
     location_text: Optional[str] = Field(
         None,

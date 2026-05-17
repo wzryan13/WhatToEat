@@ -17,6 +17,15 @@ logger = logging.getLogger(__name__)
 async def run_conversation():
     await init_tools()
     await init_memory_store()
+
+    # 初始化 RAG 服务（可选，失败不影响餐厅推荐）
+    from rag.rag_service import init_rag_service
+    rag_svc = init_rag_service()
+    if rag_svc:
+        logger.info("RAG 菜谱检索服务已启动")
+    else:
+        logger.warning("RAG 服务未启动（菜谱推荐不可用）")
+
     app = build_graph()
     memory_store = get_memory_store()
     user_id = await memory_store.get_or_create_user(

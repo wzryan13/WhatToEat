@@ -19,7 +19,7 @@ class DietState(TypedDict, total=False):
     current_time: str
 
     # ── 意图解析结果 ──
-    intent_type: Literal["normal", "brand", "scene", "time_based"]
+    intent_type: Literal["normal", "brand", "scene", "time_based", "recipe"]
     location_text: Optional[str]
     location_type: Literal["valid", "relative", "gps", "none", "invalid"]
     city: Optional[str]
@@ -53,9 +53,16 @@ class DietState(TypedDict, total=False):
     mood_factors: list[str]
     suggested_cuisines: list[str]
 
+    # ── RAG 菜谱检索结果 ──
+    rag_query: Optional[str]              # rewrite 后的查询
+    rag_documents: list[dict]             # 检索到的菜谱文档列表
+    rag_filter_expr: Optional[str]        # 生成的 Milvus 过滤表达式
+
     # ── 输出 ──
     final_recommendations: list[dict]
     response_message: str
     disclaimer_needed: bool
     disclaimer_message: Optional[str]
+    hook_message: Optional[str]
     error_message: Optional[str]
+    search_context: Optional[str]
