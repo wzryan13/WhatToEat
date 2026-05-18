@@ -47,18 +47,14 @@ class RAGFormatterOutput(BaseModel):
 RAG_FORMATTER_SYSTEM_PROMPT = """你是一个个性化菜谱推荐助手。
 
 你的任务是：
-1. 根据用户画像中的**过敏/黑名单**信息，排除含有禁忌食材的菜谱
-2. 根据用户的**偏好**（喜好菜系、辣度、健康目标等）对剩余菜谱重新排序
-3. 为每道推荐菜谱生成个性化推荐理由
-4. 生成完整的回复文本
+1. 根据用户的**偏好**（喜好菜系、辣度、健康目标等）对菜谱重新排序
+2. 为每道推荐菜谱生成个性化推荐理由
+3. 生成完整的回复文本
+
+注意：含有过敏/禁忌食材的菜谱已经在上游被过滤掉了，你收到的都是安全的菜谱。
 
 【用户画像】
 {user_profile}
-
-【排除规则（硬约束）】
-- 过敏食材: {allergies}
-- 不吃的食材: {food_blacklist}
-- 如果菜谱内容中包含以上任何食材，必须排除，不能推荐
 
 【偏好规则（软约束，影响排序）】
 - 喜欢的菜系: {liked_cuisines}
@@ -67,7 +63,7 @@ RAG_FORMATTER_SYSTEM_PROMPT = """你是一个个性化菜谱推荐助手。
 - 匹配偏好的菜谱排名靠前，但不排除不匹配的
 
 【输出要求】
-- 推荐 6-8 道菜（如果过滤后不足 6 道则全部推荐）
+- 推荐 6-8 道菜（如果不足 6 道则全部推荐）
 - 每道菜附上简短的个性化推荐理由
 - 回复文本要自然友好，像朋友推荐一样
 """
@@ -98,6 +94,30 @@ async def rag_formatter(state: DietState) -> dict:
     spice_str = spice_tolerance.get("value", "未知") if isinstance(spice_tolerance, dict) else str(spice_tolerance)
     health_goals = _extract_values(profile_data.get("health_goals", []))
 
+    # ── 硬约束过滤（代码预过滤，不依赖 LLM） ──
+    # 扫描文档内容，排除含过敏/黑名单食材的菜谱
+    banned_keywords = set(allergies + food_blacklist)
+    if banned_keywords:
+        filtered_documents = []
+        for doc in rag_documents:
+            content = doc.get("content", "")
+            dish_name = doc.get("metadata", {}).get("dish_name", "")
+            # 检查内容和菜名中是否包含禁忌食材关键词
+            text_to_check = content + dish_name
+            if not any(kw in text_to_check for kw in banned_keywords):
+                filtered_documents.append(doc)
+            else:
+                excluded_kw = [kw for kw in banned_keywords if kw in text_to_check]
+                logger.info(f"[rag_formatter] 硬过滤排除: {dish_name} (含: {excluded_kw})")
+        logger.info(f"[rag_formatter] 硬过滤: {len(rag_documents)} -> {len(filtered_documents)}")
+        rag_documents = filtered_documents
+
+    if not rag_documents:
+        return {
+            "response_message": "抱歉，根据你的饮食限制，暂时没有找到合适的菜谱。要不要换个关键词试试？",
+            "final_recommendations": [],
+        }
+
     # 构建菜谱信息文本
     recipes_text = _format_recipes_for_llm(rag_documents)
 
@@ -106,8 +126,6 @@ async def rag_formatter(state: DietState) -> dict:
 
     system_prompt = RAG_FORMATTER_SYSTEM_PROMPT.format(
         user_profile=user_profile,
-        allergies="、".join(allergies) if allergies else "无",
-        food_blacklist="、".join(food_blacklist) if food_blacklist else "无",
         liked_cuisines="、".join(liked_cuisines) if liked_cuisines else "无特别偏好",
         spice_tolerance=spice_str,
         health_goals="、".join(health_goals) if health_goals else "无",

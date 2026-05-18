@@ -39,11 +39,22 @@ async def rag_agent(state: DietState) -> dict:
     # 可选：从画像取 disliked_cuisines 构建粗过滤 expr
     extra_expr = _build_category_filter(state)
 
+    # metadata_catalog: 告诉 MetadataFilterExtractor 有哪些可过滤字段和值
+    # 格式: {"来源名": {"字段": [可选值]}}，值来源: Milvus 实际灌入数据
+    metadata_catalog = {
+        "recipe_chunks": {
+            "category": ["早餐", "汤类", "主食", "甜品", "饮品", "调料",
+                         "半成品加工", "水产", "荤菜", "素菜"],
+            "difficulty": ["入门", "简单", "中等", "较难", "困难"],
+        }
+    }
+
     logger.info(f"[rag_agent] 开始检索, query='{query}', expr={extra_expr}")
 
     # 调用 RAG 服务
     docs = await service.search_recipes(
         query=query,
+        metadata_catalog=metadata_catalog,
         extra_expr=extra_expr,
     )
 

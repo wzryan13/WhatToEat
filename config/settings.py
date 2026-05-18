@@ -4,6 +4,16 @@ from dotenv import load_dotenv
 load_dotenv("/Users/wenzhouzhou/PycharmProjects/PythonProject1/.env")
 
 
+def _parse_float_list(value: str, default: list[float]) -> list[float]:
+    raw = (value or "").strip()
+    if not raw:
+        return default
+    try:
+        return [float(item.strip()) for item in raw.split(",") if item.strip()]
+    except ValueError:
+        return default
+
+
 class Settings:
     # ── API Keys ─────────────────────────────────────────────
     DEEPSEEK_API_KE: str = os.getenv("DEEPSEEK_API_KEY", "")
@@ -36,8 +46,8 @@ class Settings:
     AGENT_MIN_SUFFICIENT: int = 6   # 过滤后达到此数量认为"足够"
 
     # ── RAG 配置 ──────────────────────────────────────────────
-    # Milvus Lite（嵌入式模式，无需 Docker）
-    MILVUS_URI: str = os.getenv("MILVUS_URI", "./milvus_data/milvus.db")
+    # Milvus Standalone / Distributed（支持 BM25BuiltInFunction hybrid search）
+    MILVUS_URI: str = os.getenv("MILVUS_URI", "http://127.0.0.1:19530")
     MILVUS_COLLECTION: str = os.getenv("MILVUS_COLLECTION", "recipe_chunks")
 
     # Embedding 模型
@@ -54,7 +64,12 @@ class Settings:
     # RAG 检索参数
     RAG_TOP_K: int = int(os.getenv("RAG_TOP_K", "20"))           # 混合检索召回数
     RAG_RERANK_TOP_K: int = int(os.getenv("RAG_RERANK_TOP_K", "10"))  # rerank 后保留数
-    RAG_RANKER_WEIGHTS: list = [0.5, 0.5]  # [dense, sparse] 固定均衡权重
+    RAG_RANKER_TYPE: str = os.getenv("RAG_RANKER_TYPE", "rrf").strip().lower()
+    RAG_RANKER_WEIGHTS: list[float] = _parse_float_list(
+        os.getenv("RAG_RANKER_WEIGHTS", ""),
+        [0.5, 0.5],
+    )
+    RAG_RRF_K: int = int(os.getenv("RAG_RRF_K", "60"))
     RAG_SCORE_THRESHOLD: float = float(os.getenv("RAG_SCORE_THRESHOLD", "0.0"))
 
     # 缓存配置

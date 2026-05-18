@@ -1,49 +1,54 @@
-# rag/pipeline/retrieval.py
-"""混合检索模块 — 基于 MilvusClient 的 dense 向量搜索。"""
+"""混合检索模块 — 基于 langchain_milvus 的 dense + BM25 hybrid search。"""
 
 import asyncio
 import logging
-from typing import List, Tuple, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
-from pymilvus import MilvusClient
 from langchain_core.documents import Document
-from langchain_core.embeddings import Embeddings
+from langchain_milvus import Milvus
+
+from config.settings import settings
 
 logger = logging.getLogger(__name__)
 
 
 class RetrievalOptimizationModule:
-    """
-    基于 MilvusClient 的向量检索模块。
-    使用 dense 向量（语义相似度）进行检索，支持元数据过滤。
-
-    注意：由于 langchain_milvus 0.3.3 + pymilvus 2.6 存在 ORM 连接 bug��
-    此模块直接使用 MilvusClient API，不依赖 langchain wrapper。
-    """
+    """基于 langchain_milvus 的 hybrid retrieval，支持 rrf/weighted 与 expr 过滤。"""
 
     def __init__(
         self,
-        client: MilvusClient,
-        collection_name: str,
-        embeddings: Embeddings,
+        vector_store: Milvus,
         score_threshold: float = 0.0,
     ):
-        """
-        Args:
-            client: MilvusClient 实例
-            collection_name: 集合名称
-            embeddings: embedding 模型（用于将 query 转为向量）
-            score_threshold: 最低分数阈值，低于此分数的结果被过滤
-        """
-        if not client:
-            raise ValueError("client 不能为空")
+        if not vector_store:
+            raise ValueError("vector_store 不能为空")
 
-        self.client = client
-        self.collection_name = collection_name
-        self.embeddings = embeddings
+        self.vector_store = vector_store
         self.score_threshold = score_threshold
+        self.default_ranker_type = settings.RAG_RANKER_TYPE
+        self.default_ranker_params = self._build_ranker_params(self.default_ranker_type)
 
-        logger.info("检索模块初始化完成, collection=%s", collection_name)
+        logger.info(
+            "检索模块初始化完成, collection=%s ranker_type=%s ranker_params=%s",
+            vector_store.collection_name,
+            self.default_ranker_type,
+            self.default_ranker_params,
+        )
+
+    @staticmethod
+    def _build_ranker_params(ranker_type: Optional[str]) -> Dict[str, Any]:
+        if ranker_type == "weighted":
+            return {"weights": settings.RAG_RANKER_WEIGHTS}
+        if ranker_type == "rrf":
+            return {"k": settings.RAG_RRF_K}
+        return {}
+
+    @staticmethod
+    def _normalize_ranker_type(ranker_type: Optional[str]) -> Optional[str]:
+        normalized = (ranker_type or "").strip().lower() or None
+        if normalized not in {None, "rrf", "weighted"}:
+            raise ValueError(f"不支持的 ranker_type: {ranker_type}")
+        return normalized
 
     async def hybrid_search(
         self,
@@ -51,75 +56,43 @@ class RetrievalOptimizationModule:
         top_k: int,
         score_threshold: Optional[float] = None,
         expr: Optional[str] = None,
+        ranker_type: Optional[str] = None,
+        ranker_params: Optional[Dict[str, Any]] = None,
     ) -> Tuple[List[Document], List[float]]:
-        """
-        执行向量检索，使用 cosine 相似度。
+        """执行 dense + BM25 混合检索。"""
 
-        Args:
-            query: 用户查询（通常是 rewrite 后的）
-            top_k: 返回文档数量
-            score_threshold: 最低分数阈值（覆盖实例默认值）
-            expr: Milvus 过滤表达式（如 category 过滤）
-
-        Returns:
-            (documents, scores) 元组，两个列表等长
-        """
         threshold = score_threshold if score_threshold is not None else self.score_threshold
-
-        logger.info("向量检索 top_k=%d threshold=%s expr=%s", top_k, threshold, expr)
-
-        # 将 query 转为向量
-        query_vector = await asyncio.to_thread(
-            self.embeddings.embed_query, query
+        resolved_ranker_type = self._normalize_ranker_type(
+            ranker_type or self.default_ranker_type
+        )
+        resolved_ranker_params = ranker_params or self._build_ranker_params(resolved_ranker_type)
+        logger.info(
+            "Hybrid 检索 top_k=%d threshold=%s expr=%s ranker_type=%s ranker_params=%s",
+            top_k,
+            threshold,
+            expr,
+            resolved_ranker_type,
+            resolved_ranker_params,
         )
 
-        # 构建搜索参数
-        search_params = {"metric_type": "COSINE"}
-
-        # 执行搜索
         results = await asyncio.to_thread(
-            self.client.search,
-            collection_name=self.collection_name,
-            data=[query_vector],
-            limit=top_k,
-            output_fields=["text", "category", "difficulty", "dish_name",
-                           "user_id", "parent_id", "data_source", "source_type"],
-            anns_field="dense_vector",
-            search_params=search_params,
-            filter=expr or "",
+            self.vector_store.similarity_search_with_score,
+            query,
+            top_k,
+            None,
+            expr,
+            None,
+            ranker_type=resolved_ranker_type,
+            ranker_params=resolved_ranker_params,
         )
 
-        docs, scores = [], []
-        if results and results[0]:
-            for hit in results[0]:
-                entity = hit["entity"]
-                metadata = {
-                    "category": entity.get("category", ""),
-                    "difficulty": entity.get("difficulty", ""),
-                    "dish_name": entity.get("dish_name", ""),
-                    "user_id": entity.get("user_id", ""),
-                    "parent_id": entity.get("parent_id", ""),
-                    "data_source": entity.get("data_source", ""),
-                    "source_type": entity.get("source_type", ""),
-                }
-                doc = Document(
-                    page_content=entity.get("text", ""),
-                    metadata=metadata,
-                )
-                docs.append(doc)
-                scores.append(hit["distance"])
+        docs: List[Document] = []
+        scores: List[float] = []
+        for doc, score in results:
+            if threshold > 0 and score < threshold:
+                continue
+            docs.append(doc)
+            scores.append(score)
 
-        logger.info("向量检索返回 %d 条文档", len(docs))
-
-        # 分数阈值过滤（cosine 距离越大越相似）
-        if threshold > 0:
-            filtered_docs, filtered_scores = [], []
-            for doc, score in zip(docs, scores):
-                if score >= threshold:
-                    filtered_docs.append(doc)
-                    filtered_scores.append(score)
-
-            logger.info("分数过滤: %d -> %d (threshold=%s)", len(docs), len(filtered_docs), threshold)
-            return filtered_docs, filtered_scores
-
+        logger.info("Hybrid 检索返回 %d 条文档", len(docs))
         return docs, scores

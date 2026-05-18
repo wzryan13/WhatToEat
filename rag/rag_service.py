@@ -13,9 +13,8 @@ Pipeline:
 """
 
 import logging
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
-from pymilvus import MilvusClient
 from langchain_core.documents import Document
 from langchain_core.embeddings import Embeddings
 
@@ -25,6 +24,7 @@ from rag.pipeline.metadata_filter import MetadataFilterExtractor
 from rag.pipeline.retrieval import RetrievalOptimizationModule
 from rag.pipeline.document_processor import document_processor
 from rag.rerankers.siliconflow_reranker import SiliconFlowReranker
+from rag.vector_stores.vector_store_factory import get_vector_store
 
 logger = logging.getLogger(__name__)
 
@@ -37,14 +37,11 @@ class RAGService:
 
     def __init__(
         self,
-        client: MilvusClient,
-        collection_name: str,
+        vector_store,
         embeddings: Embeddings,
     ):
         self.retrieval = RetrievalOptimizationModule(
-            client=client,
-            collection_name=collection_name,
-            embeddings=embeddings,
+            vector_store=vector_store,
             score_threshold=settings.RAG_SCORE_THRESHOLD,
         )
         self.query_rewriter = GenerationIntegrationModule()
@@ -57,6 +54,8 @@ class RAGService:
         query: str,
         metadata_catalog: Optional[dict] = None,
         extra_expr: Optional[str] = None,
+        ranker_type: Optional[str] = None,
+        ranker_params: Optional[Dict[str, Any]] = None,
     ) -> List[Document]:
         """
         执行完整的 RAG 检索流程。
@@ -65,9 +64,11 @@ class RAGService:
             query: 用户原始查询
             metadata_catalog: 可用元数据值（用于 LLM 生成过滤表达式）
             extra_expr: 额外的 Milvus 过滤表达式（如 category 粗过滤）
+            ranker_type: hybrid ranker 类型，可选 `rrf` 或 `weighted`
+            ranker_params: ranker 参数，如 `{\"k\": 60}` 或 `{\"weights\": [0.5, 0.5]}`
 
         Returns:
-            检索并重排序后的文档列表（纯��关性排序）
+            检索并重排序后的文档列表
         """
         # Step 2: Query Rewrite
         rewritten_query = await self.query_rewriter.rewrite_query(query)
@@ -88,6 +89,8 @@ class RAGService:
             query=rewritten_query,
             top_k=settings.RAG_TOP_K,
             expr=final_expr,
+            ranker_type=ranker_type,
+            ranker_params=ranker_params,
         )
 
         if not docs:
@@ -148,14 +151,15 @@ def init_rag_service() -> Optional[RAGService]:
         # 初始化 embedding 模型
         embeddings = get_embedding_model(settings.EMBEDDING_MODEL)
 
-        # 连接 Milvus Lite
-        client = MilvusClient(uri=settings.MILVUS_URI)
-        client.load_collection(settings.MILVUS_COLLECTION)
-        logger.info(f"Milvus 集合已加载: {settings.MILVUS_COLLECTION}")
+        vector_store = get_vector_store(
+            uri=settings.MILVUS_URI,
+            collection_name=settings.MILVUS_COLLECTION,
+            embeddings=embeddings,
+        )
+        logger.info("Milvus hybrid collection 已就绪: %s", settings.MILVUS_COLLECTION)
 
         _rag_service = RAGService(
-            client=client,
-            collection_name=settings.MILVUS_COLLECTION,
+            vector_store=vector_store,
             embeddings=embeddings,
         )
         logger.info("RAG 服务初始化成功")
