@@ -1,4 +1,6 @@
-from pydantic import BaseModel, Field
+import json
+
+from pydantic import BaseModel, Field, model_validator
 from typing import Optional, Literal
 
 
@@ -18,8 +20,8 @@ class FilterConditions(BaseModel):
 
 
 class IntentParserOutput(BaseModel):
-    intent_type: Literal["normal", "brand", "scene", "time_based", "recipe"] = Field(
-        description="意图类型: normal(餐厅), brand(品牌), scene(场景), time_based(时段), recipe(菜谱做法)"
+    intent_type: Literal["normal", "brand", "scene", "time_based", "recipe", "recommend"] = Field(
+        description="意图类型: normal(餐厅), brand(品牌), scene(场景), time_based(时段), recipe(菜谱搜索), recommend(菜谱推荐)"
     )
     location_text: Optional[str] = Field(
         None,
@@ -66,3 +68,18 @@ class IntentParserOutput(BaseModel):
         default_factory=list,
         description="推荐搜索的具体菜品或菜系"
     )
+
+    @model_validator(mode="before")
+    @classmethod
+    def _coerce_json_strings(cls, data):
+        """兼容 LLM 把嵌套对象/列表序列化成 JSON 字符串的情况。"""
+        if not isinstance(data, dict):
+            return data
+        for key in ("filters", "negative_conditions", "mood_factors", "suggested_cuisines", "keywords"):
+            v = data.get(key)
+            if isinstance(v, str):
+                try:
+                    data[key] = json.loads(v)
+                except (json.JSONDecodeError, ValueError):
+                    pass
+        return data

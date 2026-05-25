@@ -1,0 +1,30 @@
+# Web frontend
+streamlit>=1.45.0
+
+# LangGraph / LangChain
+langgraph>=1.2.0
+langgraph-checkpoint>=4.1.0
+langchain-core>=1.4.0
+langchain-deepseek>=1.0.1
+langchain-huggingface>=1.2.2
+langchain-mcp-adapters>=0.2.2
+langchain-milvus>=0.2.2
+langchain-openai>=1.2.1
+
+# MCP
+mcp>=1.27.0
+
+# Vector store + reranker
+pymilvus>=2.5.7
+sentence-transformers>=5.5.0
+huggingface_hub>=1.15.0
+
+# Persistence
+asyncpg>=0.31.0
+redis>=7.4.0
+
+# Core
+pydantic>=2.13.0
+python-dotenv>=1.1.0
+httpx>=0.27.0
+httpx-sse>=0.4.0

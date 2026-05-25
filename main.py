@@ -77,21 +77,35 @@ async def run_conversation():
             result = await app.ainvoke(initial_state, config=config)
 
         # 检查 ainvoke 后是否处于 interrupt 状态
-        state_after = app.get_state(config)
-        if state_after.next:
-            # 被 interrupt 暂停了，从 tasks 中读取追问消息
-            interrupt_msg = None
-            if hasattr(state_after, "tasks"):
-                for task in state_after.tasks:
-                    if hasattr(task, "interrupts") and task.interrupts:
-                        interrupt_msg = task.interrupts[0].value
-                        break
-            if not interrupt_msg:
-                interrupt_msg = "请补充更多信息。"
-            print(f"\n管家：{interrupt_msg}\n")
+        if "__interrupt__" in result:
+            print(f"\n管家：{result['__interrupt__'][0].value}\n")
         else:
             response = result.get("response_message", "")
-            print(f"\n管家：{response}\n")
+            final_recs = result.get("final_recommendations", [])
+            intent_type = result.get("intent_type", "normal")
+
+            if response:
+                print(f"\n管家：{response}\n")
+
+            # 仅菜谱场景需要单独打印每道菜的详细内容（含做法步骤）
+            # 餐厅场景的卡片已经由 result_formatter 拼进 response_message
+            if intent_type in ("recipe", "recommend"):
+                for rec in final_recs:
+                    dish = rec.get("dish_name", "")
+                    reason = rec.get("reason", "")
+                    content = rec.get("content", "")
+                    difficulty = rec.get("difficulty", "")
+                    category = rec.get("category", "")
+
+                    tags = " | ".join(filter(None, [category, f"难度：{difficulty}" if difficulty else ""]))
+                    print(f"── {dish} ──")
+                    if tags:
+                        print(f"[{tags}]")
+                    if reason:
+                        print(f"推荐理由：{reason}")
+                    if content:
+                        print(f"\n{content}")
+                    print()
 
 
 if __name__ == "__main__":

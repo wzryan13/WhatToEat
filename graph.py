@@ -25,8 +25,7 @@ def route_after_intent(state: DietState) -> str:
     """
     intent_type = state.get("intent_type", "normal")
 
-    # 菜谱意图直接走 RAG，不需要位置验证
-    if intent_type == "recipe":
+    if intent_type in ("recipe", "recommend"):
         return "rag_agent"
 
     # 餐厅意图：检查位置有效性

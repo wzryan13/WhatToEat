@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import logging
 import uuid
 from dataclasses import dataclass
@@ -288,7 +289,6 @@ class AsyncpgMemoryStore(BaseMemoryStore):
                 CREATE TABLE IF NOT EXISTS sessions (
                     session_id VARCHAR(80) PRIMARY KEY,
                     user_id VARCHAR(40) NOT NULL REFERENCES users(user_id),
-                    status VARCHAR(20) NOT NULL DEFAULT 'active',
                     started_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
                     last_active_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
                     ended_at TIMESTAMPTZ,
@@ -322,16 +322,10 @@ class AsyncpgMemoryStore(BaseMemoryStore):
                 """
             )
             await conn.execute(
-                "CREATE INDEX IF NOT EXISTS idx_sessions_user_status ON sessions(user_id, status)"
-            )
-            await conn.execute(
                 "CREATE INDEX IF NOT EXISTS idx_sessions_expires_at ON sessions(expires_at)"
             )
             await conn.execute(
                 "CREATE INDEX IF NOT EXISTS idx_session_memories_user_id ON session_memories(user_id)"
-            )
-            await conn.execute(
-                "CREATE UNIQUE INDEX IF NOT EXISTS idx_sessions_user_active ON sessions(user_id) WHERE status = 'active'"
             )
         finally:
             await conn.close()
@@ -397,7 +391,6 @@ class AsyncpgMemoryStore(BaseMemoryStore):
                     SELECT session_id, thread_id
                     FROM sessions
                     WHERE user_id = $1
-                      AND status = 'active'
                       AND expires_at > NOW()
                     ORDER BY started_at DESC
                     LIMIT 1
@@ -463,7 +456,9 @@ class AsyncpgMemoryStore(BaseMemoryStore):
             )
         finally:
             await conn.close()
-        return profile_from_dict(row["profile_json"] if row else None)
+        raw = row["profile_json"] if row else None
+        data = json.loads(raw) if isinstance(raw, str) else raw
+        return profile_from_dict(data)
 
     async def _save_profile(self, user_id: str, profile: UserProfile) -> None:
         conn = await self._connect()
@@ -502,7 +497,9 @@ class AsyncpgMemoryStore(BaseMemoryStore):
             )
         finally:
             await conn.close()
-        return session_from_dict(row["memory_json"] if row else None)
+        raw = row["memory_json"] if row else None
+        data = json.loads(raw) if isinstance(raw, str) else raw
+        return session_from_dict(data)
 
     async def load_memory_context(self, user_id: str, session_id: str) -> dict[str, Any]:
         profile = await self.load_profile(user_id)

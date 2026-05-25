@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+import json
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 
 class MemoryFact(BaseModel):
@@ -74,3 +75,28 @@ class ProfileUpdate(BaseModel):
 class ProfileUpdateDecision(BaseModel):
     updates: list[ProfileUpdate] = Field(default_factory=list)
     no_update_reason: str = ""
+
+    @model_validator(mode="before")
+    @classmethod
+    def _coerce_json_strings(cls, data):
+        """兼容 LLM 把 updates 列表整体或单项序列化成 JSON 字符串的情况。"""
+        if not isinstance(data, dict):
+            return data
+        v = data.get("updates")
+        if isinstance(v, str):
+            try:
+                data["updates"] = json.loads(v)
+            except (json.JSONDecodeError, ValueError):
+                data["updates"] = []
+        elif isinstance(v, list):
+            coerced = []
+            for item in v:
+                if isinstance(item, str):
+                    try:
+                        coerced.append(json.loads(item))
+                    except (json.JSONDecodeError, ValueError):
+                        continue
+                else:
+                    coerced.append(item)
+            data["updates"] = coerced
+        return data

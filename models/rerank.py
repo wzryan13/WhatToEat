@@ -1,4 +1,6 @@
-from pydantic import BaseModel, Field
+import json
+
+from pydantic import BaseModel, Field, model_validator
 from typing import Optional
 
 
@@ -25,3 +27,28 @@ class LLMRerankOutput(BaseModel):
         None,
         description="对话钩子，整体推荐后自然试探用户的一个偏好维度"
     )
+
+    @model_validator(mode="before")
+    @classmethod
+    def _coerce_json_strings(cls, data):
+        """兼容 LLM 把 recommendations 列表整体或单项序列化成 JSON 字符串的情况。"""
+        if not isinstance(data, dict):
+            return data
+        v = data.get("recommendations")
+        if isinstance(v, str):
+            try:
+                data["recommendations"] = json.loads(v)
+            except (json.JSONDecodeError, ValueError):
+                data["recommendations"] = []
+        elif isinstance(v, list):
+            coerced = []
+            for item in v:
+                if isinstance(item, str):
+                    try:
+                        coerced.append(json.loads(item))
+                    except (json.JSONDecodeError, ValueError):
+                        continue
+                else:
+                    coerced.append(item)
+            data["recommendations"] = coerced
+        return data

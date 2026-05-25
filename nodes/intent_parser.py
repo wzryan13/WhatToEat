@@ -14,16 +14,20 @@ llm = ChatDeepSeek(model=settings.MODEL_NAME)
 
 async def intent_parser(state: DietState) -> dict:
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M %A")
-    conversation_history = state.get("conversation_history", [])[-settings.MAX_HISTORY_MESSAGES :]
+    conversation_summary = state.get("conversation_summary", "")
+    recent_history = state.get("conversation_history", [])[-settings.RECENT_HISTORY_N:]
+    formatted_history = _format_recent_history(recent_history)
 
     messages = [
         SystemMessage(content=INTENT_PARSER_SYSTEM_PROMPT),
         HumanMessage(content=f"""
-当前时间：{current_time}
-记忆上下文：{state.get('memory_for_intent', '暂无记忆信息。')}
-对话历史：{conversation_history}
-最新输入：{state['user_input']}
-""")
+    当前时间：{current_time}
+    记忆上下文：{state.get('memory_for_intent', '暂无记忆信息。')}
+    对话摘要（更早历史）：{conversation_summary or '暂无'}
+    最近对话：
+    {formatted_history}
+    最新输入：{state['user_input']}
+    """),
     ]
 
     structured_llm = llm.with_structured_output(IntentParserOutput)
@@ -75,3 +79,20 @@ async def intent_parser(state: DietState) -> dict:
             {"role": "user", "content": state["user_input"]}
         ],
     }
+
+def _format_recent_history(history: list[dict]) -> str:
+    """
+    user 消息 → 用 content（用户原话，短）
+    assistant 消息 → 用 tool_summary（压缩版），没有 tool_summary 才降级用 content
+    """
+    if not history:
+        return "暂无"
+    lines = []
+    for msg in history:
+        role = msg.get("role", "")
+        if role == "user":
+            lines.append(f"用户：{msg.get('content', '')}")
+        elif role == "assistant":
+            text = msg.get("tool_summary") or msg.get("content", "")
+            lines.append(f"助手：{text}")
+    return "\n".join(lines)

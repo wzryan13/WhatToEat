@@ -360,3 +360,21 @@ def get_vector_store(
     vector_store = _connect_existing_vector_store(uri, collection_name, embeddings)
     _validate_hybrid_search(vector_store)
     return vector_store
+
+# 对每个 Document：
+#
+# 1. 取 page_content → 作为 text 字段
+# 2. 送进 embedding 模型 → 得到 dense_vector（比如 1536 维的浮点数组）
+# 3. BM25BuiltInFunction 处理 text → 得到 sparse 向量（稀疏矩阵）
+# 4. 从 metadata 取出 dish_name、category 等 → 标量字段
+#
+# 组成一行记录写入 Milvus：
+# {
+#   "id": "自动生成",
+#   "text": "番茄炒蛋的做法...",
+#   "dense_vector": [0.12, -0.34, 0.87, ...],  # 1536个数
+#   "sparse": {234: 0.6, 891: 0.3, ...},        # BM25稀疏向量
+#   "dish_name": "番茄炒蛋",
+#   "category": "家常菜",
+#   ...
+# }

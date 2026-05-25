@@ -14,12 +14,13 @@ class DietState(TypedDict, total=False):
     # ── 原始输入 ──
     user_input: str
     conversation_history: Annotated[list[dict], operator.add]
+    conversation_summary: str
 
     # ── 系统注入 ──
     current_time: str
 
     # ── 意图解析结果 ──
-    intent_type: Literal["normal", "brand", "scene", "time_based", "recipe"]
+    intent_type: Literal["normal", "brand", "scene", "time_based", "recipe", "recommend"]
     location_text: Optional[str]
     location_type: Literal["valid", "relative", "gps", "none", "invalid"]
     city: Optional[str]

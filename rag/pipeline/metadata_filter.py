@@ -46,7 +46,7 @@ FILTER_EXPRESSION_PROMPT = ChatPromptTemplate.from_template(
 
 1. category
 - 仅在用户明确指定菜系或菜品大类时使用
-- 示例：川菜、家常菜、凉菜
+- 只能从以下category中选择：主食、半成品加工、早餐、水产、汤类、甜品、素菜、荤菜、调料、饮品
 - 不得从口味、场景、食材等信息中推断 category
 
 2. dish_name

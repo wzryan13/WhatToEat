@@ -17,6 +17,7 @@
 """
 
 import argparse
+import asyncio
 import logging
 import re
 import sys
@@ -32,6 +33,7 @@ from langchain_core.documents import Document
 from config.settings import settings
 from rag.embeddings.embedding_factory import get_embedding_model
 from rag.pipeline.document_processor import document_processor
+from rag.pipeline.document_repository import get_document_repository
 from rag.vector_stores.vector_store_factory import get_vector_store
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
@@ -39,7 +41,6 @@ logger = logging.getLogger(__name__)
 
 # 目录名 → 中文分类映射
 CATEGORY_MAP = {
-    "home-cooking": "家常菜",
     "breakfast": "早餐",
     "soup": "汤类",
     "staple": "主食",
@@ -99,36 +100,28 @@ def parse_recipe_file(file_path: Path, category: str) -> Tuple[str, Dict]:
 
 def scan_recipe_directory(data_dir: Path) -> List[Tuple[str, Dict]]:
     """
-    扫描菜谱目录，返回 (content, metadata) 列表。
+    递归扫描 dishes/ 下所有菜谱 md，按一级目录映射 category。
+    跳过 dishes/template/ 示例目录。
     """
     recipes = []
 
-    for item in data_dir.iterdir():
-        if item.is_dir():
-            # 目录名作为分类
-            category = CATEGORY_MAP.get(item.name, item.name)
+    for md_file in data_dir.rglob("*.md"):
+        rel_parts = md_file.relative_to(data_dir).parts
+        if rel_parts[0] == "template":
+            continue
 
-            for md_file in item.glob("*.md"):
-                if md_file.name.startswith(".") or md_file.name == "README.md":
-                    continue
-                try:
-                    content, metadata = parse_recipe_file(md_file, category)
-                    recipes.append((content, metadata))
-                except Exception as e:
-                    logger.warning(f"解析文件失败 {md_file}: {e}")
-        elif item.suffix == ".md" and item.name != "README.md":
-            # 根目录下的 md 文件
-            try:
-                content, metadata = parse_recipe_file(item, "未分类")
-                recipes.append((content, metadata))
-            except Exception as e:
-                logger.warning(f"解析文件失败 {item}: {e}")
+        category = CATEGORY_MAP.get(rel_parts[0], rel_parts[0])
+        try:
+            content, metadata = parse_recipe_file(md_file, category)
+            recipes.append((content, metadata))
+        except Exception as e:
+            logger.warning(f"解析文件失败 {md_file}: {e}")
 
     return recipes
 
 
-def main():
-    parser = argparse.ArgumentParser(description="菜谱数据灌入 Milvus")
+async def main():
+    parser = argparse.ArgumentParser(description="菜谱数据灌入 Milvus + PostgreSQL")
     parser.add_argument(
         "--data_dir",
         type=str,
@@ -156,9 +149,10 @@ def main():
         logger.error("未找到任何菜谱文件")
         sys.exit(1)
 
-    # 2. 分块
+    # 2. 分块，同时收集父文档（完整内容）
     logger.info("开始分块...")
     all_chunks: List[Document] = []
+    parent_docs: List[Document] = []
     for content, metadata in recipes:
         doc_id = str(uuid.uuid4())
         chunks = document_processor.create_chunks(
@@ -167,14 +161,35 @@ def main():
             metadata=metadata,
         )
         all_chunks.extend(chunks)
+        parent_docs.append(
+            Document(
+                id=doc_id,
+                page_content=content,
+                metadata={**metadata, "parent_id": doc_id},
+            )
+        )
 
-    logger.info(f"共生成 {len(all_chunks)} 个 chunks")
+    logger.info(f"共生成 {len(all_chunks)} 个 chunks，{len(parent_docs)} 个父文档")
 
-    # 3. 初始化 embedding 模型
+    # 3. 将父文档存入 PostgreSQL
+    repo = get_document_repository()
+    if repo is not None:
+        logger.info("初始化 parent_documents 表...")
+        await repo.initialize()
+        if args.force_rebuild:
+            logger.warning("force_rebuild: 清空 parent_documents 表")
+            await repo.truncate()
+        logger.info("写入父文档到 PostgreSQL...")
+        await repo.save_parent_documents(parent_docs)
+        logger.info(f"已存入 {len(parent_docs)} 个父文档到 PostgreSQL")
+    else:
+        logger.warning("DATABASE_URL 未配置，跳过父文档存储（检索时将降级返回 chunk）")
+
+    # 4. 初始化 embedding 模型
     logger.info(f"加载 embedding 模型: {settings.EMBEDDING_MODEL}")
     embedding_model = get_embedding_model(settings.EMBEDDING_MODEL)
 
-    # 4. 构建 hybrid collection（dense_vector + BM25 sparse）
+    # 5. 构建 hybrid collection（dense_vector + BM25 sparse）
     uri = settings.MILVUS_URI
     collection_name = settings.MILVUS_COLLECTION
 
@@ -192,7 +207,8 @@ def main():
     logger.info(f"数据灌入完成!")
     logger.info(f"  菜谱数: {len(recipes)}")
     logger.info(f"  Chunk 数: {len(all_chunks)}")
-    logger.info(f"  已插入: {total_inserted}")
+    logger.info(f"  已插入 Milvus: {total_inserted}")
+    logger.info(f"  已存入 PostgreSQL: {len(parent_docs) if repo else '跳过'}")
     logger.info(f"  集合: {collection_name}")
     logger.info(f"  存储: {uri}")
     logger.info("=" * 50)
@@ -202,4 +218,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())

@@ -18,8 +18,7 @@ async def clarify(state: DietState) -> dict:
         "clarification_count": state.get("clarification_count", 0) + 1,
         "response_message": message,
         "conversation_history": [
-            {"role": "assistant", "content": message},
-            {"role": "user", "content": user_reply},
+            {"role": "assistant", "content": message, "tool_summary": "追问用户位置"}
         ],
     }
 
@@ -37,7 +36,11 @@ async def error_output(state: DietState) -> dict:
     return {
         "response_message": msg,
         "error_message": msg,
-        "conversation_history": [{"role": "assistant", "content": msg}],
+        "conversation_history": [{
+            "role": "assistant",
+            "content": msg,
+            "tool_summary": f"位置错误({location_type})，要求用户重新提供",
+        }],
     }
 
 
@@ -51,7 +54,11 @@ async def result_formatter(state: DietState) -> dict:
             msg = "抱歉，暂时没有找到合适的餐厅，请换个关键词或位置试试。"
         return {
             "response_message": msg,
-            "conversation_history": [{"role": "assistant", "content": msg}],
+            "conversation_history": [{
+                "role": "assistant",
+                "content": msg,  # 完整文案，给 memory_write 或未来用
+                "tool_summary": _build_restaurant_summary(state, recs),
+            }],
         }
 
     poi_map = {
@@ -111,5 +118,45 @@ async def result_formatter(state: DietState) -> dict:
     logger.info(f"[result_formatter] 输出 {len(recs)} 条推荐，{len(groups)} 个品类")
     return {
         "response_message": response,
-        "conversation_history": [{"role": "assistant", "content": response}],
+        "conversation_history": [{
+            "role": "assistant",
+            "content": response,  # 完整文案，给 memory_write 或未来用
+            "tool_summary": _build_restaurant_summary(state, recs),
+        }],
     }
+
+
+# result_formatter 里加这段
+
+def _build_restaurant_summary(state: DietState, recs: list) -> str:
+    """压缩餐厅推荐结果为一句话摘要"""
+    parts = []
+
+    # 1. 搜了什么
+    city = state.get("city", "")
+    keywords = state.get("keywords", [])
+    search_mode = state.get("search_mode", "keyword")
+    parts.append(f"在{city}{'附近' if search_mode == 'around' else ''}搜索{'、'.join(keywords[:3])}")
+
+    # 2. 结果概况
+    parts.append(f"推荐{len(recs)}家")
+
+    # 3. 只记店名（不记地址、评分、营业时间这些）
+    names = [r.get("name", "") for r in recs[:4]]
+    if names:
+        parts.append(f"包括{'、'.join(names)}")
+        if len(recs) > 4:
+            parts.append(f"等")
+
+    # 4. 价格范围（一个区间就够）
+    costs = [float(r.get("cost", 0) or 0) for r in recs
+             if r.get("cost")]
+    if costs:
+        parts.append(f"人均{min(costs):.0f}-{max(costs):.0f}元")
+
+    # 5. 排除条件（这个对下一轮意图解析很重要）
+    negatives = state.get("negative_conditions", [])
+    if negatives:
+        parts.append(f"排除了{'、'.join(negatives)}")
+
+    return "，".join(parts)

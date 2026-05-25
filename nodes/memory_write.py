@@ -107,7 +107,7 @@ async def memory_write(state: DietState) -> dict:
 
     old_profile_obj = await store.load_profile(user_id)
     old_profile = old_profile_obj.model_dump(exclude_none=True)
-    history = state.get("conversation_history", [])[-settings.MAX_HISTORY_MESSAGES :]
+    history = state.get("conversation_history", [])[-settings.RECENT_HISTORY_N :]
 
     asyncio.create_task(
         _async_profile_update(

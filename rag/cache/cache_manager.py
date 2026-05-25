@@ -24,20 +24,6 @@ logger = logging.getLogger(__name__)
 
 
 class CacheManager:
-    """
-    Manages two-level caching for RAG retrieval results.
-    
-    L1 Cache (Redis - Exact Match):
-    - Fast lookup for identical queries
-    - Key: hash of the rewritten query
-    - Value: serialized list of retrieved documents
-    
-    L2 Cache (Milvus - Semantic Match):
-    - Handles query variations with high similarity
-    - Uses vector embeddings for similarity search
-    - Falls back when L1 cache misses but similar query exists
-    """
-    
     def __init__(
         self,
         redis_host: str = "localhost",
@@ -55,23 +41,6 @@ class CacheManager:
         vector_password: Optional[str] = None,
         vector_secure: bool = False,
     ):
-        """
-        Initialize the cache manager.
-        
-        Args:
-            redis_host: Redis host address
-            redis_port: Redis port
-            redis_db: Redis database number
-            redis_password: Redis password (if required)
-            ttl: Time-to-live for cache entries (seconds)
-            similarity_threshold: Minimum similarity for L2 cache matching (0-1)
-            embeddings: Embedding model for L2 semantic matching
-            l2_enabled: Whether L2 semantic cache is enabled
-            vector_host/vector_port: Milvus connection info
-            vector_collection: Milvus collection name for cache
-            vector_user/vector_password: Optional Milvus credentials
-            vector_secure: Whether to use TLS for Milvus
-        """
         self.ttl = ttl
         self.similarity_threshold = similarity_threshold
         self.l2_enabled = l2_enabled

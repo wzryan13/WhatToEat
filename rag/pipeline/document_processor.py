@@ -1,8 +1,9 @@
 # rag/pipeline/document_processor.py
 """
 文档处理器 — 负责 Markdown 分块和检索结果后处理。
-分块逻辑保持原样（MarkdownHeaderTextSplitter 按 # 和 ## 切分）。
-post_process_retrieval 简化为按 parent_id 去重，不依赖 PostgreSQL。
+分块逻辑：MarkdownHeaderTextSplitter 按 # 和 ## 切分。
+post_process_retrieval：按 parent_id 去重后回 PostgreSQL 取完整父文档（small-to-large）。
+DATABASE_URL 未配置时自动降级为返回去重 chunk。
 """
 
 import logging
@@ -11,6 +12,8 @@ from typing import Any, Dict, List, Optional
 
 from langchain_core.documents import Document
 from langchain_text_splitters import MarkdownHeaderTextSplitter
+
+from rag.pipeline.document_repository import get_document_repository
 
 logger = logging.getLogger(__name__)
 
@@ -83,39 +86,79 @@ class DocumentProcessor:
         retrieved_chunks: List[Document],
     ) -> List[Document]:
         """
-        对检索结果进行后处理：按 parent_id 去重，保留最高分 chunk。
-
-        简化版：不从 PostgreSQL 获取父文档，直接返回去重后的 chunks。
+        检索后处理：small-to-large 模式。
+        先按 parent_id 分组保留最高分，再从 PostgreSQL 取完整父文档。
+        DATABASE_URL 未配置时降级为返回去重 chunk。
 
         Args:
             retrieved_chunks: 向量搜索返回的 chunk 列表
 
         Returns:
-            去重后的文档列表（按分数降序）
+            父文档列表（含完整内容），按分数降序排列
         """
         if not retrieved_chunks:
             return []
 
-        # 按 parent_id 分组，保留每组最高分的 chunk
-        best_by_parent: Dict[str, Document] = {}
+        # 按 parent_id 分组，收集最高 retrieval_score / rerank_score
+        parent_scores: Dict[str, Dict[str, Any]] = {}
 
         for chunk in retrieved_chunks:
-            parent_id = chunk.metadata.get("parent_id", chunk.metadata.get("dish_name", str(id(chunk))))
+            parent_id = chunk.metadata.get("parent_id")
+            if not parent_id:
+                continue
 
-            rerank_score = chunk.metadata.get("rerank_score", 0.0)
             retrieval_score = chunk.metadata.get("retrieval_score", 0.0)
-            current_best_score = rerank_score or retrieval_score
+            rerank_score = chunk.metadata.get("rerank_score")
 
-            if parent_id not in best_by_parent:
-                best_by_parent[parent_id] = chunk
+            if parent_id not in parent_scores:
+                parent_scores[parent_id] = {
+                    "retrieval_score": retrieval_score,
+                    "rerank_score": rerank_score if rerank_score is not None else 0.0,
+                    "_chunk": chunk,  # 降级时使用
+                }
             else:
-                existing = best_by_parent[parent_id]
-                existing_score = existing.metadata.get("rerank_score", 0.0) or existing.metadata.get("retrieval_score", 0.0)
-                if current_best_score > existing_score:
-                    best_by_parent[parent_id] = chunk
+                if retrieval_score > parent_scores[parent_id]["retrieval_score"]:
+                    parent_scores[parent_id]["retrieval_score"] = retrieval_score
+                if rerank_score is not None and rerank_score > parent_scores[parent_id]["rerank_score"]:
+                    parent_scores[parent_id]["rerank_score"] = rerank_score
 
-        # 按分数降序排列
-        final_docs = list(best_by_parent.values())
+        repo = get_document_repository()
+
+        # 降级路径：DATABASE_URL 未配置，返回去重 chunk
+        if repo is None:
+            fallback = [scores["_chunk"] for scores in parent_scores.values()]
+            fallback.sort(
+                key=lambda d: (
+                    d.metadata.get("rerank_score", 0.0),
+                    d.metadata.get("retrieval_score", 0.0),
+                ),
+                reverse=True,
+            )
+            logger.info(
+                "后处理(降级): %d chunks -> %d 去重 chunk（无 PostgreSQL）",
+                len(retrieved_chunks), len(fallback),
+            )
+            return fallback
+
+        # 正常路径：从 PostgreSQL 取完整父文档
+        parent_ids = list(parent_scores.keys())
+        parent_docs = await repo.get_parent_documents(parent_ids)
+
+        final_docs: List[Document] = []
+        for parent_id, scores in parent_scores.items():
+            if parent_id not in parent_docs:
+                logger.warning("父文档未找到，跳过: %s", parent_id)
+                continue
+            parent_doc = parent_docs[parent_id]
+            doc_copy = Document(
+                id=parent_doc.id,
+                page_content=parent_doc.page_content,
+                metadata=parent_doc.metadata.copy(),
+            )
+            doc_copy.metadata["retrieval_score"] = scores["retrieval_score"]
+            doc_copy.metadata["rerank_score"] = scores["rerank_score"]
+            final_docs.append(doc_copy)
+
         final_docs.sort(
             key=lambda d: (
                 d.metadata.get("rerank_score", 0.0),
@@ -124,7 +167,10 @@ class DocumentProcessor:
             reverse=True,
         )
 
-        logger.info("后处理: %d chunks -> %d 去重文档", len(retrieved_chunks), len(final_docs))
+        logger.info(
+            "后处理: %d chunks -> %d 父文档",
+            len(retrieved_chunks), len(final_docs),
+        )
         return final_docs
 
     def _clone_metadata(

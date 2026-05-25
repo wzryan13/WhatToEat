@@ -31,10 +31,7 @@ async def rag_agent(state: DietState) -> dict:
             "error_message": "菜谱检索服务暂不可用，请稍后再试。",
         }
 
-    # 构建查询：优先用 keywords 组合，fallback 到 user_input
-    keywords = state.get("keywords", [])
-    user_input = state.get("user_input", "")
-    query = " ".join(keywords) if keywords else user_input
+    query = state.get("user_input", "")
 
     # 可选：从画像取 disliked_cuisines 构建粗过滤 expr
     extra_expr = _build_category_filter(state)
