@@ -12,13 +12,16 @@ Pipeline:
 7. Post-process (按 parent_id 去重)
 """
 
+import hashlib
 import logging
 from typing import Any, Dict, List, Optional
+from urllib.parse import urlparse
 
 from langchain_core.documents import Document
 from langchain_core.embeddings import Embeddings
 
 from config.settings import settings
+from rag.cache import CacheManager
 from rag.pipeline.generation import GenerationIntegrationModule
 from rag.pipeline.metadata_filter import MetadataFilterExtractor
 from rag.pipeline.retrieval import RetrievalOptimizationModule
@@ -39,7 +42,9 @@ class RAGService:
         self,
         vector_store,
         embeddings: Embeddings,
+        cache: CacheManager | None = None,
     ):
+        self.cache = cache
         self.retrieval = RetrievalOptimizationModule(
             vector_store=vector_store,
             score_threshold=settings.RAG_SCORE_THRESHOLD,
@@ -72,6 +77,14 @@ class RAGService:
         """
         # Step 2: Query Rewrite
         rewritten_query = await self.query_rewriter.rewrite_query(query)
+
+        # Step 1: Cache check (L1 精确 → L2 语义)
+        filter_scope = hashlib.sha256(extra_expr.encode()).hexdigest()[:16] if extra_expr else None
+        if self.cache:
+            cached = await self.cache.get("recipe", rewritten_query, scope=filter_scope)
+            if cached:
+                logger.info("RAG 缓存命中: %d 条文档", len(cached))
+                return cached
 
         # Step 3: Metadata Filter (LLM 生成 expr)
         llm_expr = None
@@ -112,6 +125,10 @@ class RAGService:
 
         # Step 7: Post-process (按 parent_id 去重)
         final_docs = await document_processor.post_process_retrieval(reranked_docs)
+
+        # Cache store (rerank 后、LLM 软偏好前)
+        if self.cache and final_docs:
+            await self.cache.set("recipe", rewritten_query, final_docs, scope=filter_scope)
 
         logger.info("RAG 检索完成: %d 条结果", len(final_docs))
         return final_docs
@@ -158,9 +175,28 @@ def init_rag_service() -> Optional[RAGService]:
         )
         logger.info("Milvus hybrid collection 已就绪: %s", settings.MILVUS_COLLECTION)
 
+        cache = None
+        try:
+            parsed_uri = urlparse(settings.MILVUS_URI)
+            cache = CacheManager(
+                redis_host=settings.REDIS_HOST,
+                redis_port=settings.REDIS_PORT,
+                redis_password=settings.REDIS_PASSWORD or None,
+                ttl=settings.CACHE_TTL_RECIPE,
+                similarity_threshold=settings.CACHE_SIMILARITY_THRESHOLD,
+                embeddings=embeddings,
+                l2_enabled=settings.CACHE_L2_ENABLED,
+                vector_host=parsed_uri.hostname or "127.0.0.1",
+                vector_port=parsed_uri.port or 19530,
+            )
+            logger.info("RAG 缓存初始化成功")
+        except Exception as e:
+            logger.warning("RAG 缓存初始化失败，将跳过缓存: %s", e)
+
         _rag_service = RAGService(
             vector_store=vector_store,
             embeddings=embeddings,
+            cache=cache,
         )
         logger.info("RAG 服务初始化成功")
         return _rag_service

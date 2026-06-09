@@ -1,0 +1,2015 @@
+{
+  "timestamp": "20260526_210948",
+  "dataset": "/Users/wenzhouzhou/PycharmProjects/PythonProject1/evals/datasets/recipe_eval.json",
+  "top_k": 10,
+  "query_type_policy": {
+    "specific_dish": {
+      "enable_metadata_filter": true,
+      "reason": "菜名明确，metadata filter 可帮助精确收缩候选集合。"
+    },
+    "ingredient": {
+      "enable_metadata_filter": false,
+      "reason": "食材类 query 语义宽，硬过滤容易误杀长尾相关菜。"
+    },
+    "scene": {
+      "enable_metadata_filter": false,
+      "reason": "场景类 query 高度模糊，优先保召回，禁用硬过滤。"
+    },
+    "flavor": {
+      "enable_metadata_filter": false,
+      "reason": "口味偏好通常无法稳定映射到 category/difficulty 元数据。"
+    },
+    "category": {
+      "enable_metadata_filter": false,
+      "reason": "类目词与底层 category 枚举并非一一对应，禁用硬过滤避免坍缩。"
+    },
+    "difficulty": {
+      "enable_metadata_filter": false,
+      "reason": "难度类 query 常与早餐/家常/快手等模糊条件混合出现，禁用硬过滤保召回。"
+    },
+    "unknown": {
+      "enable_metadata_filter": false,
+      "reason": "未知 query_type 默认保守禁用 metadata filter。"
+    }
+  },
+  "modes": [
+    "baseline",
+    "full"
+  ],
+  "results": {
+    "baseline": {
+      "name": "baseline",
+      "config": {
+        "name": "baseline",
+        "label": "pure hybrid retrieval",
+        "use_query_rewrite": false,
+        "use_metadata_filter": false,
+        "adaptive_filter_by_query_type": false,
+        "use_rerank": false,
+        "use_post_process": false,
+        "raw_top_multiplier": 5
+      },
+      "per_query": [
+        {
+          "id": "q01",
+          "query": "教我做红烧肉",
+          "query_type": "specific_dish",
+          "expected": [
+            "红烧肉",
+            "徽派红烧肉",
+            "湖南家常红烧肉"
+          ],
+          "expected_count": 3,
+          "retrieved": [
+            "简易红烧肉",
+            "回锅肉",
+            "南派红烧肉"
+          ],
+          "hits": [],
+          "rewritten_query": "教我做红烧肉",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "菜名明确，metadata filter 可帮助精确收缩候选集合。",
+          "recall_at_5": 0.0,
+          "recall_at_k": 0.0,
+          "ndcg_at_k": 0.0,
+          "hit_at_k": 0.0,
+          "latency_ms": 430.5552499999976
+        },
+        {
+          "id": "q02",
+          "query": "可乐鸡翅怎么做",
+          "query_type": "specific_dish",
+          "expected": [
+            "可乐鸡翅"
+          ],
+          "expected_count": 1,
+          "retrieved": [
+            "可乐鸡翅",
+            "红烧鸡翅",
+            "甜辣烤全翅"
+          ],
+          "hits": [
+            "可乐鸡翅"
+          ],
+          "rewritten_query": "可乐鸡翅怎么做",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "菜名明确，metadata filter 可帮助精确收缩候选集合。",
+          "recall_at_5": 1.0,
+          "recall_at_k": 1.0,
+          "ndcg_at_k": 1.0,
+          "hit_at_k": 1.0,
+          "latency_ms": 401.4358340000399
+        },
+        {
+          "id": "q03",
+          "query": "罗宋汤的做法",
+          "query_type": "specific_dish",
+          "expected": [
+            "罗宋汤"
+          ],
+          "expected_count": 1,
+          "retrieved": [
+            "罗宋汤",
+            "商芝肉",
+            "醪糟小汤圆",
+            "酸梅汤"
+          ],
+          "hits": [
+            "罗宋汤"
+          ],
+          "rewritten_query": "罗宋汤的做法",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "菜名明确，metadata filter 可帮助精确收缩候选集合。",
+          "recall_at_5": 1.0,
+          "recall_at_k": 1.0,
+          "ndcg_at_k": 1.0,
+          "hit_at_k": 1.0,
+          "latency_ms": 597.3777090002841
+        },
+        {
+          "id": "q04",
+          "query": "想自己做番茄炒蛋",
+          "query_type": "specific_dish",
+          "expected": [
+            "西红柿炒鸡蛋"
+          ],
+          "expected_count": 1,
+          "retrieved": [
+            "西红柿鸡蛋挂面",
+            "西红柿炒鸡蛋",
+            "蛋包饭",
+            "美式炒蛋"
+          ],
+          "hits": [
+            "西红柿炒鸡蛋"
+          ],
+          "rewritten_query": "想自己做番茄炒蛋",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "菜名明确，metadata filter 可帮助精确收缩候选集合。",
+          "recall_at_5": 1.0,
+          "recall_at_k": 1.0,
+          "ndcg_at_k": 0.6309297535714575,
+          "hit_at_k": 1.0,
+          "latency_ms": 599.5719170005032
+        },
+        {
+          "id": "q05",
+          "query": "蒸水蛋怎么做",
+          "query_type": "specific_dish",
+          "expected": [
+            "蒸水蛋",
+            "微波炉蒸蛋"
+          ],
+          "expected_count": 2,
+          "retrieved": [
+            "蒸水蛋",
+            "鸡蛋羹",
+            "蒸箱鸡蛋羹"
+          ],
+          "hits": [
+            "蒸水蛋"
+          ],
+          "rewritten_query": "蒸水蛋怎么做",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "菜名明确，metadata filter 可帮助精确收缩候选集合。",
+          "recall_at_5": 0.5,
+          "recall_at_k": 0.5,
+          "ndcg_at_k": 0.6131471927654584,
+          "hit_at_k": 1.0,
+          "latency_ms": 401.56874999956926
+        },
+        {
+          "id": "q06",
+          "query": "有鸡蛋能做什么早餐",
+          "query_type": "ingredient",
+          "expected": [
+            "美式炒蛋",
+            "蒸水蛋",
+            "完美水煮蛋",
+            "太阳蛋",
+            "微波炉蒸蛋",
+            "茶叶蛋",
+            "燕麦鸡蛋饼",
+            "微波炉荷包蛋",
+            "意式香肠北非蛋",
+            "溏心蛋",
+            "温泉蛋"
+          ],
+          "expected_count": 11,
+          "retrieved": [
+            "燕麦鸡蛋饼",
+            "蛋包饭",
+            "鸡蛋羹",
+            "微波炉荷包蛋"
+          ],
+          "hits": [
+            "燕麦鸡蛋饼",
+            "微波炉荷包蛋"
+          ],
+          "rewritten_query": "有鸡蛋能做什么早餐",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "食材类 query 语义宽，硬过滤容易误杀长尾相关菜。",
+          "recall_at_5": 0.18181818181818182,
+          "recall_at_k": 0.18181818181818182,
+          "ndcg_at_k": 0.31488013066763093,
+          "hit_at_k": 1.0,
+          "latency_ms": 599.5972090004216
+        },
+        {
+          "id": "q07",
+          "query": "用土豆能做什么菜",
+          "query_type": "ingredient",
+          "expected": [
+            "拔丝土豆",
+            "土豆炖排骨",
+            "印度土豆花菜",
+            "地三鲜",
+            "茄子炖土豆",
+            "瘦肉土豆片",
+            "西红柿土豆炖牛肉"
+          ],
+          "expected_count": 7,
+          "retrieved": [
+            "印度土豆花菜",
+            "酸辣土豆丝",
+            "拔丝土豆"
+          ],
+          "hits": [
+            "印度土豆花菜",
+            "拔丝土豆"
+          ],
+          "rewritten_query": "用土豆能做什么菜",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "食材类 query 语义宽，硬过滤容易误杀长尾相关菜。",
+          "recall_at_5": 0.2857142857142857,
+          "recall_at_k": 0.2857142857142857,
+          "ndcg_at_k": 0.4123144993714363,
+          "hit_at_k": 1.0,
+          "latency_ms": 402.05554200019833
+        },
+        {
+          "id": "q08",
+          "query": "牛肉怎么做好吃",
+          "query_type": "ingredient",
+          "expected": [
+            "孜然牛肉",
+            "尖椒炒牛肉",
+            "小炒黄牛肉",
+            "巴基斯坦牛肉咖喱",
+            "水煮牛肉",
+            "西红柿牛腩",
+            "西红柿土豆炖牛肉",
+            "广式萝卜牛腩",
+            "柱候牛腩",
+            "咖喱肥牛",
+            "澳门湿版免治牛肉饭"
+          ],
+          "expected_count": 11,
+          "retrieved": [
+            "西红柿土豆炖牛肉",
+            "柱候牛腩",
+            "尖椒炒牛肉",
+            "澳门湿版免治牛肉饭"
+          ],
+          "hits": [
+            "西红柿土豆炖牛肉",
+            "柱候牛腩",
+            "尖椒炒牛肉",
+            "澳门湿版免治牛肉饭"
+          ],
+          "rewritten_query": "牛肉怎么做好吃",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "食材类 query 语义宽，硬过滤容易误杀长尾相关菜。",
+          "recall_at_5": 0.36363636363636365,
+          "recall_at_k": 0.36363636363636365,
+          "ndcg_at_k": 0.5637884576902256,
+          "hit_at_k": 1.0,
+          "latency_ms": 596.2985420001132
+        },
+        {
+          "id": "q09",
+          "query": "茄子的几种做法",
+          "query_type": "ingredient",
+          "expected": [
+            "红烧茄子",
+            "蒲烧茄子",
+            "炒茄子",
+            "烤茄子",
+            "地三鲜",
+            "茄子炖土豆",
+            "茄子肉煎饼"
+          ],
+          "expected_count": 7,
+          "retrieved": [
+            "炒茄子",
+            "鱼香茄子",
+            "红烧茄子",
+            "蒲烧茄子"
+          ],
+          "hits": [
+            "炒茄子",
+            "红烧茄子",
+            "蒲烧茄子"
+          ],
+          "rewritten_query": "茄子的几种做法",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "食材类 query 语义宽，硬过滤容易误杀长尾相关菜。",
+          "recall_at_5": 0.42857142857142855,
+          "recall_at_k": 0.42857142857142855,
+          "ndcg_at_k": 0.5306972923267993,
+          "hit_at_k": 1.0,
+          "latency_ms": 598.5422499998094
+        },
+        {
+          "id": "q10",
+          "query": "用豆腐能做哪些菜",
+          "query_type": "ingredient",
+          "expected": [
+            "凉拌豆腐",
+            "家常日本豆腐",
+            "皮蛋豆腐",
+            "脆皮豆腐",
+            "葱煎豆腐",
+            "西红柿豆腐汤羹"
+          ],
+          "expected_count": 6,
+          "retrieved": [
+            "凉拌豆腐",
+            "麻婆豆腐",
+            "葱煎豆腐",
+            "金针菇日本豆腐煲"
+          ],
+          "hits": [
+            "凉拌豆腐",
+            "葱煎豆腐"
+          ],
+          "rewritten_query": "用豆腐能做哪些菜",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "食材类 query 语义宽，硬过滤容易误杀长尾相关菜。",
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_k": 0.3333333333333333,
+          "ndcg_at_k": 0.45390362024822023,
+          "hit_at_k": 1.0,
+          "latency_ms": 402.56708299966704
+        },
+        {
+          "id": "q11",
+          "query": "今晚做个暖胃的汤喝",
+          "query_type": "scene",
+          "expected": [
+            "紫菜蛋花汤",
+            "西红柿鸡蛋汤",
+            "排骨苦瓜汤",
+            "玉米排骨汤",
+            "罗宋汤",
+            "番茄牛肉蛋花汤",
+            "皮蛋瘦肉粥",
+            "奶油蘑菇汤",
+            "生汆丸子汤",
+            "羊肉汤",
+            "勾芡香菇汤",
+            "昂刺鱼豆腐汤",
+            "排骨山药玉米汤"
+          ],
+          "expected_count": 13,
+          "retrieved": [
+            "醪糟小汤圆",
+            "腊八粥",
+            "羊肉汤",
+            "陈皮排骨汤"
+          ],
+          "hits": [
+            "羊肉汤"
+          ],
+          "rewritten_query": "今晚做个暖胃的汤喝",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "场景类 query 高度模糊，优先保召回，禁用硬过滤。",
+          "recall_at_5": 0.07692307692307693,
+          "recall_at_k": 0.07692307692307693,
+          "ndcg_at_k": 0.11004588314904008,
+          "hit_at_k": 1.0,
+          "latency_ms": 398.9149170001838
+        },
+        {
+          "id": "q12",
+          "query": "夏天做什么菜清爽开胃",
+          "query_type": "scene",
+          "expected": [
+            "凉拌黄瓜",
+            "凉拌豆腐",
+            "凉拌油麦菜",
+            "凉拌金针菇",
+            "凉拌木耳",
+            "凉拌莴笋",
+            "凉拌鸡丝",
+            "凉皮",
+            "酸梅汤",
+            "草莓冰淇淋",
+            "奥利奥冰淇淋"
+          ],
+          "expected_count": 11,
+          "retrieved": [
+            "口水鸡",
+            "凉拌莴笋",
+            "紫菜蛋花汤",
+            "蒜蓉空心菜"
+          ],
+          "hits": [
+            "凉拌莴笋"
+          ],
+          "rewritten_query": "夏天做什么菜清爽开胃",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "场景类 query 高度模糊，优先保召回，禁用硬过滤。",
+          "recall_at_5": 0.09090909090909091,
+          "recall_at_k": 0.09090909090909091,
+          "ndcg_at_k": 0.13886244387355454,
+          "hit_at_k": 1.0,
+          "latency_ms": 402.6063749997775
+        },
+        {
+          "id": "q13",
+          "query": "宿舍只有微波炉能做什么",
+          "query_type": "scene",
+          "expected": [
+            "微波炉荷包蛋",
+            "微波炉蒸蛋",
+            "微波炉蛋糕",
+            "微波葱姜黑鳕鱼",
+            "微波炉腊肠煲仔饭"
+          ],
+          "expected_count": 5,
+          "retrieved": [
+            "微波炉蛋糕",
+            "牛奶燕麦",
+            "微波炉荷包蛋"
+          ],
+          "hits": [
+            "微波炉蛋糕",
+            "微波炉荷包蛋"
+          ],
+          "rewritten_query": "宿舍只有微波炉能做什么",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "场景类 query 高度模糊，优先保召回，禁用硬过滤。",
+          "recall_at_5": 0.4,
+          "recall_at_k": 0.4,
+          "ndcg_at_k": 0.5087403079104241,
+          "hit_at_k": 1.0,
+          "latency_ms": 399.0073750001102
+        },
+        {
+          "id": "q14",
+          "query": "宵夜想自己做点简单的吃",
+          "query_type": "scene",
+          "expected": [
+            "煮泡面加蛋",
+            "炒方便面",
+            "速冻水饺",
+            "速冻馄饨",
+            "蛋炒饭",
+            "蒸水蛋",
+            "煎饺",
+            "螺蛳粉"
+          ],
+          "expected_count": 8,
+          "retrieved": [
+            "微波炉鸡蛋羹",
+            "金枪鱼酱三明治",
+            "牛奶燕麦",
+            "家常日本豆腐"
+          ],
+          "hits": [],
+          "rewritten_query": "宵夜想自己做点简单的吃",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "场景类 query 高度模糊，优先保召回，禁用硬过滤。",
+          "recall_at_5": 0.0,
+          "recall_at_k": 0.0,
+          "ndcg_at_k": 0.0,
+          "hit_at_k": 0.0,
+          "latency_ms": 600.3379579997272
+        },
+        {
+          "id": "q15",
+          "query": "下班想做个快手晚餐",
+          "query_type": "scene",
+          "expected": [
+            "蛋炒饭",
+            "西红柿炒鸡蛋",
+            "西红柿鸡蛋挂面",
+            "炒滑蛋",
+            "肉蛋盖饭",
+            "葱油拌面",
+            "炸酱面",
+            "蛋包饭",
+            "煮泡面加蛋"
+          ],
+          "expected_count": 9,
+          "retrieved": [
+            "吐司果酱",
+            "英式司康",
+            "金枪鱼酱三明治",
+            "皮蛋瘦肉粥"
+          ],
+          "hits": [],
+          "rewritten_query": "下班想做个快手晚餐",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "场景类 query 高度模糊，优先保召回，禁用硬过滤。",
+          "recall_at_5": 0.0,
+          "recall_at_k": 0.0,
+          "ndcg_at_k": 0.0,
+          "hit_at_k": 0.0,
+          "latency_ms": 398.3628329997373
+        },
+        {
+          "id": "q16",
+          "query": "想做点辣的下饭菜",
+          "query_type": "flavor",
+          "expected": [
+            "小米辣炒肉",
+            "冷吃兔",
+            "尖椒炒牛肉",
+            "水煮鱼",
+            "水煮牛肉",
+            "水煮肉片",
+            "贵州辣子鸡",
+            "辣椒炒肉",
+            "血浆鸭",
+            "干煸仔鸡",
+            "虎皮青椒"
+          ],
+          "expected_count": 11,
+          "retrieved": [
+            "辣椒炒肉",
+            "鱼香茄子",
+            "水煮肉片"
+          ],
+          "hits": [
+            "辣椒炒肉",
+            "水煮肉片"
+          ],
+          "rewritten_query": "想做点辣的下饭菜",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "口味偏好通常无法稳定映射到 category/difficulty 元数据。",
+          "recall_at_5": 0.18181818181818182,
+          "recall_at_k": 0.18181818181818182,
+          "ndcg_at_k": 0.33013764944712026,
+          "hit_at_k": 1.0,
+          "latency_ms": 402.39883300000656
+        },
+        {
+          "id": "q17",
+          "query": "想自己做个甜品",
+          "query_type": "flavor",
+          "expected": [
+            "提拉米苏",
+            "戚风蛋糕",
+            "草莓冰淇淋",
+            "奥利奥冰淇淋",
+            "炸鲜奶",
+            "胡萝卜甜糕",
+            "红柚蛋糕",
+            "玛格丽特饼干",
+            "烤蛋挞",
+            "芋泥雪媚娘",
+            "咖啡椰奶冻",
+            "雪花酥",
+            "魔芋蛋糕",
+            "龟苓膏",
+            "英式司康"
+          ],
+          "expected_count": 15,
+          "retrieved": [
+            "玛格丽特饼干",
+            "鸡蛋花",
+            "提拉米苏",
+            "芋泥雪媚娘"
+          ],
+          "hits": [
+            "玛格丽特饼干",
+            "提拉米苏",
+            "芋泥雪媚娘"
+          ],
+          "rewritten_query": "想自己做个甜品",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "口味偏好通常无法稳定映射到 category/difficulty 元数据。",
+          "recall_at_5": 0.2,
+          "recall_at_k": 0.2,
+          "ndcg_at_k": 0.424926013816671,
+          "hit_at_k": 1.0,
+          "latency_ms": 596.2782920005338
+        },
+        {
+          "id": "q18",
+          "query": "酸甜口味的菜怎么做",
+          "query_type": "flavor",
+          "expected": [
+            "糖醋排骨",
+            "糖醋里脊",
+            "糖醋鲤鱼",
+            "咕噜肉",
+            "老式锅包肉"
+          ],
+          "expected_count": 5,
+          "retrieved": [
+            "猪肉烩酸菜",
+            "酸辣土豆丝",
+            "酸辣蕨根粉"
+          ],
+          "hits": [],
+          "rewritten_query": "酸甜口味的菜怎么做",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "口味偏好通常无法稳定映射到 category/difficulty 元数据。",
+          "recall_at_5": 0.0,
+          "recall_at_k": 0.0,
+          "ndcg_at_k": 0.0,
+          "hit_at_k": 0.0,
+          "latency_ms": 603.3338750003168
+        },
+        {
+          "id": "q19",
+          "query": "推荐几道甜品菜谱",
+          "query_type": "category",
+          "expected": [
+            "提拉米苏",
+            "戚风蛋糕",
+            "草莓冰淇淋",
+            "奥利奥冰淇淋",
+            "炸鲜奶",
+            "胡萝卜甜糕",
+            "红柚蛋糕",
+            "玛格丽特饼干",
+            "烤蛋挞",
+            "芋泥雪媚娘",
+            "咖啡椰奶冻",
+            "反沙芋头",
+            "雪花酥",
+            "魔芋蛋糕",
+            "龟苓膏",
+            "英式司康",
+            "无厨师机蜂蜜面包",
+            "烤箱版巴斯克芝士蛋糕"
+          ],
+          "expected_count": 18,
+          "retrieved": [
+            "英式司康",
+            "桂林十八酿",
+            "皮蛋豆腐",
+            "咸肉菜饭"
+          ],
+          "hits": [
+            "英式司康"
+          ],
+          "rewritten_query": "推荐几道甜品菜谱",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "类目词与底层 category 枚举并非一一对应，禁用硬过滤避免坍缩。",
+          "recall_at_5": 0.05555555555555555,
+          "recall_at_k": 0.05555555555555555,
+          "ndcg_at_k": 0.22009176629808017,
+          "hit_at_k": 1.0,
+          "latency_ms": 398.9668750000419
+        },
+        {
+          "id": "q20",
+          "query": "想学几道海鲜的做法",
+          "query_type": "category",
+          "expected": [
+            "咖喱炒蟹",
+            "响油鳝丝",
+            "干煎阿根廷红虾",
+            "微波葱姜黑鳕鱼",
+            "水煮鱼",
+            "油焖大虾",
+            "清蒸生蚝",
+            "清蒸鲈鱼",
+            "白灼虾",
+            "红烧鱼",
+            "红烧鱼头",
+            "红烧鲤鱼",
+            "肉蟹煲",
+            "葱油桂鱼",
+            "葱烧海参",
+            "蒜蓉虾",
+            "糖醋鲤鱼",
+            "蒜香黄油虾",
+            "芥末黄油罗氏虾",
+            "酱炖蟹",
+            "蛏抱蛋",
+            "混合烤鱼",
+            "清蒸鳜鱼",
+            "豉汁蒸白鱔",
+            "电饭煲三文鱼炊饭"
+          ],
+          "expected_count": 25,
+          "retrieved": [
+            "肉蟹煲",
+            "葱烧海参",
+            "黄油煎虾",
+            "红烧鱼头"
+          ],
+          "hits": [
+            "肉蟹煲",
+            "葱烧海参",
+            "红烧鱼头"
+          ],
+          "rewritten_query": "想学几道海鲜的做法",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "类目词与底层 category 枚举并非一一对应，禁用硬过滤避免坍缩。",
+          "recall_at_5": 0.12,
+          "recall_at_k": 0.12,
+          "ndcg_at_k": 0.4537425745411855,
+          "hit_at_k": 1.0,
+          "latency_ms": 397.50999999978376
+        },
+        {
+          "id": "q21",
+          "query": "炒饭盖饭的做法推荐几个",
+          "query_type": "category",
+          "expected": [
+            "扬州炒饭",
+            "可乐炒饭",
+            "蛋炒饭",
+            "蛋包饭",
+            "肉蛋盖饭",
+            "猪油拌饭",
+            "红芸豆拌饭",
+            "日式咖喱饭",
+            "日式肥牛丼饭",
+            "印度焖饭",
+            "微波炉腊肠煲仔饭",
+            "咸肉菜饭",
+            "台式卤肉饭",
+            "澳门湿版免治牛肉饭",
+            "火腿饭团",
+            "电饭煲三文鱼炊饭",
+            "照烧鸡腿饭",
+            "空气炸锅照烧鸡饭"
+          ],
+          "expected_count": 18,
+          "retrieved": [
+            "蛋炒饭",
+            "皮蛋瘦肉粥",
+            "空气炸锅照烧鸡饭",
+            "蛋包饭"
+          ],
+          "hits": [
+            "蛋炒饭",
+            "空气炸锅照烧鸡饭",
+            "蛋包饭"
+          ],
+          "rewritten_query": "炒饭盖饭的做法推荐几个",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "类目词与底层 category 枚举并非一一对应，禁用硬过滤避免坍缩。",
+          "recall_at_5": 0.16666666666666666,
+          "recall_at_k": 0.16666666666666666,
+          "ndcg_at_k": 0.424926013816671,
+          "hit_at_k": 1.0,
+          "latency_ms": 601.0622079993482
+        },
+        {
+          "id": "q22",
+          "query": "推荐几个面食菜谱",
+          "query_type": "category",
+          "expected": [
+            "手工水饺",
+            "煎饺",
+            "汤面",
+            "热干面",
+            "炸酱面",
+            "炒河粉",
+            "意式肉酱面",
+            "炒意大利面",
+            "炒方便面",
+            "葱油拌面",
+            "酱拌荞麦面",
+            "羊排焖面",
+            "豆角焖面",
+            "螺蛳粉",
+            "蒸卤面",
+            "西红柿鸡蛋挂面",
+            "河南蒸面条",
+            "炒馍",
+            "炒年糕",
+            "老干妈拌面",
+            "速冻水饺",
+            "速冻馄饨"
+          ],
+          "expected_count": 22,
+          "retrieved": [
+            "陕西油泼面",
+            "炸酱面",
+            "汤面"
+          ],
+          "hits": [
+            "炸酱面",
+            "汤面"
+          ],
+          "rewritten_query": "推荐几个面食菜谱",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "类目词与底层 category 枚举并非一一对应，禁用硬过滤避免坍缩。",
+          "recall_at_5": 0.09090909090909091,
+          "recall_at_k": 0.09090909090909091,
+          "ndcg_at_k": 0.2489083270225946,
+          "hit_at_k": 1.0,
+          "latency_ms": 399.9253750007483
+        },
+        {
+          "id": "q23",
+          "query": "新手做早餐有什么简单菜谱",
+          "query_type": "difficulty",
+          "expected": [
+            "完美水煮蛋",
+            "太阳蛋",
+            "微波炉荷包蛋",
+            "微波炉蒸蛋",
+            "美式炒蛋",
+            "牛奶燕麦",
+            "吐司果酱",
+            "空气炸锅面包片",
+            "水煮玉米",
+            "煎饺"
+          ],
+          "expected_count": 10,
+          "retrieved": [
+            "鸡蛋羹",
+            "牛奶燕麦",
+            "微波炉荷包蛋"
+          ],
+          "hits": [
+            "牛奶燕麦",
+            "微波炉荷包蛋"
+          ],
+          "rewritten_query": "新手做早餐有什么简单菜谱",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "难度类 query 常与早餐/家常/快手等模糊条件混合出现，禁用硬过滤保召回。",
+          "recall_at_5": 0.2,
+          "recall_at_k": 0.2,
+          "ndcg_at_k": 0.2489083270225946,
+          "hit_at_k": 1.0,
+          "latency_ms": 598.9692920002199
+        },
+        {
+          "id": "q24",
+          "query": "做个简单的家常菜",
+          "query_type": "difficulty",
+          "expected": [
+            "西红柿炒鸡蛋",
+            "凉拌黄瓜",
+            "凉拌豆腐",
+            "蛋炒饭",
+            "蒸水蛋",
+            "炒青菜",
+            "蒜蓉空心菜",
+            "蚝油生菜",
+            "凉拌油麦菜",
+            "西红柿鸡蛋汤",
+            "凉拌金针菇"
+          ],
+          "expected_count": 11,
+          "retrieved": [
+            "凉拌油麦菜",
+            "清炒花菜",
+            "蚝油生菜",
+            "蒸卤面"
+          ],
+          "hits": [
+            "凉拌油麦菜",
+            "蚝油生菜"
+          ],
+          "rewritten_query": "做个简单的家常菜",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "难度类 query 常与早餐/家常/快手等模糊条件混合出现，禁用硬过滤保召回。",
+          "recall_at_5": 0.18181818181818182,
+          "recall_at_k": 0.18181818181818182,
+          "ndcg_at_k": 0.33013764944712026,
+          "hit_at_k": 1.0,
+          "latency_ms": 399.59887500026525
+        },
+        {
+          "id": "q25",
+          "query": "想自己做奶茶或者特调饮品",
+          "query_type": "category",
+          "expected": [
+            "奶茶",
+            "印度奶茶",
+            "杨枝甘露",
+            "牛油果拉西",
+            "百香果橙子特调",
+            "菠萝咖啡特调",
+            "奇异果菠菜特调",
+            "海边落日",
+            "B52轰炸机",
+            "Mojito莫吉托",
+            "可乐桶",
+            "砂糖椰子冰沙",
+            "酸梅汤",
+            "柠檬水",
+            "冬瓜茶",
+            "耙耙柑茶",
+            "泰国手标红茶"
+          ],
+          "expected_count": 17,
+          "retrieved": [
+            "印度奶茶",
+            "奶茶"
+          ],
+          "hits": [
+            "印度奶茶",
+            "奶茶"
+          ],
+          "rewritten_query": "想自己做奶茶或者特调饮品",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "类目词与底层 category 枚举并非一一对应，禁用硬过滤避免坍缩。",
+          "recall_at_5": 0.11764705882352941,
+          "recall_at_k": 0.11764705882352941,
+          "ndcg_at_k": 0.3589542101716347,
+          "hit_at_k": 1.0,
+          "latency_ms": 602.0794169999135
+        }
+      ],
+      "overall": {
+        "count": 25,
+        "recall_at_5": 0.2790128198598787,
+        "recall_at_k": 0.2790128198598787,
+        "ndcg_at_k": 0.37272168452631677,
+        "hit_at_k": 0.84,
+        "latency": {
+          "mean": 489.1569034400527,
+          "p50": 402.6063749997775,
+          "p95": 601.8759751998005,
+          "p99": 603.03280508022,
+          "min": 397.50999999978376,
+          "max": 603.3338750003168
+        },
+        "top_k": 10
+      },
+      "by_type": {
+        "specific_dish": {
+          "count": 5,
+          "recall_at_5": 0.7,
+          "recall_at_k": 0.7,
+          "ndcg_at_k": 0.6488153892673832,
+          "hit_at_k": 0.8,
+          "latency": {
+            "mean": 486.1018920000788,
+            "p50": 430.5552499999976,
+            "p95": 599.1330754004593,
+            "p99": 599.4841486804944,
+            "min": 401.4358340000399,
+            "max": 599.5719170005032
+          },
+          "top_k": 10
+        },
+        "ingredient": {
+          "count": 5,
+          "recall_at_5": 0.31861471861471863,
+          "recall_at_k": 0.31861471861471863,
+          "ndcg_at_k": 0.45511680006086247,
+          "hit_at_k": 1.0,
+          "latency": {
+            "mean": 519.8121252000419,
+            "p50": 596.2985420001132,
+            "p95": 599.3862172002991,
+            "p99": 599.5550106403971,
+            "min": 402.05554200019833,
+            "max": 599.5972090004216
+          },
+          "top_k": 10
+        },
+        "scene": {
+          "count": 5,
+          "recall_at_5": 0.11356643356643356,
+          "recall_at_k": 0.11356643356643356,
+          "ndcg_at_k": 0.15152972698660375,
+          "hit_at_k": 0.6,
+          "latency": {
+            "mean": 439.8458915999072,
+            "p50": 399.0073750001102,
+            "p95": 560.7916413997373,
+            "p99": 592.4286946797292,
+            "min": 398.3628329997373,
+            "max": 600.3379579997272
+          },
+          "top_k": 10
+        },
+        "flavor": {
+          "count": 3,
+          "recall_at_5": 0.1272727272727273,
+          "recall_at_k": 0.1272727272727273,
+          "ndcg_at_k": 0.2516878877545971,
+          "hit_at_k": 0.6666666666666666,
+          "latency": {
+            "mean": 534.0036666669524,
+            "p50": 596.2782920005338,
+            "p95": 602.6283167003385,
+            "p99": 603.1927633403211,
+            "min": 402.39883300000656,
+            "max": 603.3338750003168
+          },
+          "top_k": 10
+        },
+        "category": {
+          "count": 5,
+          "recall_at_5": 0.11015567439096849,
+          "recall_at_k": 0.11015567439096849,
+          "ndcg_at_k": 0.3413245783700332,
+          "hit_at_k": 1.0,
+          "latency": {
+            "mean": 479.90877499996714,
+            "p50": 399.9253750007483,
+            "p95": 601.8759751998005,
+            "p99": 602.0387286398909,
+            "min": 397.50999999978376,
+            "max": 602.0794169999135
+          },
+          "top_k": 10
+        },
+        "difficulty": {
+          "count": 2,
+          "recall_at_5": 0.19090909090909092,
+          "recall_at_k": 0.19090909090909092,
+          "ndcg_at_k": 0.28952298823485745,
+          "hit_at_k": 1.0,
+          "latency": {
+            "mean": 499.28408350024256,
+            "p50": 499.28408350024256,
+            "p95": 589.0007711502221,
+            "p99": 596.9755878302203,
+            "min": 399.59887500026525,
+            "max": 598.9692920002199
+          },
+          "top_k": 10
+        }
+      }
+    },
+    "full": {
+      "name": "full",
+      "config": {
+        "name": "full",
+        "label": "adaptive full pipeline",
+        "use_query_rewrite": true,
+        "use_metadata_filter": true,
+        "adaptive_filter_by_query_type": true,
+        "use_rerank": true,
+        "use_post_process": true,
+        "raw_top_multiplier": 5
+      },
+      "per_query": [
+        {
+          "id": "q01",
+          "query": "教我做红烧肉",
+          "query_type": "specific_dish",
+          "expected": [
+            "红烧肉",
+            "徽派红烧肉",
+            "湖南家常红烧肉"
+          ],
+          "expected_count": 3,
+          "retrieved": [
+            "简易红烧肉",
+            "小炒肉",
+            "回锅肉",
+            "湖南家常红烧肉"
+          ],
+          "hits": [
+            "湖南家常红烧肉"
+          ],
+          "rewritten_query": "如何制作红烧肉？",
+          "applied_metadata_filter": true,
+          "filter_expr": null,
+          "strategy_note": "菜名明确，metadata filter 可帮助精确收缩候选集合。",
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_k": 0.3333333333333333,
+          "ndcg_at_k": 0.20210734650054757,
+          "hit_at_k": 1.0,
+          "latency_ms": 9407.263041999613
+        },
+        {
+          "id": "q02",
+          "query": "可乐鸡翅怎么做",
+          "query_type": "specific_dish",
+          "expected": [
+            "可乐鸡翅"
+          ],
+          "expected_count": 1,
+          "retrieved": [
+            "可乐鸡翅",
+            "红烧鸡翅"
+          ],
+          "hits": [
+            "可乐鸡翅"
+          ],
+          "rewritten_query": "如何制作可乐鸡翅？",
+          "applied_metadata_filter": true,
+          "filter_expr": null,
+          "strategy_note": "菜名明确，metadata filter 可帮助精确收缩候选集合。",
+          "recall_at_5": 1.0,
+          "recall_at_k": 1.0,
+          "ndcg_at_k": 1.0,
+          "hit_at_k": 1.0,
+          "latency_ms": 9382.509000000027
+        },
+        {
+          "id": "q03",
+          "query": "罗宋汤的做法",
+          "query_type": "specific_dish",
+          "expected": [
+            "罗宋汤"
+          ],
+          "expected_count": 1,
+          "retrieved": [
+            "罗宋汤"
+          ],
+          "hits": [
+            "罗宋汤"
+          ],
+          "rewritten_query": "如何制作罗宋汤？",
+          "applied_metadata_filter": true,
+          "filter_expr": "dish_name LIKE \"%罗宋汤%\"",
+          "strategy_note": "菜名明确，metadata filter 可帮助精确收缩候选集合。",
+          "recall_at_5": 1.0,
+          "recall_at_k": 1.0,
+          "ndcg_at_k": 1.0,
+          "hit_at_k": 1.0,
+          "latency_ms": 5589.879458000723
+        },
+        {
+          "id": "q04",
+          "query": "想自己做番茄炒蛋",
+          "query_type": "specific_dish",
+          "expected": [
+            "西红柿炒鸡蛋"
+          ],
+          "expected_count": 1,
+          "retrieved": [
+            "西葫芦炒鸡蛋",
+            "西红柿炒鸡蛋",
+            "蛋包饭",
+            "西红柿鸡蛋挂面"
+          ],
+          "hits": [
+            "西红柿炒鸡蛋"
+          ],
+          "rewritten_query": "如何制作番茄炒蛋？",
+          "applied_metadata_filter": true,
+          "filter_expr": null,
+          "strategy_note": "菜名明确，metadata filter 可帮助精确收缩候选集合。",
+          "recall_at_5": 1.0,
+          "recall_at_k": 1.0,
+          "ndcg_at_k": 0.6309297535714575,
+          "hit_at_k": 1.0,
+          "latency_ms": 3514.9600419999842
+        },
+        {
+          "id": "q05",
+          "query": "蒸水蛋怎么做",
+          "query_type": "specific_dish",
+          "expected": [
+            "蒸水蛋",
+            "微波炉蒸蛋"
+          ],
+          "expected_count": 2,
+          "retrieved": [
+            "蒸箱鸡蛋羹",
+            "鸡蛋羹",
+            "蒸水蛋",
+            "温泉蛋"
+          ],
+          "hits": [
+            "蒸水蛋"
+          ],
+          "rewritten_query": "如何制作蒸水蛋？",
+          "applied_metadata_filter": true,
+          "filter_expr": null,
+          "strategy_note": "菜名明确，metadata filter 可帮助精确收缩候选集合。",
+          "recall_at_5": 0.5,
+          "recall_at_k": 0.5,
+          "ndcg_at_k": 0.3065735963827292,
+          "hit_at_k": 1.0,
+          "latency_ms": 3501.1121249999633
+        },
+        {
+          "id": "q06",
+          "query": "有鸡蛋能做什么早餐",
+          "query_type": "ingredient",
+          "expected": [
+            "美式炒蛋",
+            "蒸水蛋",
+            "完美水煮蛋",
+            "太阳蛋",
+            "微波炉蒸蛋",
+            "茶叶蛋",
+            "燕麦鸡蛋饼",
+            "微波炉荷包蛋",
+            "意式香肠北非蛋",
+            "溏心蛋",
+            "温泉蛋"
+          ],
+          "expected_count": 11,
+          "retrieved": [
+            "鸡蛋羹",
+            "燕麦鸡蛋饼"
+          ],
+          "hits": [
+            "燕麦鸡蛋饼"
+          ],
+          "rewritten_query": "用鸡蛋可以做什么早餐？",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "食材类 query 语义宽，硬过滤容易误杀长尾相关菜。",
+          "recall_at_5": 0.09090909090909091,
+          "recall_at_k": 0.09090909090909091,
+          "ndcg_at_k": 0.13886244387355454,
+          "hit_at_k": 1.0,
+          "latency_ms": 3358.067250000204
+        },
+        {
+          "id": "q07",
+          "query": "用土豆能做什么菜",
+          "query_type": "ingredient",
+          "expected": [
+            "拔丝土豆",
+            "土豆炖排骨",
+            "印度土豆花菜",
+            "地三鲜",
+            "茄子炖土豆",
+            "瘦肉土豆片",
+            "西红柿土豆炖牛肉"
+          ],
+          "expected_count": 7,
+          "retrieved": [
+            "拔丝土豆",
+            "酸辣土豆丝",
+            "印度土豆花菜"
+          ],
+          "hits": [
+            "拔丝土豆",
+            "印度土豆花菜"
+          ],
+          "rewritten_query": "用土豆可以做什么菜？",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "食材类 query 语义宽，硬过滤容易误杀长尾相关菜。",
+          "recall_at_5": 0.2857142857142857,
+          "recall_at_k": 0.2857142857142857,
+          "ndcg_at_k": 0.4123144993714363,
+          "hit_at_k": 1.0,
+          "latency_ms": 3807.2254580001754
+        },
+        {
+          "id": "q08",
+          "query": "牛肉怎么做好吃",
+          "query_type": "ingredient",
+          "expected": [
+            "孜然牛肉",
+            "尖椒炒牛肉",
+            "小炒黄牛肉",
+            "巴基斯坦牛肉咖喱",
+            "水煮牛肉",
+            "西红柿牛腩",
+            "西红柿土豆炖牛肉",
+            "广式萝卜牛腩",
+            "柱候牛腩",
+            "咖喱肥牛",
+            "澳门湿版免治牛肉饭"
+          ],
+          "expected_count": 11,
+          "retrieved": [
+            "西红柿土豆炖牛肉",
+            "澳门湿版免治牛肉饭",
+            "尖椒炒牛肉",
+            "番茄牛肉蛋花汤"
+          ],
+          "hits": [
+            "西红柿土豆炖牛肉",
+            "澳门湿版免治牛肉饭",
+            "尖椒炒牛肉"
+          ],
+          "rewritten_query": "如何做出好吃的牛肉？",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "食材类 query 语义宽，硬过滤容易误杀长尾相关菜。",
+          "recall_at_5": 0.2727272727272727,
+          "recall_at_k": 0.2727272727272727,
+          "ndcg_at_k": 0.4690000933206748,
+          "hit_at_k": 1.0,
+          "latency_ms": 3991.800624999996
+        },
+        {
+          "id": "q09",
+          "query": "茄子的几种做法",
+          "query_type": "ingredient",
+          "expected": [
+            "红烧茄子",
+            "蒲烧茄子",
+            "炒茄子",
+            "烤茄子",
+            "地三鲜",
+            "茄子炖土豆",
+            "茄子肉煎饼"
+          ],
+          "expected_count": 7,
+          "retrieved": [
+            "红烧茄子",
+            "炒茄子",
+            "蒲烧茄子"
+          ],
+          "hits": [
+            "红烧茄子",
+            "炒茄子",
+            "蒲烧茄子"
+          ],
+          "rewritten_query": "茄子有哪些不同的做法？",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "食材类 query 语义宽，硬过滤容易误杀长尾相关菜。",
+          "recall_at_5": 0.42857142857142855,
+          "recall_at_k": 0.42857142857142855,
+          "ndcg_at_k": 0.5857421563596759,
+          "hit_at_k": 1.0,
+          "latency_ms": 3549.7290419998535
+        },
+        {
+          "id": "q10",
+          "query": "用豆腐能做哪些菜",
+          "query_type": "ingredient",
+          "expected": [
+            "凉拌豆腐",
+            "家常日本豆腐",
+            "皮蛋豆腐",
+            "脆皮豆腐",
+            "葱煎豆腐",
+            "西红柿豆腐汤羹"
+          ],
+          "expected_count": 6,
+          "retrieved": [
+            "葱煎豆腐",
+            "凉拌豆腐",
+            "金针菇日本豆腐煲"
+          ],
+          "hits": [
+            "葱煎豆腐",
+            "凉拌豆腐"
+          ],
+          "rewritten_query": "用豆腐可以做什么菜？",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "食材类 query 语义宽，硬过滤容易误杀长尾相关菜。",
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_k": 0.3333333333333333,
+          "ndcg_at_k": 0.4935232796777482,
+          "hit_at_k": 1.0,
+          "latency_ms": 3301.738082999691
+        },
+        {
+          "id": "q11",
+          "query": "今晚做个暖胃的汤喝",
+          "query_type": "scene",
+          "expected": [
+            "紫菜蛋花汤",
+            "西红柿鸡蛋汤",
+            "排骨苦瓜汤",
+            "玉米排骨汤",
+            "罗宋汤",
+            "番茄牛肉蛋花汤",
+            "皮蛋瘦肉粥",
+            "奶油蘑菇汤",
+            "生汆丸子汤",
+            "羊肉汤",
+            "勾芡香菇汤",
+            "昂刺鱼豆腐汤",
+            "排骨山药玉米汤"
+          ],
+          "expected_count": 13,
+          "retrieved": [
+            "黄瓜皮蛋汤",
+            "羊肉汤"
+          ],
+          "hits": [
+            "羊肉汤"
+          ],
+          "rewritten_query": "今晚想喝汤，有什么暖胃的汤品食谱推荐吗？",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "场景类 query 高度模糊，优先保召回，禁用硬过滤。",
+          "recall_at_5": 0.07692307692307693,
+          "recall_at_k": 0.07692307692307693,
+          "ndcg_at_k": 0.13886244387355454,
+          "hit_at_k": 1.0,
+          "latency_ms": 3839.9863330005246
+        },
+        {
+          "id": "q12",
+          "query": "夏天做什么菜清爽开胃",
+          "query_type": "scene",
+          "expected": [
+            "凉拌黄瓜",
+            "凉拌豆腐",
+            "凉拌油麦菜",
+            "凉拌金针菇",
+            "凉拌木耳",
+            "凉拌莴笋",
+            "凉拌鸡丝",
+            "凉皮",
+            "酸梅汤",
+            "草莓冰淇淋",
+            "奥利奥冰淇淋"
+          ],
+          "expected_count": 11,
+          "retrieved": [
+            "口水鸡"
+          ],
+          "hits": [],
+          "rewritten_query": "夏天适合做什么清爽开胃的菜？",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "场景类 query 高度模糊，优先保召回，禁用硬过滤。",
+          "recall_at_5": 0.0,
+          "recall_at_k": 0.0,
+          "ndcg_at_k": 0.0,
+          "hit_at_k": 0.0,
+          "latency_ms": 2721.3641250000364
+        },
+        {
+          "id": "q13",
+          "query": "宿舍只有微波炉能做什么",
+          "query_type": "scene",
+          "expected": [
+            "微波炉荷包蛋",
+            "微波炉蒸蛋",
+            "微波炉蛋糕",
+            "微波葱姜黑鳕鱼",
+            "微波炉腊肠煲仔饭"
+          ],
+          "expected_count": 5,
+          "retrieved": [],
+          "hits": [],
+          "rewritten_query": "在宿舍里只用微波炉可以做什么菜？",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "场景类 query 高度模糊，优先保召回，禁用硬过滤。",
+          "recall_at_5": 0.0,
+          "recall_at_k": 0.0,
+          "ndcg_at_k": 0.0,
+          "hit_at_k": 0.0,
+          "latency_ms": 2709.109083999465
+        },
+        {
+          "id": "q14",
+          "query": "宵夜想自己做点简单的吃",
+          "query_type": "scene",
+          "expected": [
+            "煮泡面加蛋",
+            "炒方便面",
+            "速冻水饺",
+            "速冻馄饨",
+            "蛋炒饭",
+            "蒸水蛋",
+            "煎饺",
+            "螺蛳粉"
+          ],
+          "expected_count": 8,
+          "retrieved": [
+            "微波炉鸡蛋羹"
+          ],
+          "hits": [],
+          "rewritten_query": "你能推荐一些适合做宵夜的简单食谱吗？",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "场景类 query 高度模糊，优先保召回，禁用硬过滤。",
+          "recall_at_5": 0.0,
+          "recall_at_k": 0.0,
+          "ndcg_at_k": 0.0,
+          "hit_at_k": 0.0,
+          "latency_ms": 2699.3570000004183
+        },
+        {
+          "id": "q15",
+          "query": "下班想做个快手晚餐",
+          "query_type": "scene",
+          "expected": [
+            "蛋炒饭",
+            "西红柿炒鸡蛋",
+            "西红柿鸡蛋挂面",
+            "炒滑蛋",
+            "肉蛋盖饭",
+            "葱油拌面",
+            "炸酱面",
+            "蛋包饭",
+            "煮泡面加蛋"
+          ],
+          "expected_count": 9,
+          "retrieved": [],
+          "hits": [],
+          "rewritten_query": "下班后想快速做一顿晚餐，有什么简单快捷的食谱推荐吗？",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "场景类 query 高度模糊，优先保召回，禁用硬过滤。",
+          "recall_at_5": 0.0,
+          "recall_at_k": 0.0,
+          "ndcg_at_k": 0.0,
+          "hit_at_k": 0.0,
+          "latency_ms": 3002.466541999638
+        },
+        {
+          "id": "q16",
+          "query": "想做点辣的下饭菜",
+          "query_type": "flavor",
+          "expected": [
+            "小米辣炒肉",
+            "冷吃兔",
+            "尖椒炒牛肉",
+            "水煮鱼",
+            "水煮牛肉",
+            "水煮肉片",
+            "贵州辣子鸡",
+            "辣椒炒肉",
+            "血浆鸭",
+            "干煸仔鸡",
+            "虎皮青椒"
+          ],
+          "expected_count": 11,
+          "retrieved": [],
+          "hits": [],
+          "rewritten_query": "有哪些辣味的下饭菜食谱推荐？",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "口味偏好通常无法稳定映射到 category/difficulty 元数据。",
+          "recall_at_5": 0.0,
+          "recall_at_k": 0.0,
+          "ndcg_at_k": 0.0,
+          "hit_at_k": 0.0,
+          "latency_ms": 2597.0335409992913
+        },
+        {
+          "id": "q17",
+          "query": "想自己做个甜品",
+          "query_type": "flavor",
+          "expected": [
+            "提拉米苏",
+            "戚风蛋糕",
+            "草莓冰淇淋",
+            "奥利奥冰淇淋",
+            "炸鲜奶",
+            "胡萝卜甜糕",
+            "红柚蛋糕",
+            "玛格丽特饼干",
+            "烤蛋挞",
+            "芋泥雪媚娘",
+            "咖啡椰奶冻",
+            "雪花酥",
+            "魔芋蛋糕",
+            "龟苓膏",
+            "英式司康"
+          ],
+          "expected_count": 15,
+          "retrieved": [],
+          "hits": [],
+          "rewritten_query": "你能推荐一些适合自己制作的甜品食谱吗？",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "口味偏好通常无法稳定映射到 category/difficulty 元数据。",
+          "recall_at_5": 0.0,
+          "recall_at_k": 0.0,
+          "ndcg_at_k": 0.0,
+          "hit_at_k": 0.0,
+          "latency_ms": 2533.2358339992425
+        },
+        {
+          "id": "q18",
+          "query": "酸甜口味的菜怎么做",
+          "query_type": "flavor",
+          "expected": [
+            "糖醋排骨",
+            "糖醋里脊",
+            "糖醋鲤鱼",
+            "咕噜肉",
+            "老式锅包肉"
+          ],
+          "expected_count": 5,
+          "retrieved": [],
+          "hits": [],
+          "rewritten_query": "如何制作酸甜口味的菜肴？",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "口味偏好通常无法稳定映射到 category/difficulty 元数据。",
+          "recall_at_5": 0.0,
+          "recall_at_k": 0.0,
+          "ndcg_at_k": 0.0,
+          "hit_at_k": 0.0,
+          "latency_ms": 2452.850292000221
+        },
+        {
+          "id": "q19",
+          "query": "推荐几道甜品菜谱",
+          "query_type": "category",
+          "expected": [
+            "提拉米苏",
+            "戚风蛋糕",
+            "草莓冰淇淋",
+            "奥利奥冰淇淋",
+            "炸鲜奶",
+            "胡萝卜甜糕",
+            "红柚蛋糕",
+            "玛格丽特饼干",
+            "烤蛋挞",
+            "芋泥雪媚娘",
+            "咖啡椰奶冻",
+            "反沙芋头",
+            "雪花酥",
+            "魔芋蛋糕",
+            "龟苓膏",
+            "英式司康",
+            "无厨师机蜂蜜面包",
+            "烤箱版巴斯克芝士蛋糕"
+          ],
+          "expected_count": 18,
+          "retrieved": [],
+          "hits": [],
+          "rewritten_query": "你能推荐几道甜品或甜食的菜谱吗？",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "类目词与底层 category 枚举并非一一对应，禁用硬过滤避免坍缩。",
+          "recall_at_5": 0.0,
+          "recall_at_k": 0.0,
+          "ndcg_at_k": 0.0,
+          "hit_at_k": 0.0,
+          "latency_ms": 2803.889374999926
+        },
+        {
+          "id": "q20",
+          "query": "想学几道海鲜的做法",
+          "query_type": "category",
+          "expected": [
+            "咖喱炒蟹",
+            "响油鳝丝",
+            "干煎阿根廷红虾",
+            "微波葱姜黑鳕鱼",
+            "水煮鱼",
+            "油焖大虾",
+            "清蒸生蚝",
+            "清蒸鲈鱼",
+            "白灼虾",
+            "红烧鱼",
+            "红烧鱼头",
+            "红烧鲤鱼",
+            "肉蟹煲",
+            "葱油桂鱼",
+            "葱烧海参",
+            "蒜蓉虾",
+            "糖醋鲤鱼",
+            "蒜香黄油虾",
+            "芥末黄油罗氏虾",
+            "酱炖蟹",
+            "蛏抱蛋",
+            "混合烤鱼",
+            "清蒸鳜鱼",
+            "豉汁蒸白鱔",
+            "电饭煲三文鱼炊饭"
+          ],
+          "expected_count": 25,
+          "retrieved": [
+            "芥末黄油罗氏虾"
+          ],
+          "hits": [
+            "芥末黄油罗氏虾"
+          ],
+          "rewritten_query": "我想学几道海鲜的做法，能推荐一些海鲜食谱吗？",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "类目词与底层 category 枚举并非一一对应，禁用硬过滤避免坍缩。",
+          "recall_at_5": 0.04,
+          "recall_at_k": 0.04,
+          "ndcg_at_k": 0.22009176629808017,
+          "hit_at_k": 1.0,
+          "latency_ms": 2536.0142919998907
+        },
+        {
+          "id": "q21",
+          "query": "炒饭盖饭的做法推荐几个",
+          "query_type": "category",
+          "expected": [
+            "扬州炒饭",
+            "可乐炒饭",
+            "蛋炒饭",
+            "蛋包饭",
+            "肉蛋盖饭",
+            "猪油拌饭",
+            "红芸豆拌饭",
+            "日式咖喱饭",
+            "日式肥牛丼饭",
+            "印度焖饭",
+            "微波炉腊肠煲仔饭",
+            "咸肉菜饭",
+            "台式卤肉饭",
+            "澳门湿版免治牛肉饭",
+            "火腿饭团",
+            "电饭煲三文鱼炊饭",
+            "照烧鸡腿饭",
+            "空气炸锅照烧鸡饭"
+          ],
+          "expected_count": 18,
+          "retrieved": [],
+          "hits": [],
+          "rewritten_query": "能推荐几个炒饭和盖饭的做法吗？",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "类目词与底层 category 枚举并非一一对应，禁用硬过滤避免坍缩。",
+          "recall_at_5": 0.0,
+          "recall_at_k": 0.0,
+          "ndcg_at_k": 0.0,
+          "hit_at_k": 0.0,
+          "latency_ms": 2838.411291999364
+        },
+        {
+          "id": "q22",
+          "query": "推荐几个面食菜谱",
+          "query_type": "category",
+          "expected": [
+            "手工水饺",
+            "煎饺",
+            "汤面",
+            "热干面",
+            "炸酱面",
+            "炒河粉",
+            "意式肉酱面",
+            "炒意大利面",
+            "炒方便面",
+            "葱油拌面",
+            "酱拌荞麦面",
+            "羊排焖面",
+            "豆角焖面",
+            "螺蛳粉",
+            "蒸卤面",
+            "西红柿鸡蛋挂面",
+            "河南蒸面条",
+            "炒馍",
+            "炒年糕",
+            "老干妈拌面",
+            "速冻水饺",
+            "速冻馄饨"
+          ],
+          "expected_count": 22,
+          "retrieved": [
+            "汤面"
+          ],
+          "hits": [
+            "汤面"
+          ],
+          "rewritten_query": "你能推荐几个面食的食谱吗？",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "类目词与底层 category 枚举并非一一对应，禁用硬过滤避免坍缩。",
+          "recall_at_5": 0.045454545454545456,
+          "recall_at_k": 0.045454545454545456,
+          "ndcg_at_k": 0.22009176629808017,
+          "hit_at_k": 1.0,
+          "latency_ms": 2639.3498750003346
+        },
+        {
+          "id": "q23",
+          "query": "新手做早餐有什么简单菜谱",
+          "query_type": "difficulty",
+          "expected": [
+            "完美水煮蛋",
+            "太阳蛋",
+            "微波炉荷包蛋",
+            "微波炉蒸蛋",
+            "美式炒蛋",
+            "牛奶燕麦",
+            "吐司果酱",
+            "空气炸锅面包片",
+            "水煮玉米",
+            "煎饺"
+          ],
+          "expected_count": 10,
+          "retrieved": [
+            "鸡蛋羹",
+            "牛奶燕麦",
+            "微波炉荷包蛋"
+          ],
+          "hits": [
+            "牛奶燕麦",
+            "微波炉荷包蛋"
+          ],
+          "rewritten_query": "作为新手，做早餐有什么简单易学的菜谱推荐吗？",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "难度类 query 常与早餐/家常/快手等模糊条件混合出现，禁用硬过滤保召回。",
+          "recall_at_5": 0.2,
+          "recall_at_k": 0.2,
+          "ndcg_at_k": 0.2489083270225946,
+          "hit_at_k": 1.0,
+          "latency_ms": 2671.185209000214
+        },
+        {
+          "id": "q24",
+          "query": "做个简单的家常菜",
+          "query_type": "difficulty",
+          "expected": [
+            "西红柿炒鸡蛋",
+            "凉拌黄瓜",
+            "凉拌豆腐",
+            "蛋炒饭",
+            "蒸水蛋",
+            "炒青菜",
+            "蒜蓉空心菜",
+            "蚝油生菜",
+            "凉拌油麦菜",
+            "西红柿鸡蛋汤",
+            "凉拌金针菇"
+          ],
+          "expected_count": 11,
+          "retrieved": [],
+          "hits": [],
+          "rewritten_query": "你能推荐一些家常菜的做法吗？",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "难度类 query 常与早餐/家常/快手等模糊条件混合出现，禁用硬过滤保召回。",
+          "recall_at_5": 0.0,
+          "recall_at_k": 0.0,
+          "ndcg_at_k": 0.0,
+          "hit_at_k": 0.0,
+          "latency_ms": 2279.128708999451
+        },
+        {
+          "id": "q25",
+          "query": "想自己做奶茶或者特调饮品",
+          "query_type": "category",
+          "expected": [
+            "奶茶",
+            "印度奶茶",
+            "杨枝甘露",
+            "牛油果拉西",
+            "百香果橙子特调",
+            "菠萝咖啡特调",
+            "奇异果菠菜特调",
+            "海边落日",
+            "B52轰炸机",
+            "Mojito莫吉托",
+            "可乐桶",
+            "砂糖椰子冰沙",
+            "酸梅汤",
+            "柠檬水",
+            "冬瓜茶",
+            "耙耙柑茶",
+            "泰国手标红茶"
+          ],
+          "expected_count": 17,
+          "retrieved": [
+            "奶茶"
+          ],
+          "hits": [
+            "奶茶"
+          ],
+          "rewritten_query": "我想自己制作奶茶或者特调饮品，有什么好的食谱推荐吗？",
+          "applied_metadata_filter": false,
+          "filter_expr": null,
+          "strategy_note": "类目词与底层 category 枚举并非一一对应，禁用硬过滤避免坍缩。",
+          "recall_at_5": 0.058823529411764705,
+          "recall_at_k": 0.058823529411764705,
+          "ndcg_at_k": 0.22009176629808017,
+          "hit_at_k": 1.0,
+          "latency_ms": 2634.5969170006356
+        }
+      ],
+      "overall": {
+        "count": 25,
+        "recall_at_5": 0.22663159585512527,
+        "recall_at_k": 0.22663159585512527,
+        "ndcg_at_k": 0.25148396955392854,
+        "hit_at_k": 0.6,
+        "latency": {
+          "mean": 3614.4905017999554,
+          "p50": 2838.411291999364,
+          "p95": 8623.983091600156,
+          "p99": 9401.322071919712,
+          "min": 2279.128708999451,
+          "max": 9407.263041999613
+        },
+        "top_k": 10
+      },
+      "by_type": {
+        "specific_dish": {
+          "count": 5,
+          "recall_at_5": 0.7666666666666667,
+          "recall_at_k": 0.7666666666666667,
+          "ndcg_at_k": 0.6279221392909469,
+          "hit_at_k": 1.0,
+          "latency": {
+            "mean": 6279.144733400062,
+            "p50": 5589.879458000723,
+            "p95": 9402.312233599696,
+            "p99": 9406.27288031963,
+            "min": 3501.1121249999633,
+            "max": 9407.263041999613
+          },
+          "top_k": 10
+        },
+        "ingredient": {
+          "count": 5,
+          "recall_at_5": 0.28225108225108225,
+          "recall_at_k": 0.28225108225108225,
+          "ndcg_at_k": 0.41988849452061794,
+          "hit_at_k": 1.0,
+          "latency": {
+            "mean": 3601.712091599984,
+            "p50": 3549.7290419998535,
+            "p95": 3954.885591600032,
+            "p99": 3984.4176183200034,
+            "min": 3301.738082999691,
+            "max": 3991.800624999996
+          },
+          "top_k": 10
+        },
+        "scene": {
+          "count": 5,
+          "recall_at_5": 0.015384615384615385,
+          "recall_at_k": 0.015384615384615385,
+          "ndcg_at_k": 0.027772488774710908,
+          "hit_at_k": 0.2,
+          "latency": {
+            "mean": 2994.4566168000165,
+            "p50": 2721.3641250000364,
+            "p95": 3672.4823748003473,
+            "p99": 3806.485541360489,
+            "min": 2699.3570000004183,
+            "max": 3839.9863330005246
+          },
+          "top_k": 10
+        },
+        "flavor": {
+          "count": 3,
+          "recall_at_5": 0.0,
+          "recall_at_k": 0.0,
+          "ndcg_at_k": 0.0,
+          "hit_at_k": 0.0,
+          "latency": {
+            "mean": 2527.7065556662515,
+            "p50": 2533.2358339992425,
+            "p95": 2590.6537702992864,
+            "p99": 2595.7575868592903,
+            "min": 2452.850292000221,
+            "max": 2597.0335409992913
+          },
+          "top_k": 10
+        },
+        "category": {
+          "count": 5,
+          "recall_at_5": 0.028855614973262035,
+          "recall_at_k": 0.028855614973262035,
+          "ndcg_at_k": 0.1320550597788481,
+          "hit_at_k": 0.6,
+          "latency": {
+            "mean": 2690.45235020003,
+            "p50": 2639.3498750003346,
+            "p95": 2831.5069085994764,
+            "p99": 2837.0304153193865,
+            "min": 2536.0142919998907,
+            "max": 2838.411291999364
+          },
+          "top_k": 10
+        },
+        "difficulty": {
+          "count": 2,
+          "recall_at_5": 0.1,
+          "recall_at_k": 0.1,
+          "ndcg_at_k": 0.1244541635112973,
+          "hit_at_k": 0.5,
+          "latency": {
+            "mean": 2475.1569589998326,
+            "p50": 2475.1569589998326,
+            "p95": 2651.582384000176,
+            "p99": 2667.2646440002063,
+            "min": 2279.128708999451,
+            "max": 2671.185209000214
+          },
+          "top_k": 10
+        }
+      }
+    }
+  }
+}

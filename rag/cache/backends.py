@@ -108,13 +108,13 @@ class MilvusVectorCache(VectorCacheBackend):
         self._dimension = dimension
         self._alias = alias
         self._search_params = search_params or {
-            "metric_type": "IP",
-            "params": {"nprobe": 16},
+            "metric_type": "IP",  #内积计算，标准化后等同于余弦相似度
+            "params": {"nprobe": 16}, #前x个簇
         }
         self._index_params = index_params or {
             "metric_type": "IP",
             "index_type": "IVF_FLAT",
-            "params": {"nlist": 1024},
+            "params": {"nlist": 1024},  #分为xx个簇
         }
 
         self._connect(host, port, user, password, secure)

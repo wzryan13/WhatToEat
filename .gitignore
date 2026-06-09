@@ -1,0 +1,48 @@
+# ── 密钥 & 环境变量 ──
+.env
+.env.*
+!.env.example
+
+# ── Python ──
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+.pytest_cache/
+
+# ── IDE ──
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ── Node ──
+node_modules/
+package-lock.json
+
+# ── Milvus 本地数据 ──
+.milvus/
+milvus_data/
+
+# ── Streamlit ──
+.streamlit/
+
+# ── 数据集（从外部仓库获取） ──
+data/
+
+# ── 实验 / 学习文件（不上传） ──
+pydamic.py
+pydamic_data.py
+langchain_diet_agent_tooluse.py
+langgraf_diet_agent.py
+Node_Test/
+mcp_test/
+trip_agent_items.ipynb
+
+# ── 杂项 ──
+.DS_Store
+*.log
+.claude/

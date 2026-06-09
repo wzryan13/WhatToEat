@@ -8,7 +8,12 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from typing import Any
 
+from sqlalchemy import func, select, update
+from sqlalchemy.dialects.postgresql import insert as pg_insert
+
 from config.settings import settings
+from core.db import SessionLocal
+from memory import orm
 from memory.user_profile import (
     build_memory_for_intent,
     build_memory_for_rerank,
@@ -164,6 +169,16 @@ def _apply_profile_updates(profile: UserProfile, updates: list[ProfileUpdate]) -
     return updated
 
 
+def _as_dict(raw: Any) -> dict | None:
+    """JSONB 列正常返回 dict；个别驱动可能返回 JSON 字符串，这里兜底。"""
+    if isinstance(raw, str):
+        try:
+            return json.loads(raw)
+        except (json.JSONDecodeError, ValueError):
+            return None
+    return raw
+
+
 class BaseMemoryStore:
     def __init__(self):
         self._profiles: dict[str, UserProfile] = {}
@@ -259,294 +274,166 @@ class BaseMemoryStore:
         await self._save_profile(user_id, updated)
 
 
-class AsyncpgMemoryStore(BaseMemoryStore):
-    def __init__(self, dsn: str):
-        super().__init__()
-        self.dsn = dsn
+class SqlAlchemyMemoryStore(BaseMemoryStore):
+    """基于 SQLAlchemy async 的持久化记忆存储（Postgres）。
 
-    async def _connect(self):
-        import asyncpg
-
-        return await asyncpg.connect(self.dsn)
+    public 方法签名与 BaseMemoryStore 完全一致，对 LangGraph 节点 / CLI 透明。
+    schema 由 Alembic 管理，本类不负责建表。
+    load_memory_context / apply_profile_updates 复用基类实现（内部调用下面被重写的方法）。
+    """
 
     async def initialize(self) -> None:
-        conn = await self._connect()
-        try:
-            await conn.execute(
-                """
-                CREATE TABLE IF NOT EXISTS users (
-                    user_id VARCHAR(40) PRIMARY KEY,
-                    channel VARCHAR(20),
-                    external_id VARCHAR(255),
-                    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-                    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-                    UNIQUE(channel, external_id)
-                )
-                """
-            )
-            await conn.execute(
-                """
-                CREATE TABLE IF NOT EXISTS sessions (
-                    session_id VARCHAR(80) PRIMARY KEY,
-                    user_id VARCHAR(40) NOT NULL REFERENCES users(user_id),
-                    started_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-                    last_active_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-                    ended_at TIMESTAMPTZ,
-                    expires_at TIMESTAMPTZ NOT NULL,
-                    thread_id VARCHAR(100),
-                    turn_no INTEGER NOT NULL DEFAULT 0
-                )
-                """
-            )
-            await conn.execute(
-                """
-                CREATE TABLE IF NOT EXISTS user_profiles (
-                    user_id VARCHAR(40) PRIMARY KEY REFERENCES users(user_id),
-                    profile_version INTEGER NOT NULL,
-                    profile_json JSONB NOT NULL DEFAULT '{}'::jsonb,
-                    profile_summary TEXT NOT NULL DEFAULT '',
-                    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-                    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-                )
-                """
-            )
-            await conn.execute(
-                """
-                CREATE TABLE IF NOT EXISTS session_memories (
-                    session_id VARCHAR(80) PRIMARY KEY REFERENCES sessions(session_id),
-                    user_id VARCHAR(40) NOT NULL REFERENCES users(user_id),
-                    memory_json JSONB NOT NULL DEFAULT '{}'::jsonb,
-                    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-                    expires_at TIMESTAMPTZ NOT NULL
-                )
-                """
-            )
-            await conn.execute(
-                "CREATE INDEX IF NOT EXISTS idx_sessions_expires_at ON sessions(expires_at)"
-            )
-            await conn.execute(
-                "CREATE INDEX IF NOT EXISTS idx_session_memories_user_id ON session_memories(user_id)"
-            )
-        finally:
-            await conn.close()
+        return None
 
     async def get_or_create_user(self, channel: str, external_id: str) -> str:
-        conn = await self._connect()
-        try:
-            row = await conn.fetchrow(
-                """
-                SELECT user_id
-                FROM users
-                WHERE channel = $1 AND external_id = $2
-                """,
-                channel,
-                external_id,
-            )
-            if row:
-                return row["user_id"]
-
-            user_id = generate_user_id()
-            await conn.execute(
-                """
-                INSERT INTO users (user_id, channel, external_id)
-                VALUES ($1, $2, $3)
-                """,
-                user_id,
-                channel,
-                external_id,
-            )
+        async with SessionLocal() as session:
+            async with session.begin():
+                existing = await session.scalar(
+                    select(orm.User.user_id).where(
+                        orm.User.channel == channel,
+                        orm.User.external_id == external_id,
+                    )
+                )
+                if existing:
+                    return existing
+                user_id = generate_user_id()
+                session.add(
+                    orm.User(user_id=user_id, channel=channel, external_id=external_id)
+                )
             return user_id
-        finally:
-            await conn.close()
 
     async def get_or_create_session(
         self, user_id: str, requested_session_id: str | None = None
     ) -> SessionRuntime:
-        conn = await self._connect()
-        try:
-            async with conn.transaction():
+        async with SessionLocal() as session:
+            async with session.begin():
                 if requested_session_id:
-                    row = await conn.fetchrow(
-                        """
-                        SELECT session_id, thread_id
-                        FROM sessions
-                        WHERE session_id = $1 AND user_id = $2
-                        FOR UPDATE
-                        """,
-                        requested_session_id,
-                        user_id,
+                    row = await session.scalar(
+                        select(orm.Session)
+                        .where(
+                            orm.Session.session_id == requested_session_id,
+                            orm.Session.user_id == user_id,
+                        )
+                        .with_for_update()
                     )
                     if row:
-                        thread_id = row["thread_id"] or generate_thread_id(row["session_id"])
-                        if row["thread_id"] is None:
-                            await conn.execute(
-                                "UPDATE sessions SET thread_id = $2 WHERE session_id = $1",
-                                row["session_id"],
-                                thread_id,
-                            )
-                        return SessionRuntime(user_id, row["session_id"], thread_id)
+                        thread_id = row.thread_id or generate_thread_id(row.session_id)
+                        if row.thread_id is None:
+                            row.thread_id = thread_id
+                        return SessionRuntime(user_id, row.session_id, thread_id)
 
-                row = await conn.fetchrow(
-                    """
-                    SELECT session_id, thread_id
-                    FROM sessions
-                    WHERE user_id = $1
-                      AND expires_at > NOW()
-                    ORDER BY started_at DESC
-                    LIMIT 1
-                    FOR UPDATE
-                    """,
-                    user_id,
+                row = await session.scalar(
+                    select(orm.Session)
+                    .where(
+                        orm.Session.user_id == user_id,
+                        orm.Session.expires_at > func.now(),
+                    )
+                    .order_by(orm.Session.started_at.desc())
+                    .limit(1)
+                    .with_for_update()
                 )
                 if row:
-                    thread_id = row["thread_id"] or generate_thread_id(row["session_id"])
-                    if row["thread_id"] is None:
-                        await conn.execute(
-                            "UPDATE sessions SET thread_id = $2 WHERE session_id = $1",
-                            row["session_id"],
-                            thread_id,
-                        )
-                    return SessionRuntime(user_id, row["session_id"], thread_id)
+                    thread_id = row.thread_id or generate_thread_id(row.session_id)
+                    if row.thread_id is None:
+                        row.thread_id = thread_id
+                    return SessionRuntime(user_id, row.session_id, thread_id)
 
                 session_id = generate_session_id(user_id)
                 thread_id = generate_thread_id(session_id)
-                expires_at = datetime.now(timezone.utc) + timedelta(hours=settings.SESSION_TTL_HOURS)
-                await conn.execute(
-                    """
-                    INSERT INTO sessions (
-                        session_id, user_id, expires_at, thread_id
-                    ) VALUES ($1, $2, $3, $4)
-                    """,
-                    session_id,
-                    user_id,
-                    expires_at,
-                    thread_id,
+                expires_at = datetime.now(timezone.utc) + timedelta(
+                    hours=settings.SESSION_TTL_HOURS
+                )
+                session.add(
+                    orm.Session(
+                        session_id=session_id,
+                        user_id=user_id,
+                        expires_at=expires_at,
+                        thread_id=thread_id,
+                    )
                 )
                 return SessionRuntime(user_id, session_id, thread_id)
-        finally:
-            await conn.close()
 
     async def next_turn(self, session_id: str) -> int:
-        conn = await self._connect()
-        try:
-            row = await conn.fetchrow(
-                """
-                UPDATE sessions
-                SET turn_no = turn_no + 1,
-                    last_active_at = NOW()
-                WHERE session_id = $1
-                RETURNING turn_no
-                """,
-                session_id,
-            )
-            return int(row["turn_no"]) if row else 1
-        finally:
-            await conn.close()
+        async with SessionLocal() as session:
+            async with session.begin():
+                result = await session.execute(
+                    update(orm.Session)
+                    .where(orm.Session.session_id == session_id)
+                    .values(turn_no=orm.Session.turn_no + 1, last_active_at=func.now())
+                    .returning(orm.Session.turn_no)
+                )
+                turn_no = result.scalar_one_or_none()
+            return int(turn_no) if turn_no is not None else 1
 
     async def load_profile(self, user_id: str) -> UserProfile:
-        conn = await self._connect()
-        try:
-            row = await conn.fetchrow(
-                """
-                SELECT profile_json
-                FROM user_profiles
-                WHERE user_id = $1
-                """,
-                user_id,
+        async with SessionLocal() as session:
+            raw = await session.scalar(
+                select(orm.UserProfile.profile_json).where(
+                    orm.UserProfile.user_id == user_id
+                )
             )
-        finally:
-            await conn.close()
-        raw = row["profile_json"] if row else None
-        data = json.loads(raw) if isinstance(raw, str) else raw
-        return profile_from_dict(data)
+        return profile_from_dict(_as_dict(raw))
 
     async def _save_profile(self, user_id: str, profile: UserProfile) -> None:
-        conn = await self._connect()
-        try:
-            await conn.execute(
-                """
-                INSERT INTO user_profiles (
-                    user_id, profile_version, profile_json, profile_summary
-                ) VALUES ($1, $2, $3::jsonb, $4)
-                ON CONFLICT (user_id)
-                DO UPDATE SET
-                    profile_version = EXCLUDED.profile_version,
-                    profile_json = EXCLUDED.profile_json,
-                    profile_summary = EXCLUDED.profile_summary,
-                    updated_at = NOW()
-                """,
-                user_id,
-                profile.schema_version,
-                profile.model_dump_json(exclude_none=True),
-                build_memory_for_rerank(profile, SessionMemory()),
-            )
-        finally:
-            await conn.close()
+        stmt = pg_insert(orm.UserProfile).values(
+            user_id=user_id,
+            profile_version=profile.schema_version,
+            profile_json=profile.model_dump(mode="json", exclude_none=True),
+            profile_summary=build_memory_for_rerank(profile, SessionMemory()),
+        )
+        stmt = stmt.on_conflict_do_update(
+            index_elements=[orm.UserProfile.user_id],
+            set_={
+                "profile_version": stmt.excluded.profile_version,
+                "profile_json": stmt.excluded.profile_json,
+                "profile_summary": stmt.excluded.profile_summary,
+                "updated_at": func.now(),
+            },
+        )
+        async with SessionLocal() as session:
+            async with session.begin():
+                await session.execute(stmt)
 
     async def _load_session_memory(self, session_id: str) -> SessionMemory:
-        conn = await self._connect()
-        try:
-            row = await conn.fetchrow(
-                """
-                SELECT memory_json
-                FROM session_memories
-                WHERE session_id = $1
-                  AND expires_at > NOW()
-                """,
-                session_id,
+        async with SessionLocal() as session:
+            raw = await session.scalar(
+                select(orm.SessionMemory.memory_json).where(
+                    orm.SessionMemory.session_id == session_id,
+                    orm.SessionMemory.expires_at > func.now(),
+                )
             )
-        finally:
-            await conn.close()
-        raw = row["memory_json"] if row else None
-        data = json.loads(raw) if isinstance(raw, str) else raw
-        return session_from_dict(data)
+        return session_from_dict(_as_dict(raw))
 
-    async def load_memory_context(self, user_id: str, session_id: str) -> dict[str, Any]:
-        profile = await self.load_profile(user_id)
-        session = await self._load_session_memory(session_id)
-        return _build_memory_payload(profile, session)
-
-    async def save_session_memory(self, user_id: str, session_id: str, memory: SessionMemory) -> None:
-        conn = await self._connect()
-        try:
-            expires_at = (
-                datetime.fromisoformat(memory.expires_at)
-                if memory.expires_at
-                else datetime.now(timezone.utc) + timedelta(hours=settings.SESSION_TTL_HOURS)
-            )
-            await conn.execute(
-                """
-                INSERT INTO session_memories (
-                    session_id, user_id, memory_json, updated_at, expires_at
-                ) VALUES ($1, $2, $3::jsonb, NOW(), $4)
-                ON CONFLICT (session_id)
-                DO UPDATE SET
-                    memory_json = EXCLUDED.memory_json,
-                    updated_at = NOW(),
-                    expires_at = EXCLUDED.expires_at
-                """,
-                session_id,
-                user_id,
-                memory.model_dump_json(exclude_none=True),
-                expires_at,
-            )
-            await conn.execute(
-                """
-                UPDATE sessions
-                SET last_active_at = NOW(),
-                    expires_at = $2
-                WHERE session_id = $1
-                """,
-                session_id,
-                expires_at,
-            )
-        finally:
-            await conn.close()
-
-    async def apply_profile_updates(self, user_id: str, updates: list[ProfileUpdate]) -> None:
-        profile = await self.load_profile(user_id)
-        updated = _apply_profile_updates(profile, updates)
-        await self._save_profile(user_id, updated)
+    async def save_session_memory(
+        self, user_id: str, session_id: str, memory: SessionMemory
+    ) -> None:
+        expires_at = (
+            datetime.fromisoformat(memory.expires_at)
+            if memory.expires_at
+            else datetime.now(timezone.utc) + timedelta(hours=settings.SESSION_TTL_HOURS)
+        )
+        mem_stmt = pg_insert(orm.SessionMemory).values(
+            session_id=session_id,
+            user_id=user_id,
+            memory_json=memory.model_dump(mode="json", exclude_none=True),
+            expires_at=expires_at,
+        )
+        mem_stmt = mem_stmt.on_conflict_do_update(
+            index_elements=[orm.SessionMemory.session_id],
+            set_={
+                "memory_json": mem_stmt.excluded.memory_json,
+                "updated_at": func.now(),
+                "expires_at": mem_stmt.excluded.expires_at,
+            },
+        )
+        async with SessionLocal() as session:
+            async with session.begin():
+                await session.execute(mem_stmt)
+                await session.execute(
+                    update(orm.Session)
+                    .where(orm.Session.session_id == session_id)
+                    .values(last_active_at=func.now(), expires_at=expires_at)
+                )
 
 
 _memory_store: BaseMemoryStore | None = None
@@ -572,9 +459,9 @@ async def init_memory_store() -> BaseMemoryStore:
         _memory_store = BaseMemoryStore()
         return _memory_store
 
-    store = AsyncpgMemoryStore(settings.DATABASE_URL)
+    store = SqlAlchemyMemoryStore()
     await store.initialize()
-    logger.info("[memory] PostgreSQL 记忆存储初始化完成")
+    logger.info("[memory] SQLAlchemy 记忆存储初始化完成（schema 由 Alembic 管理）")
     _memory_store = store
     return _memory_store
 

@@ -7,6 +7,8 @@ from collections import Counter
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_deepseek import ChatDeepSeek
 
+import redis.asyncio as aioredis
+
 from config.prompts import RERANK_SYSTEM_PROMPT
 from config.settings import settings
 from models.intent import FilterConditions
@@ -23,6 +25,31 @@ TIMEOUT_GEO = 20.0       # 地标解析正常 ~2.5s，留 2 倍余量
 TIMEOUT_SEARCH = 60.0   # around/text 搜索正常 ~9s，留 3s 余量切尾巴
 TIMEOUT_DETAIL = 30    # 详情正常 ~3s，留 2.6 倍余量
 DETAIL_CONCURRENCY = 8 # 高德个人认证 key QPS=5，按 P25 RT≈2s 推算上限
+
+# ── Geo 缓存 ────────────────────────────────────────────────
+GEO_CACHE_TTL = 604800  # 7 days
+
+_geo_cache_client: aioredis.Redis | None = None
+_geo_cache_initialized = False
+
+
+def _get_geo_cache() -> aioredis.Redis | None:
+    global _geo_cache_client, _geo_cache_initialized
+    if not _geo_cache_initialized:
+        _geo_cache_initialized = True
+        try:
+            _geo_cache_client = aioredis.Redis(
+                host=settings.REDIS_HOST,
+                port=settings.REDIS_PORT,
+                password=settings.REDIS_PASSWORD or None,
+                db=0,
+                decode_responses=True,
+                socket_connect_timeout=3,
+                socket_timeout=3,
+            )
+        except Exception as e:
+            logger.warning(f"[search_agent] geo缓存初始化失败: {e}")
+    return _geo_cache_client
 
 
 # ── 工具函数 ──────────────────────────────────────────────
@@ -142,6 +169,17 @@ def _is_diverse(pois: list) -> bool:
 # ── 搜索管道 ──────────────────────────────────────────────
 
 async def _geo_resolve(address: str, city: str) -> tuple[str | None, str | None]:
+    cache = _get_geo_cache()
+    cache_key = f"geo:{city}:{address}"
+    if cache:
+        try:
+            cached = await cache.get(cache_key)
+            if cached:
+                logger.info(f"[search_agent] geo缓存命中: {address} → {cached}")
+                return cached, None
+        except Exception as e:
+            logger.warning(f"[search_agent] geo缓存读取失败: {e}")
+
     try:
         result = await asyncio.wait_for(
             _tools["geo"].ainvoke({
@@ -169,6 +207,11 @@ async def _geo_resolve(address: str, city: str) -> tuple[str | None, str | None]
 
         location = items[0].get("location")
         if location:
+            if cache:
+                try:
+                    await cache.setex(cache_key, GEO_CACHE_TTL, location)
+                except Exception as e:
+                    logger.warning(f"[search_agent] geo缓存写入失败: {e}")
             logger.info(f"[search_agent] 地标解析成功: {address} → {location}")
             return location, None
         else:
