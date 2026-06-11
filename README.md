@@ -1,4 +1,4 @@
-# CookHero — 饮食管家 Agent
+# WhatToEat — 饮食管家 Agent
 
 基于 **LangGraph + RAG + 高德 MCP + 长期记忆** 的对话式饮食推荐 Agent。
 提供 **餐厅搜索** 与 **菜谱推荐** 两大能力，支持 Streamlit Web 界面与 FastAPI 后端 API 两种接入方式。
@@ -66,8 +66,8 @@ flowchart TD
 ### 1. 克隆项目
 
 ```bash
-git clone https://github.com/<你的用户名>/CookHero.git
-cd CookHero
+git clone https://github.com/wzryan13/WhatToEat.git
+cd WhatToEat
 ```
 
 ### 2. 准备菜谱数据集

@@ -295,7 +295,7 @@ class MilvusVectorCache(VectorCacheBackend):
                         max_length=128,
                     ),
                 ],
-                description="CookHero retrieval L2 cache",
+                description="WhatToEat retrieval L2 cache",
             )
             collection = Collection(
                 name=self._collection_name,
