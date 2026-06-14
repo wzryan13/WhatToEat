@@ -54,6 +54,7 @@ async def intent_parser(state: DietState) -> dict:
             "scene_context": state.get("scene_context", ""),
             "mood_factors": state.get("mood_factors", []),
             "suggested_cuisines": state.get("suggested_cuisines", []),
+            "has_ingredient": False,
             "current_time": current_time,
             "error_message": f"意图解析失败：{str(last_error)}",
         }
@@ -74,6 +75,7 @@ async def intent_parser(state: DietState) -> dict:
         "scene_context": result.scene_context,
         "mood_factors": result.mood_factors,
         "suggested_cuisines": result.suggested_cuisines,
+        "has_ingredient": result.has_ingredient,
         "current_time": current_time,
         "conversation_history": [
             {"role": "user", "content": state["user_input"]}

@@ -68,6 +68,11 @@ class IntentParserOutput(BaseModel):
         default_factory=list,
         description="推荐搜索的具体菜品或菜系"
     )
+    has_ingredient: bool = Field(
+        default=False,
+        description="仅 recommend 场景使用：用户输入是否包含具体食材（排骨/鸡蛋/茄子等）。"
+                    "具体菜名、菜系、品类、口味、场景一律为 False。"
+    )
 
     @model_validator(mode="before")
     @classmethod

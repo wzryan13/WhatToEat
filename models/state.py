@@ -53,6 +53,7 @@ class DietState(TypedDict, total=False):
     scene_context: str
     mood_factors: list[str]
     suggested_cuisines: list[str]
+    has_ingredient: bool
 
     # ── RAG 菜谱检索结果 ──
     rag_query: Optional[str]              # rewrite 后的查询

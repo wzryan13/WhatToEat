@@ -31,7 +31,7 @@ async def rag_agent(state: DietState) -> dict:
             "error_message": "菜谱检索服务暂不可用，请稍后再试。",
         }
 
-    query = state.get("user_input", "")
+    query = _build_rag_query(state)
 
     # 可选：从画像取 disliked_cuisines 构建粗过滤 expr
     extra_expr = _build_category_filter(state)
@@ -72,6 +72,26 @@ async def rag_agent(state: DietState) -> dict:
         "rag_query": query,
         "rag_filter_expr": extra_expr,
     }
+
+
+def _build_rag_query(state: DietState) -> str:
+    """
+    构建 RAG 检索查询。
+    - recipe：用户已指定具体菜品，直接用原始输入
+    - recommend 且 has_ingredient=True：食材本身是好锚点（一个食材散射到多道菜），直接用原始输入
+    - recommend 且 has_ingredient=False：原始输入拼接 LLM 建议的具体菜名
+      （菜名举例/菜系/品类/口味/场景直接搜都搜不准，需要具体菜名做锚点）
+    """
+    user_input = state.get("user_input", "")
+    intent_type = state.get("intent_type", "recipe")
+    has_ingredient = state.get("has_ingredient", False)
+    suggested_cuisines = state.get("suggested_cuisines", [])
+
+    if intent_type == "recommend" and not has_ingredient and suggested_cuisines:
+        query = user_input + " " + " ".join(suggested_cuisines)
+        logger.info(f"[rag_agent] recommend 无食材，拼接建议菜名: {suggested_cuisines}")
+        return query
+    return user_input
 
 
 def _build_category_filter(state: DietState) -> str | None:
