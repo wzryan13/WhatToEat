@@ -1,0 +1,17 @@
+# ── 微调产物（绝不进 git，权重/checkpoint 可达数 GB）──
+outputs/*
+!outputs/.gitkeep
+checkpoint-*/
+*.safetensors
+*.bin
+*.pt
+*.gguf
+
+# ── teacher 生成的训练集（可重新生成；datasets/raw 手工种子保留进 git）──
+datasets/processed/*
+!datasets/processed/.gitkeep
+
+# ── 独立 venv & 缓存 ──
+.venv/
+__pycache__/
+*.pyc
