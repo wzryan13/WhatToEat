@@ -22,8 +22,7 @@ from langchain_core.embeddings import Embeddings
 
 from config.settings import settings
 from rag.cache import CacheManager
-from rag.pipeline.generation import GenerationIntegrationModule
-from rag.pipeline.metadata_filter import MetadataFilterExtractor
+from rag.pipeline.query_understanding import QueryUnderstandingModule
 from rag.pipeline.retrieval import RetrievalOptimizationModule
 from rag.pipeline.document_processor import document_processor
 from rag.rerankers.siliconflow_reranker import SiliconFlowReranker
@@ -49,8 +48,7 @@ class RAGService:
             vector_store=vector_store,
             score_threshold=settings.RAG_SCORE_THRESHOLD,
         )
-        self.query_rewriter = GenerationIntegrationModule()
-        self.metadata_filter = MetadataFilterExtractor()
+        self.query_understanding = QueryUnderstandingModule()
         self.reranker = SiliconFlowReranker()
         self.embeddings = embeddings
 
@@ -75,8 +73,11 @@ class RAGService:
         Returns:
             检索并重排序后的文档列表
         """
-        # Step 2: Query Rewrite
-        rewritten_query = await self.query_rewriter.rewrite_query(query)
+        # Step 2+3: Query Understanding（单次 LLM：改写 + 元数据过滤表达式）
+        rewritten_query, llm_expr = await self.query_understanding.understand(
+            query=query,
+            metadata_catalog=metadata_catalog,
+        )
 
         # Step 1: Cache check (L1 精确 → L2 语义)
         filter_scope = hashlib.sha256(extra_expr.encode()).hexdigest()[:16] if extra_expr else None
@@ -85,14 +86,6 @@ class RAGService:
             if cached:
                 logger.info("RAG 缓存命中: %d 条文档", len(cached))
                 return cached
-
-        # Step 3: Metadata Filter (LLM 生成 expr)
-        llm_expr = None
-        if metadata_catalog:
-            llm_expr = await self.metadata_filter.build_filter_expression(
-                query=rewritten_query,
-                metadata_catalog=metadata_catalog,
-            )
 
         # 合并 extra_expr 和 llm_expr
         final_expr = self._merge_expressions(extra_expr, llm_expr)
