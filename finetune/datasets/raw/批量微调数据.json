@@ -1,0 +1,5636 @@
+[
+ {
+  "id": 1,
+  "query": "红烧肉怎么做",
+  "rewritten_query": "如何制作红烧肉？",
+  "expr": "dish_name LIKE \"%红烧肉%\""
+ },
+ {
+  "id": 2,
+  "query": "教我做麻婆豆腐",
+  "rewritten_query": "如何制作麻婆豆腐？",
+  "expr": "dish_name LIKE \"%麻婆豆腐%\""
+ },
+ {
+  "id": 3,
+  "query": "想做个戚风蛋糕",
+  "rewritten_query": "如何制作戚风蛋糕？",
+  "expr": "dish_name LIKE \"%戚风蛋糕%\""
+ },
+ {
+  "id": 4,
+  "query": "糖醋排骨的做法",
+  "rewritten_query": "如何制作糖醋排骨？",
+  "expr": "dish_name LIKE \"%糖醋排骨%\""
+ },
+ {
+  "id": 5,
+  "query": "酸辣土豆丝怎么炒",
+  "rewritten_query": "如何制作酸辣土豆丝？",
+  "expr": "dish_name LIKE \"%酸辣土豆丝%\""
+ },
+ {
+  "id": 6,
+  "query": "来个水煮肉片",
+  "rewritten_query": "如何制作水煮肉片？",
+  "expr": "dish_name LIKE \"%水煮肉片%\""
+ },
+ {
+  "id": 7,
+  "query": "回锅肉怎么做才好吃",
+  "rewritten_query": "如何制作回锅肉？",
+  "expr": "dish_name LIKE \"%回锅肉%\""
+ },
+ {
+  "id": 8,
+  "query": "想学做鱼香肉丝",
+  "rewritten_query": "如何制作鱼香肉丝？",
+  "expr": "dish_name LIKE \"%鱼香肉丝%\""
+ },
+ {
+  "id": 9,
+  "query": "可乐鸡翅的做法",
+  "rewritten_query": "如何制作可乐鸡翅？",
+  "expr": "dish_name LIKE \"%可乐鸡翅%\""
+ },
+ {
+  "id": 10,
+  "query": "包饺子怎么调馅",
+  "rewritten_query": "如何调制饺子馅料？",
+  "expr": "dish_name LIKE \"%饺子%\""
+ },
+ {
+  "id": 11,
+  "query": "佛跳墙怎么做",
+  "rewritten_query": "如何制作佛跳墙？",
+  "expr": "dish_name LIKE \"%佛跳墙%\""
+ },
+ {
+  "id": 12,
+  "query": "做个紫菜蛋花汤",
+  "rewritten_query": "如何制作紫菜蛋花汤？",
+  "expr": "dish_name LIKE \"%紫菜蛋花汤%\""
+ },
+ {
+  "id": 13,
+  "query": "番茄意面的食谱",
+  "rewritten_query": "如何制作番茄意面？",
+  "expr": "dish_name LIKE \"%番茄意面%\""
+ },
+ {
+  "id": 14,
+  "query": "清蒸鲈鱼怎么处理",
+  "rewritten_query": "如何制作清蒸鲈鱼？",
+  "expr": "dish_name LIKE \"%清蒸鲈鱼%\""
+ },
+ {
+  "id": 15,
+  "query": "蛋炒饭的详细步骤",
+  "rewritten_query": "如何制作蛋炒饭？",
+  "expr": "dish_name LIKE \"%蛋炒饭%\""
+ },
+ {
+  "id": 16,
+  "query": "做个抹茶千层蛋糕",
+  "rewritten_query": "如何制作抹茶千层蛋糕？",
+  "expr": "dish_name LIKE \"%抹茶千层蛋糕%\""
+ },
+ {
+  "id": 17,
+  "query": "推荐几道素菜",
+  "rewritten_query": "能推荐几道素菜吗？",
+  "expr": "category == \"素菜\""
+ },
+ {
+  "id": 18,
+  "query": "想在家做点海鲜",
+  "rewritten_query": "有哪些在家可以做的海鲜食谱？",
+  "expr": "category == \"水产\""
+ },
+ {
+  "id": 19,
+  "query": "煲个老火汤喝",
+  "rewritten_query": "有哪些老火汤的食谱可以推荐？",
+  "expr": "category == \"汤类\""
+ },
+ {
+  "id": 20,
+  "query": "早餐可以做点啥",
+  "rewritten_query": "早餐可以做些什么？",
+  "expr": "category == \"早餐\""
+ },
+ {
+  "id": 21,
+  "query": "想自己做个蛋糕甜品",
+  "rewritten_query": "有哪些甜品类食谱可以学着做？",
+  "expr": "category == \"甜品\""
+ },
+ {
+  "id": 22,
+  "query": "来点硬菜荤的",
+  "rewritten_query": "有哪些荤菜食谱推荐？",
+  "expr": "category == \"荤菜\""
+ },
+ {
+  "id": 23,
+  "query": "有哪些主食可以换换花样",
+  "rewritten_query": "有哪些主食食谱可以换换花样？",
+  "expr": "category == \"主食\""
+ },
+ {
+  "id": 24,
+  "query": "自己在家调杯饮料",
+  "rewritten_query": "有哪些自制饮品的食谱？",
+  "expr": "category == \"饮品\""
+ },
+ {
+  "id": 25,
+  "query": "想做点半成品囤冰箱",
+  "rewritten_query": "有哪些半成品加工食谱可以囤冰箱？",
+  "expr": "category == \"半成品加工\""
+ },
+ {
+  "id": 26,
+  "query": "整点下饭的荤菜",
+  "rewritten_query": "有哪些下饭的荤菜可以制作？",
+  "expr": "category == \"荤菜\""
+ },
+ {
+  "id": 27,
+  "query": "有没有什么汤类的食谱",
+  "rewritten_query": "能推荐一些汤类的食谱吗？",
+  "expr": "category == \"汤类\""
+ },
+ {
+  "id": 28,
+  "query": "早餐想换个新花样吃",
+  "rewritten_query": "早餐有什么新花样的食谱？",
+  "expr": "category == \"早餐\""
+ },
+ {
+  "id": 29,
+  "query": "自己调个低卡饮料配方",
+  "rewritten_query": "有哪些自制饮品的低卡配方？",
+  "expr": "category == \"饮品\""
+ },
+ {
+  "id": 30,
+  "query": "水产类的菜谱给我看看",
+  "rewritten_query": "有哪些水产类的菜谱？",
+  "expr": "category == \"水产\""
+ },
+ {
+  "id": 31,
+  "query": "我想学做几道简单的调料",
+  "rewritten_query": "有哪些简单的调料可以自制？",
+  "expr": "category == \"调料\""
+ },
+ {
+  "id": 32,
+  "query": "有没有简单的菜谱",
+  "rewritten_query": "能推荐一些简单的菜谱吗？",
+  "expr": "difficulty == \"入门\" or difficulty == \"简单\""
+ },
+ {
+  "id": 33,
+  "query": "挑战个高难度大菜",
+  "rewritten_query": "有哪些高难度的大菜可以挑战？",
+  "expr": "difficulty == \"困难\""
+ },
+ {
+  "id": 34,
+  "query": "适合新手做的菜",
+  "rewritten_query": "有哪些适合新手制作的菜品？",
+  "expr": "difficulty == \"入门\""
+ },
+ {
+  "id": 35,
+  "query": "有没有难度适中的家常小炒",
+  "rewritten_query": "有哪些难度适中的家常小炒？",
+  "expr": "difficulty == \"中等\""
+ },
+ {
+  "id": 36,
+  "query": "手残党能做的零失败菜",
+  "rewritten_query": "有哪些适合手残党的零失败菜品？",
+  "expr": "difficulty == \"入门\" or difficulty == \"简单\""
+ },
+ {
+  "id": 37,
+  "query": "稍微有点挑战的菜",
+  "rewritten_query": "有哪些稍微有点挑战的菜？",
+  "expr": "difficulty == \"中等\" or difficulty == \"较难\""
+ },
+ {
+  "id": 38,
+  "query": "想试试比较难的烘焙",
+  "rewritten_query": "有哪些比较难的烘焙食谱？",
+  "expr": "difficulty == \"较难\" or difficulty == \"困难\""
+ },
+ {
+  "id": 39,
+  "query": "不用太费劲就能做好的菜",
+  "rewritten_query": "有哪些不用太费劲就能做好的菜品？",
+  "expr": "difficulty == \"简单\""
+ },
+ {
+  "id": 40,
+  "query": "推荐几道简单的素菜",
+  "rewritten_query": "能推荐几道简单的素菜吗？",
+  "expr": "category == \"素菜\" and (difficulty == \"入门\" or difficulty == \"简单\")"
+ },
+ {
+  "id": 41,
+  "query": "有没有难一点的荤菜",
+  "rewritten_query": "有哪些难度较高的荤菜可以制作？",
+  "expr": "category == \"荤菜\" and (difficulty == \"较难\" or difficulty == \"困难\")"
+ },
+ {
+  "id": 42,
+  "query": "新手做早餐能做什么",
+  "rewritten_query": "有哪些适合新手的早餐食谱？",
+  "expr": "category == \"早餐\" and difficulty == \"入门\""
+ },
+ {
+  "id": 43,
+  "query": "入门级的水产怎么做",
+  "rewritten_query": "有哪些入门级的水产食谱？",
+  "expr": "category == \"水产\" and difficulty == \"入门\""
+ },
+ {
+  "id": 44,
+  "query": "来点简单的汤暖暖胃",
+  "rewritten_query": "有哪些做法简单的汤类食谱？",
+  "expr": "category == \"汤类\" and (difficulty == \"入门\" or difficulty == \"简单\")"
+ },
+ {
+  "id": 45,
+  "query": "中等难度的甜品想挑战",
+  "rewritten_query": "有哪些中等难度的甜品可以挑战？",
+  "expr": "category == \"甜品\" and difficulty == \"中等\""
+ },
+ {
+  "id": 46,
+  "query": "高难度的硬菜荤菜",
+  "rewritten_query": "有哪些高难度的荤菜硬菜？",
+  "expr": "category == \"荤菜\" and difficulty == \"困难\""
+ },
+ {
+  "id": 47,
+  "query": "简单的半成品加工点心",
+  "rewritten_query": "有哪些简单的半成品加工点心食谱？",
+  "expr": "category == \"半成品加工\" and (difficulty == \"入门\" or difficulty == \"简单\")"
+ },
+ {
+  "id": 48,
+  "query": "素菜里稍微难做一点的",
+  "rewritten_query": "有哪些做法稍微复杂一些的素菜？",
+  "expr": "category == \"素菜\" and (difficulty == \"中等\" or difficulty == \"较难\")"
+ },
+ {
+  "id": 49,
+  "query": "推荐几道川菜",
+  "rewritten_query": "能推荐几道川菜吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 50,
+  "query": "想做点粤菜的家常做法",
+  "rewritten_query": "有哪些粤菜的家常做法？",
+  "expr": "NONE"
+ },
+ {
+  "id": 51,
+  "query": "湘菜有哪些下饭菜",
+  "rewritten_query": "湘菜中有什么下饭的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 52,
+  "query": "东北菜里的大炖菜",
+  "rewritten_query": "有哪些东北风味的炖菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 53,
+  "query": "推荐几道鲁菜经典",
+  "rewritten_query": "能推荐几道鲁菜中的经典菜吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 54,
+  "query": "江浙那边的清淡菜谱",
+  "rewritten_query": "有哪些江浙风味的清淡菜谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 55,
+  "query": "四川风味的菜怎么做",
+  "rewritten_query": "有哪些四川风味的菜可以学着做？",
+  "expr": "NONE"
+ },
+ {
+  "id": 56,
+  "query": "来个闽菜佛跳墙难度太高换点别的",
+  "rewritten_query": "有哪些闽菜食谱推荐，除了佛跳墙？",
+  "expr": "NONE"
+ },
+ {
+  "id": 57,
+  "query": "想做点辣的菜",
+  "rewritten_query": "有哪些辣的菜可以制作？",
+  "expr": "NONE"
+ },
+ {
+  "id": 58,
+  "query": "清淡养生的汤羹",
+  "rewritten_query": "有哪些清淡养生的汤羹食谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 59,
+  "query": "酸甜口的家常菜",
+  "rewritten_query": "有哪些酸甜口味的家常菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 60,
+  "query": "特别下饭的菜推荐",
+  "rewritten_query": "有哪些特别下饭的菜可以推荐？",
+  "expr": "NONE"
+ },
+ {
+  "id": 61,
+  "query": "开胃的小凉菜",
+  "rewritten_query": "有哪些开胃的凉菜可以制作？",
+  "expr": "NONE"
+ },
+ {
+  "id": 62,
+  "query": "想吃点重口味的",
+  "rewritten_query": "有哪些重口味的菜可以制作？",
+  "expr": "NONE"
+ },
+ {
+  "id": 63,
+  "query": "解腻的菜有啥",
+  "rewritten_query": "有哪些可以解腻的菜品？",
+  "expr": "NONE"
+ },
+ {
+  "id": 64,
+  "query": "麻味的菜怎么做",
+  "rewritten_query": "有哪些麻味的菜可以学着做？",
+  "expr": "NONE"
+ },
+ {
+  "id": 65,
+  "query": "想做点不辣的菜",
+  "rewritten_query": "有哪些不辣的菜的菜谱推荐？",
+  "expr": "NONE"
+ },
+ {
+  "id": 66,
+  "query": "做菜别太麻烦的",
+  "rewritten_query": "有哪些做法不麻烦的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 67,
+  "query": "不油腻的荤菜有哪些",
+  "rewritten_query": "有哪些不油腻的荤菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 68,
+  "query": "别太甜的甜品有什么",
+  "rewritten_query": "有哪些不太甜的甜品类食谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 69,
+  "query": "用排骨能做什么菜",
+  "rewritten_query": "用排骨可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 70,
+  "query": "有点虾想做菜",
+  "rewritten_query": "用虾可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 71,
+  "query": "鸡蛋能做啥",
+  "rewritten_query": "用鸡蛋可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 72,
+  "query": "家里有五花肉怎么做好吃",
+  "rewritten_query": "用五花肉可以做什么好吃的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 73,
+  "query": "买了好多鸡胸肉怎么吃",
+  "rewritten_query": "用鸡胸肉可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 74,
+  "query": "剩下的土豆能做什么",
+  "rewritten_query": "用土豆可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 75,
+  "query": "扇贝怎么做菜",
+  "rewritten_query": "用扇贝可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 76,
+  "query": "有块牛肉除了煎还能做啥",
+  "rewritten_query": "用牛肉可以做什么其他菜品？",
+  "expr": "NONE"
+ },
+ {
+  "id": 77,
+  "query": "今晚做什么菜好呢",
+  "rewritten_query": "今晚做什么菜好呢？",
+  "expr": "NONE"
+ },
+ {
+  "id": 78,
+  "query": "下班累了想做个快手菜",
+  "rewritten_query": "有哪些快手菜可以快速完成？",
+  "expr": "NONE"
+ },
+ {
+  "id": 79,
+  "query": "随便推荐几个家常菜吧",
+  "rewritten_query": "能随便推荐几个家常菜吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 80,
+  "query": "周末请客做什么菜有面子",
+  "rewritten_query": "有哪些适合请客时做的拿手菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 81,
+  "query": "想带饭做点什么好",
+  "rewritten_query": "有哪些适合带饭的菜品？",
+  "expr": "NONE"
+ },
+ {
+  "id": 82,
+  "query": "孩子爱吃的不辣的菜",
+  "rewritten_query": "有哪些适合孩子的不辣的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 83,
+  "query": "天热了想吃点凉拌的",
+  "rewritten_query": "有哪些适合热天的凉拌菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 84,
+  "query": "今晚做什么菜 回锅肉 麻婆豆腐 酸辣土豆丝 紫菜蛋花汤",
+  "rewritten_query": "今晚做什么菜，比如回锅肉、麻婆豆腐、酸辣土豆丝或紫菜蛋花汤？",
+  "expr": "NONE"
+ },
+ {
+  "id": 85,
+  "query": "推荐几道川菜 回锅肉 麻婆豆腐 水煮肉片 鱼香肉丝",
+  "rewritten_query": "能推荐几道川菜吗，比如回锅肉、麻婆豆腐、水煮肉片或鱼香肉丝？",
+  "expr": "NONE"
+ },
+ {
+  "id": 86,
+  "query": "不知道吃啥 红烧排骨 清炒时蔬 番茄蛋汤",
+  "rewritten_query": "在不知道吃什么的情况下，可以尝试红烧排骨、清炒时蔬或番茄蛋汤吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 87,
+  "query": "来几个菜 宫保鸡丁 干煸四季豆 酸菜鱼",
+  "rewritten_query": "能推荐宫保鸡丁、干煸四季豆和酸菜鱼这几个菜的做法吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 88,
+  "query": "随便煮点 饺子 馄饨 阳春面",
+  "rewritten_query": "想随便煮点像饺子、馄饨或阳春面这样的食物。",
+  "expr": "NONE"
+ },
+ {
+  "id": 89,
+  "query": "做点素菜 地三鲜 蚝油生菜 麻婆豆腐",
+  "rewritten_query": "能推荐像地三鲜、蚝油生菜和麻婆豆腐这样的素菜做法吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 90,
+  "query": "整一桌菜 凉拌黄瓜 糖醋里脊 西湖牛肉羹",
+  "rewritten_query": "如何制作一桌包含凉拌黄瓜、糖醋里脊和西湖牛肉羹的饭菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 91,
+  "query": "在家做饭 红烧肉 油焖大虾 蒜蓉西兰花",
+  "rewritten_query": "在家如何制作红烧肉、油焖大虾和蒜蓉西兰花？",
+  "expr": "NONE"
+ },
+ {
+  "id": 92,
+  "query": "快手小炒 青椒肉丝 韭黄炒蛋 酸辣藕丁",
+  "rewritten_query": "能推荐几道像青椒肉丝、韭黄炒蛋、酸辣藕丁这样的快手小炒吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 93,
+  "query": "周末聚餐 烤羊排 芝士焗龙虾 提拉米苏 南瓜浓汤",
+  "rewritten_query": "周末聚餐适合准备烤羊排、芝士焗龙虾、提拉米苏和南瓜浓汤吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 94,
+  "query": "清淡点的 白灼菜心 清蒸鱼 冬瓜排骨汤",
+  "rewritten_query": "有哪些清淡点的菜，比如白灼菜心、清蒸鱼或冬瓜排骨汤？",
+  "expr": "NONE"
+ },
+ {
+  "id": 95,
+  "query": "过年硬菜 梅菜扣肉 四喜丸子 葱烧海参",
+  "rewritten_query": "过年有哪些像梅菜扣肉、四喜丸子和葱烧海参这样的硬菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 96,
+  "query": "减脂期吃的 鸡胸肉沙拉 杂粮饭 西兰花炒虾仁",
+  "rewritten_query": "减脂期可以尝试吃鸡胸肉沙拉、杂粮饭或西兰花炒虾仁吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 97,
+  "query": "孩子挑食 可乐鸡翅 炸猪排 番茄肉酱面",
+  "rewritten_query": "针对孩子挑食，可以做可乐鸡翅、炸猪排或番茄肉酱面吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 98,
+  "query": "一锅炖 猪肉炖粉条 小鸡炖蘑菇 红烧牛腩",
+  "rewritten_query": "有哪些一锅炖的菜，比如猪肉炖粉条、小鸡炖蘑菇或红烧牛腩？",
+  "expr": "NONE"
+ },
+ {
+  "id": 99,
+  "query": "做个减脂餐",
+  "rewritten_query": "有哪些适合减脂的餐食？",
+  "expr": "NONE"
+ },
+ {
+  "id": 100,
+  "query": "有什么下酒菜好做",
+  "rewritten_query": "有哪些好做的下酒菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 101,
+  "query": "想做个酸菜鱼",
+  "rewritten_query": "如何制作酸菜鱼？",
+  "expr": "dish_name LIKE \"%酸菜鱼%\""
+ },
+ {
+  "id": 102,
+  "query": "西红柿炒鸡蛋步骤",
+  "rewritten_query": "西红柿炒鸡蛋的具体步骤是什么？",
+  "expr": "dish_name LIKE \"%西红柿炒鸡蛋%\""
+ },
+ {
+  "id": 103,
+  "query": "蛋炒饭怎么炒",
+  "rewritten_query": "如何制作蛋炒饭？",
+  "expr": "dish_name LIKE \"%蛋炒饭%\""
+ },
+ {
+  "id": 104,
+  "query": "皮蛋瘦肉粥怎么熬",
+  "rewritten_query": "如何熬制皮蛋瘦肉粥？",
+  "expr": "dish_name LIKE \"%皮蛋瘦肉粥%\""
+ },
+ {
+  "id": 105,
+  "query": "想学做宫保鸡丁",
+  "rewritten_query": "如何制作宫保鸡丁？",
+  "expr": "dish_name LIKE \"%宫保鸡丁%\""
+ },
+ {
+  "id": 106,
+  "query": "回锅肉怎么做才正宗",
+  "rewritten_query": "如何制作正宗的回锅肉？",
+  "expr": "dish_name LIKE \"%回锅肉%\""
+ },
+ {
+  "id": 107,
+  "query": "鱼香肉丝的做法",
+  "rewritten_query": "鱼香肉丝的做法是什么？",
+  "expr": "dish_name LIKE \"%鱼香肉丝%\""
+ },
+ {
+  "id": 108,
+  "query": "想做水煮鱼",
+  "rewritten_query": "如何制作水煮鱼？",
+  "expr": "dish_name LIKE \"%水煮鱼%\""
+ },
+ {
+  "id": 109,
+  "query": "土豆炖牛肉步骤",
+  "rewritten_query": "土豆炖牛肉的具体步骤是什么？",
+  "expr": "dish_name LIKE \"%土豆炖牛肉%\""
+ },
+ {
+  "id": 110,
+  "query": "红烧鸡块怎么烧",
+  "rewritten_query": "如何制作红烧鸡块？",
+  "expr": "dish_name LIKE \"%红烧鸡块%\""
+ },
+ {
+  "id": 111,
+  "query": "蒜蓉西兰花的做法",
+  "rewritten_query": "蒜蓉西兰花的做法是什么？",
+  "expr": "dish_name LIKE \"%蒜蓉西兰花%\""
+ },
+ {
+  "id": 112,
+  "query": "想做个玉米排骨汤",
+  "rewritten_query": "如何制作玉米排骨汤？",
+  "expr": "dish_name LIKE \"%玉米排骨汤%\""
+ },
+ {
+  "id": 113,
+  "query": "蛋挞怎么做",
+  "rewritten_query": "如何制作蛋挞？",
+  "expr": "dish_name LIKE \"%蛋挞%\""
+ },
+ {
+  "id": 114,
+  "query": "想煲个汤",
+  "rewritten_query": "有哪些汤类食谱可以推荐？",
+  "expr": "category == \"汤类\""
+ },
+ {
+  "id": 115,
+  "query": "有什么主食推荐",
+  "rewritten_query": "有哪些主食类的菜谱可以推荐？",
+  "expr": "category == \"主食\""
+ },
+ {
+  "id": 116,
+  "query": "给我推荐几道荤菜",
+  "rewritten_query": "能推荐几道荤菜吗？",
+  "expr": "category == \"荤菜\""
+ },
+ {
+  "id": 117,
+  "query": "想自己调杯饮料",
+  "rewritten_query": "有哪些自制饮品的食谱？",
+  "expr": "category == \"饮品\""
+ },
+ {
+  "id": 118,
+  "query": "推荐个早餐做法",
+  "rewritten_query": "能推荐几道早餐的做法吗？",
+  "expr": "category == \"早餐\""
+ },
+ {
+  "id": 119,
+  "query": "想做个甜品",
+  "rewritten_query": "有哪些甜品的制作方法？",
+  "expr": "category == \"甜品\""
+ },
+ {
+  "id": 120,
+  "query": "教我做几道水产",
+  "rewritten_query": "能教我几道水产类菜肴的做法吗？",
+  "expr": "category == \"水产\""
+ },
+ {
+  "id": 121,
+  "query": "有啥好吃的素菜",
+  "rewritten_query": "有哪些好吃的素菜推荐？",
+  "expr": "category == \"素菜\""
+ },
+ {
+  "id": 122,
+  "query": "来点汤的做法",
+  "rewritten_query": "能推荐一些汤类的做法吗？",
+  "expr": "category == \"汤类\""
+ },
+ {
+  "id": 123,
+  "query": "想吃点海鲜",
+  "rewritten_query": "有哪些海鲜类的食谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 124,
+  "query": "早餐能吃什么",
+  "rewritten_query": "早餐能做什么吃的？",
+  "expr": "category == \"早餐\""
+ },
+ {
+  "id": 125,
+  "query": "主食类菜谱",
+  "rewritten_query": "能推荐一些主食类的菜谱吗？",
+  "expr": "category == \"主食\""
+ },
+ {
+  "id": 126,
+  "query": "想做调料",
+  "rewritten_query": "有哪些自制调料的食谱？",
+  "expr": "category == \"调料\""
+ },
+ {
+  "id": 127,
+  "query": "有没有简单的菜谱推荐",
+  "rewritten_query": "能推荐一些简单的菜谱吗？",
+  "expr": "difficulty == \"入门\" or difficulty == \"简单\""
+ },
+ {
+  "id": 128,
+  "query": "新手能做的菜",
+  "rewritten_query": "有哪些适合新手做的菜？",
+  "expr": "difficulty == \"入门\""
+ },
+ {
+  "id": 129,
+  "query": "推荐几个复杂的大菜",
+  "rewritten_query": "能推荐几道做法复杂的大菜吗？",
+  "expr": "difficulty == \"较难\" or difficulty == \"困难\""
+ },
+ {
+  "id": 130,
+  "query": "入门级别的菜",
+  "rewritten_query": "有哪些入门级别的菜谱？",
+  "expr": "difficulty == \"入门\""
+ },
+ {
+  "id": 131,
+  "query": "中等难度的菜谱",
+  "rewritten_query": "能推荐一些中等难度的菜谱吗？",
+  "expr": "difficulty == \"中等\""
+ },
+ {
+  "id": 132,
+  "query": "有没有不那么难的菜",
+  "rewritten_query": "能推荐一些难度不那么高的菜吗？",
+  "expr": "difficulty == \"入门\" or difficulty == \"简单\""
+ },
+ {
+  "id": 133,
+  "query": "简单好做的家常菜",
+  "rewritten_query": "能推荐一些简单好做的家常菜吗？",
+  "expr": "difficulty == \"入门\" or difficulty == \"简单\""
+ },
+ {
+  "id": 134,
+  "query": "难一点的荤菜",
+  "rewritten_query": "有哪些难度高一些的荤菜？",
+  "expr": "category == \"荤菜\" and (difficulty == \"较难\" or difficulty == \"困难\")"
+ },
+ {
+  "id": 135,
+  "query": "新手能做的汤",
+  "rewritten_query": "有哪些新手也能做的汤类？",
+  "expr": "category == \"汤类\" and difficulty == \"入门\""
+ },
+ {
+  "id": 136,
+  "query": "简单的主食做法",
+  "rewritten_query": "有哪些简单的主食做法？",
+  "expr": "category == \"主食\" and (difficulty == \"入门\" or difficulty == \"简单\")"
+ },
+ {
+  "id": 137,
+  "query": "入门级甜品推荐",
+  "rewritten_query": "能推荐一些入门级的甜品吗？",
+  "expr": "category == \"甜品\" and difficulty == \"入门\""
+ },
+ {
+  "id": 138,
+  "query": "中等难度的水产菜",
+  "rewritten_query": "有哪些中等难度的水产类菜肴？",
+  "expr": "category == \"水产\" and difficulty == \"中等\""
+ },
+ {
+  "id": 139,
+  "query": "复杂的素菜大餐",
+  "rewritten_query": "有哪些做法复杂的素菜大餐？",
+  "expr": "category == \"素菜\" and (difficulty == \"较难\" or difficulty == \"困难\")"
+ },
+ {
+  "id": 140,
+  "query": "简单的早餐推荐",
+  "rewritten_query": "能推荐几道简单的早餐吗？",
+  "expr": "category == \"早餐\" and (difficulty == \"入门\" or difficulty == \"简单\")"
+ },
+ {
+  "id": 141,
+  "query": "困难的甜品挑战",
+  "rewritten_query": "有哪些高难度的甜品可以挑战？",
+  "expr": "category == \"甜品\" and difficulty == \"困难\""
+ },
+ {
+  "id": 142,
+  "query": "想做点粤菜",
+  "rewritten_query": "有哪些粤菜可以制作？",
+  "expr": "NONE"
+ },
+ {
+  "id": 143,
+  "query": "湘菜有什么好吃的",
+  "rewritten_query": "湘菜里有什么好吃的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 144,
+  "query": "东北菜的做法",
+  "rewritten_query": "东北菜的做法有哪些？",
+  "expr": "NONE"
+ },
+ {
+  "id": 145,
+  "query": "鲁菜推荐",
+  "rewritten_query": "能推荐几道鲁菜吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 146,
+  "query": "想学做江浙菜",
+  "rewritten_query": "如何制作江浙菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 147,
+  "query": "闽菜风味",
+  "rewritten_query": "有哪些闽菜风味的菜肴？",
+  "expr": "NONE"
+ },
+ {
+  "id": 148,
+  "query": "徽菜怎么做",
+  "rewritten_query": "徽菜怎么做？",
+  "expr": "NONE"
+ },
+ {
+  "id": 149,
+  "query": "想吃点清淡的",
+  "rewritten_query": "有哪些口味清淡的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 150,
+  "query": "下饭菜推荐",
+  "rewritten_query": "能推荐几道下饭的菜吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 151,
+  "query": "酸甜口味的菜",
+  "rewritten_query": "有哪些酸甜口味的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 152,
+  "query": "开胃菜的做法",
+  "rewritten_query": "有哪些开胃菜的做法？",
+  "expr": "NONE"
+ },
+ {
+  "id": 153,
+  "query": "麻辣口味的",
+  "rewritten_query": "能推荐一些麻辣口味的菜吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 154,
+  "query": "香辣的菜谱",
+  "rewritten_query": "有哪些香辣的菜谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 155,
+  "query": "酸辣口味推荐",
+  "rewritten_query": "能推荐几道酸辣口味的菜吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 156,
+  "query": "别太油腻的菜",
+  "rewritten_query": "有哪些不太油腻的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 157,
+  "query": "不想用太多调料",
+  "rewritten_query": "有哪些不需要太多调料的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 158,
+  "query": "五花肉的做法",
+  "rewritten_query": "五花肉可以做成什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 159,
+  "query": "家里有鸡肉，做点啥",
+  "rewritten_query": "用鸡肉可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 160,
+  "query": "牛肉怎么做好吃",
+  "rewritten_query": "牛肉怎么做好吃？",
+  "expr": "NONE"
+ },
+ {
+  "id": 161,
+  "query": "鱼的做法大全",
+  "rewritten_query": "鱼有哪些做法？",
+  "expr": "NONE"
+ },
+ {
+  "id": 162,
+  "query": "豆腐能做什么菜",
+  "rewritten_query": "用豆腐可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 163,
+  "query": "随便推荐几个",
+  "rewritten_query": "能随便推荐几个菜谱吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 164,
+  "query": "下班累了，想做个快手菜",
+  "rewritten_query": "有哪些快手菜可以快速完成？",
+  "expr": "NONE"
+ },
+ {
+  "id": 165,
+  "query": "周末做点好吃的",
+  "rewritten_query": "周末适合做什么好吃的？",
+  "expr": "NONE"
+ },
+ {
+  "id": 166,
+  "query": "家里来客人做啥菜",
+  "rewritten_query": "家里来客人适合做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 167,
+  "query": "一个人吃做什么简单",
+  "rewritten_query": "一个人吃饭做什么简单？",
+  "expr": "NONE"
+ },
+ {
+  "id": 168,
+  "query": "孩子爱吃什么菜",
+  "rewritten_query": "有什么孩子爱吃的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 169,
+  "query": "今天吃什么 红烧排骨 清炒时蔬 番茄蛋汤",
+  "rewritten_query": "今天适合吃什么，比如红烧排骨、清炒时蔬或番茄蛋汤？",
+  "expr": "NONE"
+ },
+ {
+  "id": 170,
+  "query": "想学几道家常菜 醋溜白菜 鱼香茄子 肉末粉丝",
+  "rewritten_query": "想学几道如醋溜白菜、鱼香茄子或肉末粉丝之类的家常菜的做法。",
+  "expr": "NONE"
+ },
+ {
+  "id": 171,
+  "query": "周末加餐 红烧鱼 白灼虾 蒜蓉生蚝",
+  "rewritten_query": "周末加餐可以做什么，比如红烧鱼、白灼虾或蒜蓉生蚝？",
+  "expr": "NONE"
+ },
+ {
+  "id": 172,
+  "query": "早餐吃什么 煎饼果子 豆浆 油条",
+  "rewritten_query": "早餐可以吃些什么，比如煎饼果子、豆浆和油条？",
+  "expr": "NONE"
+ },
+ {
+  "id": 173,
+  "query": "做个汤 排骨汤 鸡汤 鱼汤 豆腐汤",
+  "rewritten_query": "适合做什么汤，例如排骨汤、鸡汤、鱼汤或豆腐汤？",
+  "expr": "NONE"
+ },
+ {
+  "id": 174,
+  "query": "主食推荐 炒饭 炒面 盖饭 饺子",
+  "rewritten_query": "有什么主食可以推荐，比如炒饭、炒面、盖饭或饺子？",
+  "expr": "NONE"
+ },
+ {
+  "id": 175,
+  "query": "甜点时间 蛋糕 布丁 双皮奶 杨枝甘露",
+  "rewritten_query": "甜点时间可以做些什么，比如蛋糕、布丁、双皮奶或杨枝甘露？",
+  "expr": "NONE"
+ },
+ {
+  "id": 176,
+  "query": "素菜大全 地三鲜 手撕包菜 干煸豆角 素炒青菜",
+  "rewritten_query": "有哪些素菜推荐，比如地三鲜、手撕包菜、干煸豆角或素炒青菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 177,
+  "query": "荤菜做法 红烧肉 糖醋排骨 酱牛肉 啤酒鸭",
+  "rewritten_query": "有哪些荤菜的做法可以推荐，比如红烧肉、糖醋排骨、酱牛肉或啤酒鸭？",
+  "expr": "NONE"
+ },
+ {
+  "id": 178,
+  "query": "汤类推荐 紫菜蛋花汤 西红柿鸡蛋汤 酸辣汤 疙瘩汤",
+  "rewritten_query": "有什么汤类推荐，比如紫菜蛋花汤、西红柿鸡蛋汤、酸辣汤或疙瘩汤？",
+  "expr": "NONE"
+ },
+ {
+  "id": 179,
+  "query": "饮品自制 柠檬水 奶茶 果汁 奶昔",
+  "rewritten_query": "有哪些自制饮品的做法，比如柠檬水、奶茶、果汁或奶昔？",
+  "expr": "NONE"
+ },
+ {
+  "id": 180,
+  "query": "下酒菜推荐",
+  "rewritten_query": "有哪些适合下酒的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 181,
+  "query": "拿手菜做什么好",
+  "rewritten_query": "有哪些适合当拿手菜的菜谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 182,
+  "query": "想复刻苍蝇馆子的味道",
+  "rewritten_query": "如何做出像苍蝇馆子那种味道的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 183,
+  "query": "东坡肉的做法",
+  "rewritten_query": "如何制作东坡肉？",
+  "expr": "dish_name LIKE \"%东坡肉%\""
+ },
+ {
+  "id": 184,
+  "query": "教我做口水鸡",
+  "rewritten_query": "能教我如何制作口水鸡吗？",
+  "expr": "dish_name LIKE \"%口水鸡%\""
+ },
+ {
+  "id": 185,
+  "query": "清蒸鲈鱼怎么蒸",
+  "rewritten_query": "如何制作清蒸鲈鱼？",
+  "expr": "dish_name LIKE \"%清蒸鲈鱼%\""
+ },
+ {
+  "id": 186,
+  "query": "想做个佛跳墙",
+  "rewritten_query": "如何制作佛跳墙？",
+  "expr": "dish_name LIKE \"%佛跳墙%\""
+ },
+ {
+  "id": 187,
+  "query": "小笼包怎么做",
+  "rewritten_query": "如何制作小笼包？",
+  "expr": "dish_name LIKE \"%小笼包%\""
+ },
+ {
+  "id": 188,
+  "query": "扬州炒饭步骤",
+  "rewritten_query": "扬州炒饭的具体步骤是什么？",
+  "expr": "dish_name LIKE \"%扬州炒饭%\""
+ },
+ {
+  "id": 189,
+  "query": "红烧牛肉面怎么煮",
+  "rewritten_query": "如何制作红烧牛肉面？",
+  "expr": "dish_name LIKE \"%红烧牛肉面%\""
+ },
+ {
+  "id": 190,
+  "query": "想学做北京烤鸭",
+  "rewritten_query": "如何制作北京烤鸭？",
+  "expr": "dish_name LIKE \"%北京烤鸭%\""
+ },
+ {
+  "id": 191,
+  "query": "葱爆羊肉的做法",
+  "rewritten_query": "葱爆羊肉的做法是什么？",
+  "expr": "dish_name LIKE \"%葱爆羊肉%\""
+ },
+ {
+  "id": 192,
+  "query": "辣子鸡丁怎么做",
+  "rewritten_query": "如何制作辣子鸡丁？",
+  "expr": "dish_name LIKE \"%辣子鸡丁%\""
+ },
+ {
+  "id": 193,
+  "query": "想做毛血旺",
+  "rewritten_query": "如何制作毛血旺？",
+  "expr": "dish_name LIKE \"%毛血旺%\""
+ },
+ {
+  "id": 194,
+  "query": "地三鲜步骤",
+  "rewritten_query": "地三鲜的具体步骤是什么？",
+  "expr": "dish_name LIKE \"%地三鲜%\""
+ },
+ {
+  "id": 195,
+  "query": "夫妻肺片怎么做",
+  "rewritten_query": "如何制作夫妻肺片？",
+  "expr": "dish_name LIKE \"%夫妻肺片%\""
+ },
+ {
+  "id": 196,
+  "query": "想做个西湖醋鱼",
+  "rewritten_query": "如何制作西湖醋鱼？",
+  "expr": "dish_name LIKE \"%西湖醋鱼%\""
+ },
+ {
+  "id": 197,
+  "query": "饺子馅怎么调",
+  "rewritten_query": "如何调制饺子馅？",
+  "expr": "dish_name LIKE \"%饺子%\""
+ },
+ {
+  "id": 198,
+  "query": "葱油饼的做法",
+  "rewritten_query": "葱油饼的做法是什么？",
+  "expr": "dish_name LIKE \"%葱油饼%\""
+ },
+ {
+  "id": 199,
+  "query": "推荐几道汤类",
+  "rewritten_query": "能推荐几道汤类吗？",
+  "expr": "category == \"汤类\""
+ },
+ {
+  "id": 200,
+  "query": "有什么素菜好吃",
+  "rewritten_query": "有哪些好吃的素菜？",
+  "expr": "category == \"素菜\""
+ },
+ {
+  "id": 201,
+  "query": "想做个主食",
+  "rewritten_query": "有哪些主食类的菜谱？",
+  "expr": "category == \"主食\""
+ },
+ {
+  "id": 202,
+  "query": "甜品推荐几个",
+  "rewritten_query": "能推荐几道甜品吗？",
+  "expr": "category == \"甜品\""
+ },
+ {
+  "id": 203,
+  "query": "想喝点东西",
+  "rewritten_query": "有哪些饮品的制作方法？",
+  "expr": "category == \"饮品\""
+ },
+ {
+  "id": 204,
+  "query": "调料怎么自己做",
+  "rewritten_query": "有哪些可以自制的调料？",
+  "expr": "category == \"调料\""
+ },
+ {
+  "id": 205,
+  "query": "半成品加工有哪些",
+  "rewritten_query": "有哪些半成品加工的食谱？",
+  "expr": "category == \"半成品加工\""
+ },
+ {
+  "id": 206,
+  "query": "水产类菜谱",
+  "rewritten_query": "能推荐一些水产类的菜谱吗？",
+  "expr": "category == \"水产\""
+ },
+ {
+  "id": 207,
+  "query": "荤菜来几个",
+  "rewritten_query": "能推荐几道荤菜吗？",
+  "expr": "category == \"荤菜\""
+ },
+ {
+  "id": 208,
+  "query": "早餐吃什么好",
+  "rewritten_query": "早餐适合吃什么？",
+  "expr": "category == \"早餐\""
+ },
+ {
+  "id": 209,
+  "query": "素菜大全推荐",
+  "rewritten_query": "能推荐一些素菜的做法吗？",
+  "expr": "category == \"素菜\""
+ },
+ {
+  "id": 210,
+  "query": "想煲个靓汤",
+  "rewritten_query": "有哪些好喝的汤类可以煲？",
+  "expr": "category == \"汤类\""
+ },
+ {
+  "id": 211,
+  "query": "主食类有啥",
+  "rewritten_query": "主食类有什么推荐？",
+  "expr": "category == \"主食\""
+ },
+ {
+  "id": 212,
+  "query": "甜品简单做法",
+  "rewritten_query": "有没有简单的甜品做法？",
+  "expr": "category == \"甜品\" and (difficulty == \"入门\" or difficulty == \"简单\")"
+ },
+ {
+  "id": 213,
+  "query": "自制冷饮",
+  "rewritten_query": "如何自制冷饮？",
+  "expr": "category == \"饮品\""
+ },
+ {
+  "id": 214,
+  "query": "简单好做的菜",
+  "rewritten_query": "有哪些简单好做的菜？",
+  "expr": "difficulty == \"入门\" or difficulty == \"简单\""
+ },
+ {
+  "id": 215,
+  "query": "新手做饭推荐",
+  "rewritten_query": "适合新手做的饭有哪些？",
+  "expr": "difficulty == \"入门\""
+ },
+ {
+  "id": 216,
+  "query": "难度大的菜",
+  "rewritten_query": "有哪些难度比较大的菜？",
+  "expr": "difficulty == \"较难\" or difficulty == \"困难\""
+ },
+ {
+  "id": 217,
+  "query": "挑战一下复杂菜",
+  "rewritten_query": "有哪些复杂的菜可以挑战？",
+  "expr": "difficulty == \"困难\""
+ },
+ {
+  "id": 218,
+  "query": "零基础学做菜",
+  "rewritten_query": "零基础可以学做什么菜？",
+  "expr": "difficulty == \"入门\""
+ },
+ {
+  "id": 219,
+  "query": "中级难度的菜谱",
+  "rewritten_query": "有哪些中级难度的菜谱？",
+  "expr": "difficulty == \"中等\""
+ },
+ {
+  "id": 220,
+  "query": "不复杂的家常菜",
+  "rewritten_query": "有哪些做法不复杂的家常菜？",
+  "expr": "difficulty == \"入门\" or difficulty == \"简单\""
+ },
+ {
+  "id": 221,
+  "query": "省事简单的菜",
+  "rewritten_query": "有哪些省事又简单的菜？",
+  "expr": "difficulty == \"入门\" or difficulty == \"简单\""
+ },
+ {
+  "id": 222,
+  "query": "推荐简单的汤",
+  "rewritten_query": "能推荐几道简单的汤吗？",
+  "expr": "category == \"汤类\" and (difficulty == \"入门\" or difficulty == \"简单\")"
+ },
+ {
+  "id": 223,
+  "query": "难做的荤菜有哪些",
+  "rewritten_query": "有哪些做法比较难的荤菜？",
+  "expr": "category == \"荤菜\" and (difficulty == \"较难\" or difficulty == \"困难\")"
+ },
+ {
+  "id": 224,
+  "query": "新手素菜推荐",
+  "rewritten_query": "新手容易做的素菜有哪些？",
+  "expr": "category == \"素菜\" and difficulty == \"入门\""
+ },
+ {
+  "id": 225,
+  "query": "简单甜品做法",
+  "rewritten_query": "有哪些简单的甜品做法？",
+  "expr": "category == \"甜品\" and (difficulty == \"入门\" or difficulty == \"简单\")"
+ },
+ {
+  "id": 226,
+  "query": "入门级主食",
+  "rewritten_query": "有哪些入门级别的主食？",
+  "expr": "category == \"主食\" and difficulty == \"入门\""
+ },
+ {
+  "id": 227,
+  "query": "中等难度的荤菜",
+  "rewritten_query": "有哪些中等难度的荤菜？",
+  "expr": "category == \"荤菜\" and difficulty == \"中等\""
+ },
+ {
+  "id": 228,
+  "query": "复杂的水产菜",
+  "rewritten_query": "有哪些做法复杂的水产类菜肴？",
+  "expr": "category == \"水产\" and (difficulty == \"较难\" or difficulty == \"困难\")"
+ },
+ {
+  "id": 229,
+  "query": "简单的早餐食谱",
+  "rewritten_query": "有哪些简单的早餐食谱？",
+  "expr": "category == \"早餐\" and (difficulty == \"入门\" or difficulty == \"简单\")"
+ },
+ {
+  "id": 230,
+  "query": "高难度甜品挑战",
+  "rewritten_query": "有哪些高难度的甜品可以尝试？",
+  "expr": "category == \"甜品\" and difficulty == \"困难\""
+ },
+ {
+  "id": 231,
+  "query": "推荐几道陕西菜",
+  "rewritten_query": "能推荐几道陕西菜吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 232,
+  "query": "想做点云南菜",
+  "rewritten_query": "有哪些云南菜可以制作？",
+  "expr": "NONE"
+ },
+ {
+  "id": 233,
+  "query": "贵州菜有什么",
+  "rewritten_query": "贵州菜有什么特色菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 234,
+  "query": "甘肃菜做法",
+  "rewritten_query": "甘肃菜的做法有哪些？",
+  "expr": "NONE"
+ },
+ {
+  "id": 235,
+  "query": "新疆大盘鸡属于什么菜系",
+  "rewritten_query": "新疆大盘鸡属于哪个菜系？",
+  "expr": "NONE"
+ },
+ {
+  "id": 236,
+  "query": "想学做潮州菜",
+  "rewritten_query": "如何制作潮州菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 237,
+  "query": "客家菜风味",
+  "rewritten_query": "有哪些客家菜风味的菜肴？",
+  "expr": "NONE"
+ },
+ {
+  "id": 238,
+  "query": "京菜怎么做",
+  "rewritten_query": "京菜怎么做？",
+  "expr": "NONE"
+ },
+ {
+  "id": 239,
+  "query": "清淡的汤",
+  "rewritten_query": "有哪些口味清淡的汤？",
+  "expr": "NONE"
+ },
+ {
+  "id": 240,
+  "query": "超级下饭的菜",
+  "rewritten_query": "有哪些超级下饭的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 241,
+  "query": "酸甜开胃的",
+  "rewritten_query": "有哪些酸甜开胃的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 242,
+  "query": "解腻的小菜",
+  "rewritten_query": "有哪些解腻的小菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 243,
+  "query": "香喷喷的下饭菜",
+  "rewritten_query": "能推荐一些香喷喷的下饭菜吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 244,
+  "query": "蒜蓉口味的菜",
+  "rewritten_query": "有哪些蒜蓉口味的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 245,
+  "query": "酱香口味的",
+  "rewritten_query": "能推荐几道酱香口味的菜吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 246,
+  "query": "别放辣椒的菜",
+  "rewritten_query": "有哪些不放辣椒的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 247,
+  "query": "少油少盐的",
+  "rewritten_query": "有哪些少油少盐的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 248,
+  "query": "别太甜的食物",
+  "rewritten_query": "有哪些不太甜的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 249,
+  "query": "不用炸的菜",
+  "rewritten_query": "有哪些不需要油炸的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 250,
+  "query": "土豆能做什么",
+  "rewritten_query": "用土豆可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 251,
+  "query": "茄子怎么做",
+  "rewritten_query": "茄子有哪些做法？",
+  "expr": "NONE"
+ },
+ {
+  "id": 252,
+  "query": "有猪肉做点啥",
+  "rewritten_query": "用猪肉可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 253,
+  "query": "家里有牛肉",
+  "rewritten_query": "家里有牛肉，可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 254,
+  "query": "羊肉的做法",
+  "rewritten_query": "羊肉可以怎么做？",
+  "expr": "NONE"
+ },
+ {
+  "id": 255,
+  "query": "鸭肉怎么做好吃",
+  "rewritten_query": "鸭肉怎么做好吃？",
+  "expr": "NONE"
+ },
+ {
+  "id": 256,
+  "query": "西葫芦能做啥",
+  "rewritten_query": "用西葫芦可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 257,
+  "query": "白菜的吃法",
+  "rewritten_query": "白菜有哪些吃法？",
+  "expr": "NONE"
+ },
+ {
+  "id": 258,
+  "query": "晚饭做什么",
+  "rewritten_query": "晚饭做什么好？",
+  "expr": "NONE"
+ },
+ {
+  "id": 259,
+  "query": "推荐几个家常菜",
+  "rewritten_query": "能推荐几个家常菜吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 260,
+  "query": "想做个简单省事的",
+  "rewritten_query": "有哪些简单省事的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 261,
+  "query": "周末在家做点啥",
+  "rewritten_query": "周末在家适合做点什么？",
+  "expr": "NONE"
+ },
+ {
+  "id": 262,
+  "query": "请客吃饭做什么菜",
+  "rewritten_query": "请客吃饭适合做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 263,
+  "query": "自己一个人吃",
+  "rewritten_query": "一个人吃做什么菜比较方便？",
+  "expr": "NONE"
+ },
+ {
+  "id": 264,
+  "query": "小朋友爱吃的",
+  "rewritten_query": "有什么小朋友爱吃的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 265,
+  "query": "中午吃什么 青椒肉丝 番茄炒蛋 冬瓜汤",
+  "rewritten_query": "中午适合吃哪些菜，比如青椒肉丝、番茄炒蛋或冬瓜汤？",
+  "expr": "NONE"
+ },
+ {
+  "id": 266,
+  "query": "晚餐菜单 红烧鱼 清炒菜心 萝卜排骨汤",
+  "rewritten_query": "晚餐推荐做什么菜，比如红烧鱼、清炒菜心或萝卜排骨汤？",
+  "expr": "NONE"
+ },
+ {
+  "id": 267,
+  "query": "想学几道硬菜 红烧肘子 清炖羊肉 糖醋鲤鱼",
+  "rewritten_query": "想学几道硬菜，比如红烧肘子、清炖羊肉、糖醋鲤鱼。",
+  "expr": "NONE"
+ },
+ {
+  "id": 268,
+  "query": "素菜推荐 虎皮青椒 红烧茄子 蒜蓉空心菜",
+  "rewritten_query": "有什么推荐的素菜，比如虎皮青椒、红烧茄子或蒜蓉空心菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 269,
+  "query": "荤菜推荐 红烧排骨 孜然羊肉 酱大骨",
+  "rewritten_query": "有什么推荐的荤菜，例如红烧排骨、孜然羊肉或酱大骨？",
+  "expr": "NONE"
+ },
+ {
+  "id": 270,
+  "query": "汤品推荐 菌菇汤 南瓜汤 菠菜猪肝汤",
+  "rewritten_query": "有什么推荐的汤品，例如菌菇汤、南瓜汤或菠菜猪肝汤？",
+  "expr": "NONE"
+ },
+ {
+  "id": 271,
+  "query": "主食推荐 馒头 花卷 包子 面条",
+  "rewritten_query": "有什么推荐的主食，例如馒头、花卷、包子或面条？",
+  "expr": "NONE"
+ },
+ {
+  "id": 272,
+  "query": "甜品推荐 绿豆糕 红豆沙 芋圆 西米露",
+  "rewritten_query": "有什么推荐的甜品，例如绿豆糕、红豆沙、芋圆或西米露？",
+  "expr": "NONE"
+ },
+ {
+  "id": 273,
+  "query": "饮料自制 酸梅汤 冬瓜茶 蜂蜜柚子茶",
+  "rewritten_query": "有哪些可以自制的饮料，例如酸梅汤、冬瓜茶或蜂蜜柚子茶？",
+  "expr": "NONE"
+ },
+ {
+  "id": 274,
+  "query": "调味料制作 辣椒油 花椒油 蒜蓉酱",
+  "rewritten_query": "有哪些可以自制的调味料，例如辣椒油、花椒油或蒜蓉酱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 275,
+  "query": "半成品冷冻 速冻水饺 馄饨 春卷",
+  "rewritten_query": "有哪些冷冻半成品推荐，例如速冻水饺、馄饨或春卷？",
+  "expr": "NONE"
+ },
+ {
+  "id": 276,
+  "query": "水产推荐 清蒸多宝鱼 香辣蟹 蒜蓉扇贝",
+  "rewritten_query": "有什么推荐的水产类菜肴，例如清蒸多宝鱼、香辣蟹或蒜蓉扇贝？",
+  "expr": "NONE"
+ },
+ {
+  "id": 277,
+  "query": "做点好吃的",
+  "rewritten_query": "能做点什么好吃的？",
+  "expr": "NONE"
+ },
+ {
+  "id": 278,
+  "query": "求推荐菜谱",
+  "rewritten_query": "能推荐一些菜谱吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 279,
+  "query": "不知道吃啥",
+  "rewritten_query": "不知道吃什么，有什么推荐吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 280,
+  "query": "帮我想想菜单",
+  "rewritten_query": "能帮我想想菜单吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 281,
+  "query": "有啥好吃的家常菜",
+  "rewritten_query": "有什么好吃的家常菜推荐？",
+  "expr": "NONE"
+ },
+ {
+  "id": 282,
+  "query": "锅包肉怎么做",
+  "rewritten_query": "如何制作锅包肉？",
+  "expr": "dish_name LIKE \"%锅包肉%\""
+ },
+ {
+  "id": 283,
+  "query": "教我做干煸四季豆",
+  "rewritten_query": "能教我如何制作干煸四季豆吗？",
+  "expr": "dish_name LIKE \"%干煸四季豆%\""
+ },
+ {
+  "id": 284,
+  "query": "狮子头的做法",
+  "rewritten_query": "如何制作狮子头？",
+  "expr": "dish_name LIKE \"%狮子头%\""
+ },
+ {
+  "id": 285,
+  "query": "想做个大盘鸡",
+  "rewritten_query": "如何制作大盘鸡？",
+  "expr": "dish_name LIKE \"%大盘鸡%\""
+ },
+ {
+  "id": 286,
+  "query": "蛋包饭怎么做好",
+  "rewritten_query": "如何制作蛋包饭？",
+  "expr": "dish_name LIKE \"%蛋包饭%\""
+ },
+ {
+  "id": 287,
+  "query": "罗宋汤的做法",
+  "rewritten_query": "罗宋汤的做法是什么？",
+  "expr": "dish_name LIKE \"%罗宋汤%\""
+ },
+ {
+  "id": 288,
+  "query": "咖喱鸡块怎么做",
+  "rewritten_query": "如何制作咖喱鸡块？",
+  "expr": "dish_name LIKE \"%咖喱鸡块%\""
+ },
+ {
+  "id": 289,
+  "query": "想学做糯米藕",
+  "rewritten_query": "如何制作糯米藕？",
+  "expr": "dish_name LIKE \"%糯米藕%\""
+ },
+ {
+  "id": 290,
+  "query": "韭菜盒子做法",
+  "rewritten_query": "韭菜盒子的做法是什么？",
+  "expr": "dish_name LIKE \"%韭菜盒子%\""
+ },
+ {
+  "id": 291,
+  "query": "蒜香排骨怎么做",
+  "rewritten_query": "如何制作蒜香排骨？",
+  "expr": "dish_name LIKE \"%蒜香排骨%\""
+ },
+ {
+  "id": 292,
+  "query": "想做麻辣香锅",
+  "rewritten_query": "如何制作麻辣香锅？",
+  "expr": "dish_name LIKE \"%麻辣香锅%\""
+ },
+ {
+  "id": 293,
+  "query": "千层饼步骤",
+  "rewritten_query": "千层饼的具体步骤是什么？",
+  "expr": "dish_name LIKE \"%千层饼%\""
+ },
+ {
+  "id": 294,
+  "query": "三杯鸡的做法",
+  "rewritten_query": "三杯鸡的做法是什么？",
+  "expr": "dish_name LIKE \"%三杯鸡%\""
+ },
+ {
+  "id": 295,
+  "query": "想做个糖醋里脊",
+  "rewritten_query": "如何制作糖醋里脊？",
+  "expr": "dish_name LIKE \"%糖醋里脊%\""
+ },
+ {
+  "id": 296,
+  "query": "馄饨汤怎么调",
+  "rewritten_query": "如何调制馄饨汤？",
+  "expr": "dish_name LIKE \"%馄饨汤%\""
+ },
+ {
+  "id": 297,
+  "query": "鸡蛋灌饼的做法",
+  "rewritten_query": "鸡蛋灌饼的做法是什么？",
+  "expr": "dish_name LIKE \"%鸡蛋灌饼%\""
+ },
+ {
+  "id": 298,
+  "query": "推荐几道水产",
+  "rewritten_query": "能推荐几道水产类菜肴吗？",
+  "expr": "category == \"水产\""
+ },
+ {
+  "id": 299,
+  "query": "有什么好喝的汤",
+  "rewritten_query": "有哪些好喝的汤类？",
+  "expr": "category == \"汤类\""
+ },
+ {
+  "id": 300,
+  "query": "想做个素菜",
+  "rewritten_query": "有哪些素菜的做法？",
+  "expr": "category == \"素菜\""
+ },
+ {
+  "id": 301,
+  "query": "主食来点什么",
+  "rewritten_query": "主食可以做什么？",
+  "expr": "category == \"主食\""
+ },
+ {
+  "id": 302,
+  "query": "甜品简单点",
+  "rewritten_query": "有哪些简单的甜品？",
+  "expr": "category == \"甜品\""
+ },
+ {
+  "id": 303,
+  "query": "想喝自制饮品",
+  "rewritten_query": "有哪些可以自制的饮品？",
+  "expr": "category == \"饮品\""
+ },
+ {
+  "id": 304,
+  "query": "调料怎么配",
+  "rewritten_query": "有哪些自制调料的配方？",
+  "expr": "category == \"调料\""
+ },
+ {
+  "id": 305,
+  "query": "半成品怎么弄",
+  "rewritten_query": "有哪些半成品加工的做法？",
+  "expr": "category == \"半成品加工\""
+ },
+ {
+  "id": 306,
+  "query": "荤菜推荐几个",
+  "rewritten_query": "能推荐几道荤菜吗？",
+  "expr": "category == \"荤菜\""
+ },
+ {
+  "id": 307,
+  "query": "早餐简单点",
+  "rewritten_query": "有什么简单的早餐？",
+  "expr": "category == \"早餐\""
+ },
+ {
+  "id": 308,
+  "query": "素菜有什么",
+  "rewritten_query": "素菜有哪些种类？",
+  "expr": "category == \"素菜\""
+ },
+ {
+  "id": 309,
+  "query": "煲汤推荐",
+  "rewritten_query": "有什么煲汤推荐？",
+  "expr": "category == \"汤类\""
+ },
+ {
+  "id": 310,
+  "query": "主食推荐一下",
+  "rewritten_query": "主食有什么推荐？",
+  "expr": "category == \"主食\""
+ },
+ {
+  "id": 311,
+  "query": "甜品有啥",
+  "rewritten_query": "甜品有什么推荐？",
+  "expr": "category == \"甜品\""
+ },
+ {
+  "id": 312,
+  "query": "冷饮怎么做",
+  "rewritten_query": "冷饮怎么做？",
+  "expr": "category == \"饮品\""
+ },
+ {
+  "id": 313,
+  "query": "好做又简单的菜",
+  "rewritten_query": "有哪些好做又简单的菜？",
+  "expr": "difficulty == \"入门\" or difficulty == \"简单\""
+ },
+ {
+  "id": 314,
+  "query": "适合新手的菜",
+  "rewritten_query": "有哪些适合新手做的菜？",
+  "expr": "difficulty == \"入门\""
+ },
+ {
+  "id": 315,
+  "query": "很难做的菜",
+  "rewritten_query": "有哪些很难做的菜？",
+  "expr": "difficulty == \"较难\" or difficulty == \"困难\""
+ },
+ {
+  "id": 316,
+  "query": "挑战星级大菜",
+  "rewritten_query": "有哪些星级大菜可以挑战？",
+  "expr": "difficulty == \"困难\""
+ },
+ {
+  "id": 317,
+  "query": "第一次做菜",
+  "rewritten_query": "第一次做菜可以做什么？",
+  "expr": "difficulty == \"入门\""
+ },
+ {
+  "id": 318,
+  "query": "中等难度菜",
+  "rewritten_query": "有哪些中等难度的菜？",
+  "expr": "difficulty == \"中等\""
+ },
+ {
+  "id": 319,
+  "query": "不太难的菜",
+  "rewritten_query": "有哪些不太难的菜？",
+  "expr": "difficulty == \"入门\" or difficulty == \"简单\""
+ },
+ {
+  "id": 320,
+  "query": "快手简单的菜",
+  "rewritten_query": "有哪些快手又简单的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 321,
+  "query": "推荐简单的荤菜",
+  "rewritten_query": "能推荐几道简单的荤菜吗？",
+  "expr": "category == \"荤菜\" and (difficulty == \"入门\" or difficulty == \"简单\")"
+ },
+ {
+  "id": 322,
+  "query": "难做的素菜",
+  "rewritten_query": "有哪些做法比较难的素菜？",
+  "expr": "category == \"素菜\" and (difficulty == \"较难\" or difficulty == \"困难\")"
+ },
+ {
+  "id": 323,
+  "query": "新手汤类推荐",
+  "rewritten_query": "新手容易做的汤有哪些？",
+  "expr": "category == \"汤类\" and difficulty == \"入门\""
+ },
+ {
+  "id": 324,
+  "query": "简单的主食",
+  "rewritten_query": "有哪些简单的主食？",
+  "expr": "category == \"主食\" and (difficulty == \"入门\" or difficulty == \"简单\")"
+ },
+ {
+  "id": 325,
+  "query": "入门级荤菜",
+  "rewritten_query": "有哪些入门级别的荤菜？",
+  "expr": "category == \"荤菜\" and difficulty == \"入门\""
+ },
+ {
+  "id": 326,
+  "query": "中等难度的甜品",
+  "rewritten_query": "有哪些中等难度的甜品？",
+  "expr": "category == \"甜品\" and difficulty == \"中等\""
+ },
+ {
+  "id": 327,
+  "query": "复杂的主食",
+  "rewritten_query": "有哪些做法复杂的主食？",
+  "expr": "category == \"主食\" and (difficulty == \"较难\" or difficulty == \"困难\")"
+ },
+ {
+  "id": 328,
+  "query": "简单的甜品",
+  "rewritten_query": "有哪些简单的甜品？",
+  "expr": "category == \"甜品\" and (difficulty == \"入门\" or difficulty == \"简单\")"
+ },
+ {
+  "id": 329,
+  "query": "高难度汤类",
+  "rewritten_query": "有哪些高难度的汤类？",
+  "expr": "category == \"汤类\" and difficulty == \"困难\""
+ },
+ {
+  "id": 330,
+  "query": "推荐几道湖北菜",
+  "rewritten_query": "能推荐几道湖北菜吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 331,
+  "query": "想做点湖南菜",
+  "rewritten_query": "有哪些湖南菜可以制作？",
+  "expr": "NONE"
+ },
+ {
+  "id": 332,
+  "query": "江西菜有什么",
+  "rewritten_query": "江西菜有哪些？",
+  "expr": "NONE"
+ },
+ {
+  "id": 333,
+  "query": "安徽菜做法",
+  "rewritten_query": "安徽菜的做法有哪些？",
+  "expr": "NONE"
+ },
+ {
+  "id": 334,
+  "query": "上海本帮菜",
+  "rewritten_query": "上海本帮菜怎么做？",
+  "expr": "NONE"
+ },
+ {
+  "id": 335,
+  "query": "想学做杭州菜",
+  "rewritten_query": "如何制作杭州菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 336,
+  "query": "重庆江湖菜",
+  "rewritten_query": "有哪些重庆江湖菜的菜谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 337,
+  "query": "天津菜做法",
+  "rewritten_query": "天津菜怎么做？",
+  "expr": "NONE"
+ },
+ {
+  "id": 338,
+  "query": "想吃酸菜鱼口味",
+  "rewritten_query": "有哪些酸菜鱼口味的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 339,
+  "query": "清淡的素菜",
+  "rewritten_query": "有哪些清淡的素菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 340,
+  "query": "巨下饭的菜",
+  "rewritten_query": "有哪些巨下饭的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 341,
+  "query": "酸甜口的菜",
+  "rewritten_query": "有哪些酸甜口的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 342,
+  "query": "清爽开胃",
+  "rewritten_query": "有哪些清爽开胃的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 343,
+  "query": "浓油赤酱的菜",
+  "rewritten_query": "能推荐一些浓油赤酱的菜吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 344,
+  "query": "糖醋口味的菜",
+  "rewritten_query": "有哪些糖醋口味的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 345,
+  "query": "红烧口味的",
+  "rewritten_query": "能推荐几道红烧口味的菜吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 346,
+  "query": "不要葱姜蒜的菜",
+  "rewritten_query": "有哪些不放葱姜蒜的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 347,
+  "query": "少油少糖的",
+  "rewritten_query": "有哪些少油少糖的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 348,
+  "query": "别太咸的菜",
+  "rewritten_query": "有哪些不太咸的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 349,
+  "query": "不用烤箱的菜",
+  "rewritten_query": "有哪些不需要烤箱的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 350,
+  "query": "西兰花怎么做",
+  "rewritten_query": "西兰花可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 351,
+  "query": "蘑菇能做什么",
+  "rewritten_query": "用蘑菇可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 352,
+  "query": "有鸡腿做点啥",
+  "rewritten_query": "有鸡腿可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 353,
+  "query": "家里有鱼",
+  "rewritten_query": "家里有鱼，可以怎么做？",
+  "expr": "NONE"
+ },
+ {
+  "id": 354,
+  "query": "虾仁的做法",
+  "rewritten_query": "虾仁可以怎么做？",
+  "expr": "NONE"
+ },
+ {
+  "id": 355,
+  "query": "猪肉怎么做",
+  "rewritten_query": "猪肉可以怎么做？",
+  "expr": "NONE"
+ },
+ {
+  "id": 356,
+  "query": "胡萝卜能做啥",
+  "rewritten_query": "用胡萝卜可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 357,
+  "query": "黄瓜的吃法",
+  "rewritten_query": "黄瓜有哪些吃法？",
+  "expr": "NONE"
+ },
+ {
+  "id": 358,
+  "query": "今晚吃啥好",
+  "rewritten_query": "今晚吃啥比较好？",
+  "expr": "NONE"
+ },
+ {
+  "id": 359,
+  "query": "推荐几个快手菜",
+  "rewritten_query": "能推荐几个快手菜吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 360,
+  "query": "想做个省事的",
+  "rewritten_query": "有哪些省事的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 361,
+  "query": "周末改善伙食",
+  "rewritten_query": "周末改善伙食做什么？",
+  "expr": "NONE"
+ },
+ {
+  "id": 362,
+  "query": "聚餐做什么菜",
+  "rewritten_query": "聚餐适合做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 363,
+  "query": "懒人食谱",
+  "rewritten_query": "有什么懒人食谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 364,
+  "query": "孩子喜欢吃的",
+  "rewritten_query": "有什么孩子喜欢吃的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 365,
+  "query": "年夜饭 饺子 年糕 鱼 红烧肉",
+  "rewritten_query": "有哪些适合年夜饭做的饺子、年糕、鱼和红烧肉？",
+  "expr": "NONE"
+ },
+ {
+  "id": 366,
+  "query": "宴客菜 红烧狮子头 清蒸鲈鱼 白切鸡",
+  "rewritten_query": "有哪些适合宴客的红烧狮子头、清蒸鲈鱼和白切鸡？",
+  "expr": "NONE"
+ },
+ {
+  "id": 367,
+  "query": "家常小炒 青椒土豆丝 西红柿炒蛋 醋溜白菜",
+  "rewritten_query": "有哪些常见的家常小炒，比如青椒土豆丝、西红柿炒蛋和醋溜白菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 368,
+  "query": "凉菜推荐 凉拌黄瓜 皮蛋豆腐 拍黄瓜",
+  "rewritten_query": "有什么值得推荐的凉菜，比如凉拌黄瓜、皮蛋豆腐或拍黄瓜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 369,
+  "query": "热菜推荐 红烧肉 糖醋排骨 宫保鸡丁",
+  "rewritten_query": "有什么推荐的热菜，比如红烧肉、糖醋排骨和宫保鸡丁？",
+  "expr": "NONE"
+ },
+ {
+  "id": 370,
+  "query": "汤羹推荐 西红柿蛋汤 紫菜蛋花汤 酸辣汤",
+  "rewritten_query": "有什么值得推荐的汤羹，例如西红柿蛋汤、紫菜蛋花汤或酸辣汤？",
+  "expr": "NONE"
+ },
+ {
+  "id": 371,
+  "query": "主食花样 蛋炒饭 扬州炒饭 酱油炒饭",
+  "rewritten_query": "主食有哪些花样，比如蛋炒饭、扬州炒饭和酱油炒饭？",
+  "expr": "NONE"
+ },
+ {
+  "id": 372,
+  "query": "点心制作 烧卖 虾饺 叉烧包",
+  "rewritten_query": "点心可以制作哪些，比如烧卖、虾饺和叉烧包？",
+  "expr": "NONE"
+ },
+ {
+  "id": 373,
+  "query": "饮品DIY 西瓜汁 芒果汁 百香果茶",
+  "rewritten_query": "可以DIY哪些饮品，比如西瓜汁、芒果汁或百香果茶？",
+  "expr": "NONE"
+ },
+ {
+  "id": 374,
+  "query": "酱料自制 芝麻酱 花生酱 番茄酱",
+  "rewritten_query": "可以自制哪些酱料，比如芝麻酱、花生酱和番茄酱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 375,
+  "query": "速冻食品 速冻汤圆 速冻粽子 速冻南瓜饼",
+  "rewritten_query": "速冻食品有哪些做法，比如速冻汤圆、速冻粽子或速冻南瓜饼？",
+  "expr": "NONE"
+ },
+ {
+  "id": 376,
+  "query": "海鲜做法 清蒸螃蟹 白灼虾 葱姜炒蛤蜊",
+  "rewritten_query": "海鲜有哪些做法，比如清蒸螃蟹、白灼虾或葱姜炒蛤蜊？",
+  "expr": "NONE"
+ },
+ {
+  "id": 377,
+  "query": "来点好吃的",
+  "rewritten_query": "有什么好吃的可以推荐？",
+  "expr": "NONE"
+ },
+ {
+  "id": 378,
+  "query": "求简单菜谱",
+  "rewritten_query": "能推荐一些简单的菜谱吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 379,
+  "query": "没想好吃啥",
+  "rewritten_query": "没想好吃什么，有什么建议？",
+  "expr": "NONE"
+ },
+ {
+  "id": 380,
+  "query": "帮我规划菜单",
+  "rewritten_query": "能帮我规划一下菜单吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 381,
+  "query": "家常菜大全",
+  "rewritten_query": "家常菜有哪些？",
+  "expr": "NONE"
+ },
+ {
+  "id": 382,
+  "query": "白切鸡怎么做",
+  "rewritten_query": "如何制作白切鸡？",
+  "expr": "dish_name LIKE \"%白切鸡%\""
+ },
+ {
+  "id": 383,
+  "query": "教我做醋溜白菜",
+  "rewritten_query": "能教我如何制作醋溜白菜吗？",
+  "expr": "dish_name LIKE \"%醋溜白菜%\""
+ },
+ {
+  "id": 384,
+  "query": "红烧猪蹄的做法",
+  "rewritten_query": "如何制作红烧猪蹄？",
+  "expr": "dish_name LIKE \"%红烧猪蹄%\""
+ },
+ {
+  "id": 385,
+  "query": "想做个酸汤肥牛",
+  "rewritten_query": "如何制作酸汤肥牛？",
+  "expr": "dish_name LIKE \"%酸汤肥牛%\""
+ },
+ {
+  "id": 386,
+  "query": "葱油拌面怎么做",
+  "rewritten_query": "如何制作葱油拌面？",
+  "expr": "dish_name LIKE \"%葱油拌面%\""
+ },
+ {
+  "id": 387,
+  "query": "番茄鱼的做法",
+  "rewritten_query": "番茄鱼的做法是什么？",
+  "expr": "dish_name LIKE \"%番茄鱼%\""
+ },
+ {
+  "id": 388,
+  "query": "干锅花菜怎么做",
+  "rewritten_query": "如何制作干锅花菜？",
+  "expr": "dish_name LIKE \"%干锅花菜%\""
+ },
+ {
+  "id": 389,
+  "query": "想学做桂花糕",
+  "rewritten_query": "如何制作桂花糕？",
+  "expr": "dish_name LIKE \"%桂花糕%\""
+ },
+ {
+  "id": 390,
+  "query": "牛肉面的做法",
+  "rewritten_query": "牛肉面的做法是什么？",
+  "expr": "dish_name LIKE \"%牛肉面%\""
+ },
+ {
+  "id": 391,
+  "query": "蒜蓉西兰花怎么做",
+  "rewritten_query": "如何制作蒜蓉西兰花？",
+  "expr": "dish_name LIKE \"%蒜蓉西兰花%\""
+ },
+ {
+  "id": 392,
+  "query": "想做啤酒鸭",
+  "rewritten_query": "如何制作啤酒鸭？",
+  "expr": "dish_name LIKE \"%啤酒鸭%\""
+ },
+ {
+  "id": 393,
+  "query": "炸酱面步骤",
+  "rewritten_query": "炸酱面的具体步骤是什么？",
+  "expr": "dish_name LIKE \"%炸酱面%\""
+ },
+ {
+  "id": 394,
+  "query": "虎皮青椒的做法",
+  "rewritten_query": "虎皮青椒的做法是什么？",
+  "expr": "dish_name LIKE \"%虎皮青椒%\""
+ },
+ {
+  "id": 395,
+  "query": "想做个红烧带鱼",
+  "rewritten_query": "如何制作红烧带鱼？",
+  "expr": "dish_name LIKE \"%红烧带鱼%\""
+ },
+ {
+  "id": 396,
+  "query": "包子馅怎么调",
+  "rewritten_query": "如何调制包子馅？",
+  "expr": "dish_name LIKE \"%包子%\""
+ },
+ {
+  "id": 397,
+  "query": "鸡蛋饼的做法",
+  "rewritten_query": "鸡蛋饼的做法是什么？",
+  "expr": "dish_name LIKE \"%鸡蛋饼%\""
+ },
+ {
+  "id": 398,
+  "query": "推荐几道荤菜",
+  "rewritten_query": "能推荐几道荤菜吗？",
+  "expr": "category == \"荤菜\""
+ },
+ {
+  "id": 399,
+  "query": "有什么素菜推荐",
+  "rewritten_query": "有什么素菜可以推荐？",
+  "expr": "category == \"素菜\""
+ },
+ {
+  "id": 400,
+  "query": "想做个汤",
+  "rewritten_query": "有哪些汤类可以做？",
+  "expr": "category == \"汤类\""
+ },
+ {
+  "id": 401,
+  "query": "主食吃什么",
+  "rewritten_query": "主食可以吃什么？",
+  "expr": "category == \"主食\""
+ },
+ {
+  "id": 402,
+  "query": "甜品来一个",
+  "rewritten_query": "有什么甜品推荐？",
+  "expr": "category == \"甜品\""
+ },
+ {
+  "id": 403,
+  "query": "想喝点啥",
+  "rewritten_query": "有什么饮品可以自己在家做？",
+  "expr": "category == \"饮品\""
+ },
+ {
+  "id": 404,
+  "query": "自制调料",
+  "rewritten_query": "有哪些可以自制的调料？",
+  "expr": "category == \"调料\""
+ },
+ {
+  "id": 405,
+  "query": "半成品加工怎么做",
+  "rewritten_query": "半成品加工有哪些做法？",
+  "expr": "category == \"半成品加工\""
+ },
+ {
+  "id": 406,
+  "query": "水产推荐一下",
+  "rewritten_query": "能推荐一些水产类菜肴吗？",
+  "expr": "category == \"水产\""
+ },
+ {
+  "id": 407,
+  "query": "早餐做啥",
+  "rewritten_query": "早餐可以做什么？",
+  "expr": "category == \"早餐\""
+ },
+ {
+  "id": 408,
+  "query": "来个素菜",
+  "rewritten_query": "有没有素菜的做法？",
+  "expr": "category == \"素菜\""
+ },
+ {
+  "id": 409,
+  "query": "煲个什么汤",
+  "rewritten_query": "煲什么汤比较好？",
+  "expr": "category == \"汤类\""
+ },
+ {
+  "id": 410,
+  "query": "主食来一个",
+  "rewritten_query": "主食有什么推荐的做法？",
+  "expr": "category == \"主食\""
+ },
+ {
+  "id": 411,
+  "query": "甜品推荐一下",
+  "rewritten_query": "甜品有什么推荐？",
+  "expr": "category == \"甜品\""
+ },
+ {
+  "id": 412,
+  "query": "饮料怎么做",
+  "rewritten_query": "饮料怎么自己做？",
+  "expr": "category == \"饮品\""
+ },
+ {
+  "id": 413,
+  "query": "省事简单的菜谱",
+  "rewritten_query": "有哪些省事又简单的菜谱？",
+  "expr": "difficulty == \"入门\" or difficulty == \"简单\""
+ },
+ {
+  "id": 414,
+  "query": "新手学做菜",
+  "rewritten_query": "新手学做菜从什么开始？",
+  "expr": "difficulty == \"入门\""
+ },
+ {
+  "id": 415,
+  "query": "比较难的菜",
+  "rewritten_query": "有哪些比较难做的菜？",
+  "expr": "difficulty == \"较难\" or difficulty == \"困难\""
+ },
+ {
+  "id": 416,
+  "query": "挑战硬菜",
+  "rewritten_query": "有哪些硬菜可以挑战？",
+  "expr": "NONE"
+ },
+ {
+  "id": 417,
+  "query": "零基础做饭",
+  "rewritten_query": "零基础做饭可以做什么？",
+  "expr": "difficulty == \"入门\""
+ },
+ {
+  "id": 418,
+  "query": "中等难度食谱",
+  "rewritten_query": "有哪些中等难度的食谱？",
+  "expr": "difficulty == \"中等\""
+ },
+ {
+  "id": 419,
+  "query": "好上手的菜",
+  "rewritten_query": "有哪些好上手的菜？",
+  "expr": "difficulty == \"入门\" or difficulty == \"简单\""
+ },
+ {
+  "id": 420,
+  "query": "简单的家常菜",
+  "rewritten_query": "有哪些简单的家常菜？",
+  "expr": "difficulty == \"入门\" or difficulty == \"简单\""
+ },
+ {
+  "id": 421,
+  "query": "推荐简单的水产",
+  "rewritten_query": "能推荐几道简单的水产类菜吗？",
+  "expr": "category == \"水产\" and (difficulty == \"入门\" or difficulty == \"简单\")"
+ },
+ {
+  "id": 422,
+  "query": "难的甜品",
+  "rewritten_query": "有哪些比较难做的甜品？",
+  "expr": "category == \"甜品\" and (difficulty == \"较难\" or difficulty == \"困难\")"
+ },
+ {
+  "id": 423,
+  "query": "新手荤菜",
+  "rewritten_query": "新手容易做的荤菜有哪些？",
+  "expr": "category == \"荤菜\" and difficulty == \"入门\""
+ },
+ {
+  "id": 424,
+  "query": "简单的素菜",
+  "rewritten_query": "有哪些简单的素菜？",
+  "expr": "category == \"素菜\" and (difficulty == \"入门\" or difficulty == \"简单\")"
+ },
+ {
+  "id": 425,
+  "query": "入门级汤类",
+  "rewritten_query": "有哪些入门级别的汤类？",
+  "expr": "category == \"汤类\" and difficulty == \"入门\""
+ },
+ {
+  "id": 426,
+  "query": "中等难度的主食",
+  "rewritten_query": "有哪些中等难度的主食？",
+  "expr": "category == \"主食\" and difficulty == \"中等\""
+ },
+ {
+  "id": 427,
+  "query": "复杂的水产",
+  "rewritten_query": "有哪些做法复杂的水产菜？",
+  "expr": "category == \"水产\" and (difficulty == \"较难\" or difficulty == \"困难\")"
+ },
+ {
+  "id": 428,
+  "query": "简单的早餐",
+  "rewritten_query": "有哪些简单的早餐做法？",
+  "expr": "category == \"早餐\" and (difficulty == \"入门\" or difficulty == \"简单\")"
+ },
+ {
+  "id": 429,
+  "query": "高难度主食",
+  "rewritten_query": "有哪些高难度的主食？",
+  "expr": "category == \"主食\" and difficulty == \"困难\""
+ },
+ {
+  "id": 430,
+  "query": "推荐几道河南菜",
+  "rewritten_query": "能推荐几道河南菜吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 431,
+  "query": "想做点河北菜",
+  "rewritten_query": "有哪些河北菜可以制作？",
+  "expr": "NONE"
+ },
+ {
+  "id": 432,
+  "query": "山西菜有什么",
+  "rewritten_query": "山西菜有什么特色？",
+  "expr": "NONE"
+ },
+ {
+  "id": 433,
+  "query": "四川风味菜",
+  "rewritten_query": "四川风味的菜有哪些？",
+  "expr": "NONE"
+ },
+ {
+  "id": 434,
+  "query": "广东菜做法",
+  "rewritten_query": "广东菜的做法有哪些？",
+  "expr": "NONE"
+ },
+ {
+  "id": 435,
+  "query": "想学做福建菜",
+  "rewritten_query": "如何制作福建菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 436,
+  "query": "东北家常菜",
+  "rewritten_query": "有哪些东北家常菜的菜谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 437,
+  "query": "山东菜怎么做",
+  "rewritten_query": "山东菜怎么做？",
+  "expr": "NONE"
+ },
+ {
+  "id": 438,
+  "query": "想吃水煮系列",
+  "rewritten_query": "有哪些水煮系列的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 439,
+  "query": "清淡的荤菜",
+  "rewritten_query": "有哪些清淡的荤菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 440,
+  "query": "超级下饭神器",
+  "rewritten_query": "有哪些超级下饭的神器菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 441,
+  "query": "酸甜开胃菜",
+  "rewritten_query": "有哪些酸甜开胃的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 442,
+  "query": "清爽凉菜",
+  "rewritten_query": "有哪些清爽的凉菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 443,
+  "query": "重口味菜",
+  "rewritten_query": "能推荐一些重口味的菜吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 444,
+  "query": "鱼香口味菜",
+  "rewritten_query": "有哪些鱼香口味的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 445,
+  "query": "家常口味",
+  "rewritten_query": "能推荐几道家常口味的菜吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 446,
+  "query": "不放辣椒的菜",
+  "rewritten_query": "有哪些不放辣椒的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 447,
+  "query": "低脂低卡的",
+  "rewritten_query": "有哪些低脂低卡的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 448,
+  "query": "不甜的点心",
+  "rewritten_query": "有哪些不甜的点心？",
+  "expr": "NONE"
+ },
+ {
+  "id": 449,
+  "query": "不用炒的菜",
+  "rewritten_query": "有哪些不需要炒的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 450,
+  "query": "青菜怎么做",
+  "rewritten_query": "青菜可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 451,
+  "query": "豆腐能做什么",
+  "rewritten_query": "用豆腐可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 452,
+  "query": "有鸡蛋做点啥",
+  "rewritten_query": "有鸡蛋可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 453,
+  "query": "家里有五花肉",
+  "rewritten_query": "家里有五花肉，可以做什么？",
+  "expr": "NONE"
+ },
+ {
+  "id": 454,
+  "query": "牛肉的做法",
+  "rewritten_query": "牛肉可以怎么做？",
+  "expr": "NONE"
+ },
+ {
+  "id": 455,
+  "query": "羊肉怎么做",
+  "rewritten_query": "羊肉怎么做好吃？",
+  "expr": "NONE"
+ },
+ {
+  "id": 456,
+  "query": "南瓜能做啥",
+  "rewritten_query": "用南瓜可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 457,
+  "query": "冬瓜的吃法",
+  "rewritten_query": "冬瓜有哪些吃法？",
+  "expr": "NONE"
+ },
+ {
+  "id": 458,
+  "query": "今天做什么吃",
+  "rewritten_query": "今天做什么吃比较好？",
+  "expr": "NONE"
+ },
+ {
+  "id": 459,
+  "query": "推荐几个好吃菜",
+  "rewritten_query": "能推荐几个好吃的菜吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 460,
+  "query": "想做个简单的",
+  "rewritten_query": "有哪些简单的菜可以做？",
+  "expr": "difficulty == \"入门\" or difficulty == \"简单\""
+ },
+ {
+  "id": 461,
+  "query": "节日做什么菜",
+  "rewritten_query": "节日适合做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 462,
+  "query": "请客硬菜",
+  "rewritten_query": "请客有什么硬菜推荐？",
+  "expr": "NONE"
+ },
+ {
+  "id": 463,
+  "query": "懒人做饭",
+  "rewritten_query": "有什么懒人做饭的方法？",
+  "expr": "NONE"
+ },
+ {
+  "id": 464,
+  "query": "老人爱吃的菜",
+  "rewritten_query": "有什么老人爱吃的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 465,
+  "query": "今天中午 鱼香肉丝 宫保鸡丁 番茄蛋汤",
+  "rewritten_query": "如何制作鱼香肉丝、宫保鸡丁和番茄蛋汤？",
+  "expr": "NONE"
+ },
+ {
+  "id": 466,
+  "query": "晚上菜单 红烧茄子 青椒肉丝 排骨汤",
+  "rewritten_query": "如何制作红烧茄子、青椒肉丝和排骨汤？",
+  "expr": "NONE"
+ },
+ {
+  "id": 467,
+  "query": "拿手菜推荐 红烧肉 糖醋鱼 口水鸡",
+  "rewritten_query": "如何制作红烧肉、糖醋鱼和口水鸡？",
+  "expr": "NONE"
+ },
+ {
+  "id": 468,
+  "query": "私房菜 秘制排骨 香辣蟹 蒜香鸡翅",
+  "rewritten_query": "如何制作秘制排骨、香辣蟹和蒜香鸡翅？",
+  "expr": "NONE"
+ },
+ {
+  "id": 469,
+  "query": "传统菜 四喜丸子 梅菜扣肉 粉蒸肉",
+  "rewritten_query": "如何制作四喜丸子、梅菜扣肉和粉蒸肉？",
+  "expr": "NONE"
+ },
+ {
+  "id": 470,
+  "query": "创新菜 芒果虾球 榴莲披萨 芝士焗红薯",
+  "rewritten_query": "如何制作芒果虾球、榴莲披萨和芝士焗红薯？",
+  "expr": "NONE"
+ },
+ {
+  "id": 471,
+  "query": "小吃做法 炸鸡块 薯条 洋葱圈",
+  "rewritten_query": "如何制作炸鸡块、薯条和洋葱圈？",
+  "expr": "NONE"
+ },
+ {
+  "id": 472,
+  "query": "烘焙入门 饼干 蛋挞 纸杯蛋糕",
+  "rewritten_query": "如何制作饼干、蛋挞和纸杯蛋糕？",
+  "expr": "NONE"
+ },
+ {
+  "id": 473,
+  "query": "果酱自制 草莓酱 蓝莓酱 苹果酱",
+  "rewritten_query": "如何自制草莓酱、蓝莓酱和苹果酱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 474,
+  "query": "泡菜做法 辣白菜 萝卜泡菜 黄瓜泡菜",
+  "rewritten_query": "如何制作辣白菜、萝卜泡菜和黄瓜泡菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 475,
+  "query": "卤味制作 卤鸡爪 卤鸭脖 卤藕片",
+  "rewritten_query": "如何制作卤鸡爪、卤鸭脖和卤藕片？",
+  "expr": "NONE"
+ },
+ {
+  "id": 476,
+  "query": "蒸菜大全 粉蒸肉 蒜蓉蒸丝瓜 剁椒蒸鱼头",
+  "rewritten_query": "如何制作粉蒸肉、蒜蓉蒸丝瓜和剁椒蒸鱼头？",
+  "expr": "NONE"
+ },
+ {
+  "id": 477,
+  "query": "搞点好吃的",
+  "rewritten_query": "有什么好吃的可以搞一下？",
+  "expr": "NONE"
+ },
+ {
+  "id": 478,
+  "query": "求推荐好菜",
+  "rewritten_query": "能推荐一些好菜吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 479,
+  "query": "想不出来吃啥",
+  "rewritten_query": "想不出来吃什么，有什么建议？",
+  "expr": "NONE"
+ },
+ {
+  "id": 480,
+  "query": "帮我想几个菜",
+  "rewritten_query": "能帮我想几个菜吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 481,
+  "query": "家常菜有哪些",
+  "rewritten_query": "家常菜通常有哪些种类？",
+  "expr": "NONE"
+ },
+ {
+  "id": 482,
+  "query": "水煮肉片怎么搞",
+  "rewritten_query": "如何制作水煮肉片？",
+  "expr": "dish_name LIKE \"%水煮肉片%\""
+ },
+ {
+  "id": 483,
+  "query": "想学做酸菜鱼",
+  "rewritten_query": "如何制作酸菜鱼？",
+  "expr": "dish_name LIKE \"%酸菜鱼%\""
+ },
+ {
+  "id": 484,
+  "query": "来个西红柿鸡蛋汤",
+  "rewritten_query": "如何制作西红柿鸡蛋汤？",
+  "expr": "dish_name LIKE \"%西红柿鸡蛋汤%\""
+ },
+ {
+  "id": 485,
+  "query": "蛋炒饭怎么炒好吃",
+  "rewritten_query": "如何制作蛋炒饭？",
+  "expr": "dish_name LIKE \"%蛋炒饭%\""
+ },
+ {
+  "id": 486,
+  "query": "油焖大虾食谱",
+  "rewritten_query": "如何制作油焖大虾？",
+  "expr": "dish_name LIKE \"%油焖大虾%\""
+ },
+ {
+  "id": 487,
+  "query": "叫花鸡在家能做吗",
+  "rewritten_query": "如何在家制作叫花鸡？",
+  "expr": "dish_name LIKE \"%叫花鸡%\""
+ },
+ {
+  "id": 488,
+  "query": "教我做小笼包",
+  "rewritten_query": "如何制作小笼包？",
+  "expr": "dish_name LIKE \"%小笼包%\""
+ },
+ {
+  "id": 489,
+  "query": "想试试做提拉米苏",
+  "rewritten_query": "如何制作提拉米苏？",
+  "expr": "dish_name LIKE \"%提拉米苏%\""
+ },
+ {
+  "id": 490,
+  "query": "京酱肉丝正宗做法",
+  "rewritten_query": "如何制作京酱肉丝？",
+  "expr": "dish_name LIKE \"%京酱肉丝%\""
+ },
+ {
+  "id": 491,
+  "query": "绿豆汤怎么熬",
+  "rewritten_query": "如何熬制绿豆汤？",
+  "expr": "dish_name LIKE \"%绿豆汤%\""
+ },
+ {
+  "id": 492,
+  "query": "想做锅包肉",
+  "rewritten_query": "如何制作锅包肉？",
+  "expr": "dish_name LIKE \"%锅包肉%\""
+ },
+ {
+  "id": 493,
+  "query": "热干面自己能做不",
+  "rewritten_query": "如何自己制作热干面？",
+  "expr": "dish_name LIKE \"%热干面%\""
+ },
+ {
+  "id": 494,
+  "query": "宫保鸡丁咋整",
+  "rewritten_query": "如何制作宫保鸡丁？",
+  "expr": "dish_name LIKE \"%宫保鸡丁%\""
+ },
+ {
+  "id": 495,
+  "query": "来个东坡肘子",
+  "rewritten_query": "如何制作东坡肘子？",
+  "expr": "dish_name LIKE \"%东坡肘子%\""
+ },
+ {
+  "id": 496,
+  "query": "酸辣粉怎么做",
+  "rewritten_query": "如何制作酸辣粉？",
+  "expr": "dish_name LIKE \"%酸辣粉%\""
+ },
+ {
+  "id": 497,
+  "query": "想学卤牛肉",
+  "rewritten_query": "如何制作卤牛肉？",
+  "expr": "dish_name LIKE \"%卤牛肉%\""
+ },
+ {
+  "id": 498,
+  "query": "烤羊排做法",
+  "rewritten_query": "如何制作烤羊排？",
+  "expr": "dish_name LIKE \"%烤羊排%\""
+ },
+ {
+  "id": 499,
+  "query": "炸酱面教教我",
+  "rewritten_query": "如何制作炸酱面？",
+  "expr": "dish_name LIKE \"%炸酱面%\""
+ },
+ {
+  "id": 500,
+  "query": "想做清蒸鲈鱼",
+  "rewritten_query": "如何制作清蒸鲈鱼？",
+  "expr": "dish_name LIKE \"%清蒸鲈鱼%\""
+ },
+ {
+  "id": 501,
+  "query": "葱油饼的家常做法",
+  "rewritten_query": "如何制作家常葱油饼？",
+  "expr": "dish_name LIKE \"%葱油饼%\""
+ },
+ {
+  "id": 502,
+  "query": "有没有啥汤类推荐",
+  "rewritten_query": "有哪些汤类食谱推荐？",
+  "expr": "category == \"汤类\""
+ },
+ {
+  "id": 503,
+  "query": "想吃点甜的东西",
+  "rewritten_query": "有哪些甜品食谱推荐？",
+  "expr": "category == \"甜品\""
+ },
+ {
+  "id": 504,
+  "query": "早饭自己做点啥好",
+  "rewritten_query": "有哪些适合自己做的早餐？",
+  "expr": "category == \"早餐\""
+ },
+ {
+  "id": 505,
+  "query": "想做点主食",
+  "rewritten_query": "有哪些主食类的食谱推荐？",
+  "expr": "category == \"主食\""
+ },
+ {
+  "id": 506,
+  "query": "搞个大鱼大肉的菜",
+  "rewritten_query": "有哪些荤菜推荐？",
+  "expr": "category == \"荤菜\""
+ },
+ {
+  "id": 507,
+  "query": "教我做点调料吧",
+  "rewritten_query": "有哪些自制调料的食谱？",
+  "expr": "category == \"调料\""
+ },
+ {
+  "id": 508,
+  "query": "来几道全素的家常菜",
+  "rewritten_query": "有哪些全素的家常菜推荐？",
+  "expr": "category == \"素菜\""
+ },
+ {
+  "id": 509,
+  "query": "想煲个汤喝",
+  "rewritten_query": "有哪些汤类食谱适合煲？",
+  "expr": "category == \"汤类\""
+ },
+ {
+  "id": 510,
+  "query": "整点水产吃吃",
+  "rewritten_query": "有哪些水产类的食谱？",
+  "expr": "category == \"水产\""
+ },
+ {
+  "id": 511,
+  "query": "有没有调饮料的方子",
+  "rewritten_query": "有哪些自制饮品的方子？",
+  "expr": "category == \"饮品\""
+ },
+ {
+  "id": 512,
+  "query": "给我推点半成品的菜",
+  "rewritten_query": "有哪些半成品加工的食谱？",
+  "expr": "category == \"半成品加工\""
+ },
+ {
+  "id": 513,
+  "query": "熬个粥算啥类别",
+  "rewritten_query": "有哪些粥类的食谱推荐？",
+  "expr": "NONE"
+ },
+ {
+  "id": 514,
+  "query": "早点吃啥好",
+  "rewritten_query": "有哪些早餐食谱推荐？",
+  "expr": "category == \"早餐\""
+ },
+ {
+  "id": 515,
+  "query": "整点硬菜",
+  "rewritten_query": "有哪些荤菜类的硬菜？",
+  "expr": "category == \"荤菜\""
+ },
+ {
+  "id": 516,
+  "query": "就想吃肉",
+  "rewritten_query": "有哪些肉类的荤菜推荐？",
+  "expr": "category == \"荤菜\""
+ },
+ {
+  "id": 517,
+  "query": "搞点凉菜素菜",
+  "rewritten_query": "有哪些素菜适合做凉菜？",
+  "expr": "category == \"素菜\""
+ },
+ {
+  "id": 518,
+  "query": "新手适合做啥",
+  "rewritten_query": "有哪些适合新手的菜谱？",
+  "expr": "difficulty == \"入门\""
+ },
+ {
+  "id": 519,
+  "query": "稍微有点难度的菜有哪些",
+  "rewritten_query": "有哪些稍微有点难度的菜？",
+  "expr": "difficulty == \"中等\""
+ },
+ {
+  "id": 520,
+  "query": "来点入门级的练练手",
+  "rewritten_query": "有哪些入门级的菜谱适合练手？",
+  "expr": "difficulty == \"入门\""
+ },
+ {
+  "id": 521,
+  "query": "有没有比较复杂的菜品",
+  "rewritten_query": "有哪些比较复杂的菜品推荐？",
+  "expr": "difficulty == \"较难\" or difficulty == \"困难\""
+ },
+ {
+  "id": 522,
+  "query": "特简单的家常菜有没有",
+  "rewritten_query": "有哪些特别简单的家常菜？",
+  "expr": "difficulty == \"简单\""
+ },
+ {
+  "id": 523,
+  "query": "不要入门的，来个中等难度的",
+  "rewritten_query": "有哪些中等难度的菜谱推荐？",
+  "expr": "difficulty == \"中等\""
+ },
+ {
+  "id": 524,
+  "query": "给我整点困难的菜谱",
+  "rewritten_query": "有哪些困难级别的菜谱？",
+  "expr": "difficulty == \"困难\""
+ },
+ {
+  "id": 525,
+  "query": "简单快手的有什么",
+  "rewritten_query": "有哪些简单快手的菜谱？",
+  "expr": "difficulty == \"简单\""
+ },
+ {
+  "id": 526,
+  "query": "我是纯小白，能推荐点吗",
+  "rewritten_query": "有哪些适合零基础小白的菜谱？",
+  "expr": "difficulty == \"入门\""
+ },
+ {
+  "id": 527,
+  "query": "稍微复杂一点的素菜",
+  "rewritten_query": "有哪些稍微复杂一点的素菜？",
+  "expr": "category == \"素菜\" and (difficulty == \"中等\" or difficulty == \"较难\")"
+ },
+ {
+  "id": 528,
+  "query": "有没有简单点的荤菜",
+  "rewritten_query": "有哪些简单点的荤菜推荐？",
+  "expr": "category == \"荤菜\" and (difficulty == \"入门\" or difficulty == \"简单\")"
+ },
+ {
+  "id": 529,
+  "query": "想做个高难度的甜品",
+  "rewritten_query": "有哪些高难度的甜品可以制作？",
+  "expr": "category == \"甜品\" and difficulty == \"困难\""
+ },
+ {
+  "id": 530,
+  "query": "早餐要简单的",
+  "rewritten_query": "有哪些简单的早餐食谱？",
+  "expr": "category == \"早餐\" and (difficulty == \"入门\" or difficulty == \"简单\")"
+ },
+ {
+  "id": 531,
+  "query": "主食类入门级的",
+  "rewritten_query": "有哪些入门级的主食食谱？",
+  "expr": "category == \"主食\" and difficulty == \"入门\""
+ },
+ {
+  "id": 532,
+  "query": "复杂点的汤类有哪些",
+  "rewritten_query": "有哪些复杂点的汤类食谱？",
+  "expr": "category == \"汤类\" and (difficulty == \"较难\" or difficulty == \"困难\")"
+ },
+ {
+  "id": 533,
+  "query": "入门级半成品加工",
+  "rewritten_query": "有哪些入门级的半成品加工食谱？",
+  "expr": "category == \"半成品加工\" and difficulty == \"入门\""
+ },
+ {
+  "id": 534,
+  "query": "简单的水产怎么做",
+  "rewritten_query": "有哪些简单的水产类食谱？",
+  "expr": "category == \"水产\" and (difficulty == \"入门\" or difficulty == \"简单\")"
+ },
+ {
+  "id": 535,
+  "query": "能不能推荐几个高难度的荤菜",
+  "rewritten_query": "有哪些高难度的荤菜推荐？",
+  "expr": "category == \"荤菜\" and (difficulty == \"困难\" or difficulty == \"较难\")"
+ },
+ {
+  "id": 536,
+  "query": "甜品类新手能做什么",
+  "rewritten_query": "有哪些新手能做的甜品？",
+  "expr": "category == \"甜品\" and difficulty == \"入门\""
+ },
+ {
+  "id": 537,
+  "query": "想做点四川风味的菜",
+  "rewritten_query": "有哪些四川风味的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 538,
+  "query": "来个粤菜食谱",
+  "rewritten_query": "有哪些粤菜食谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 539,
+  "query": "湘菜有什么做法",
+  "rewritten_query": "有哪些湘菜的做法？",
+  "expr": "NONE"
+ },
+ {
+  "id": 540,
+  "query": "东北菜在家能做吗",
+  "rewritten_query": "有哪些东北菜适合在家做？",
+  "expr": "NONE"
+ },
+ {
+  "id": 541,
+  "query": "江浙那边的菜",
+  "rewritten_query": "有哪些江浙风味的菜品？",
+  "expr": "NONE"
+ },
+ {
+  "id": 542,
+  "query": "想吃鲁菜",
+  "rewritten_query": "有哪些鲁菜推荐？",
+  "expr": "NONE"
+ },
+ {
+  "id": 543,
+  "query": "福建菜怎么做",
+  "rewritten_query": "如何制作福建菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 544,
+  "query": "想学个淮扬菜",
+  "rewritten_query": "有哪些淮扬菜可以学做？",
+  "expr": "NONE"
+ },
+ {
+  "id": 545,
+  "query": "有没有本帮菜谱",
+  "rewritten_query": "有哪些本帮菜的菜谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 546,
+  "query": "潮汕那边的菜咋做",
+  "rewritten_query": "如何制作潮汕风味的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 547,
+  "query": "来个西北风味的菜",
+  "rewritten_query": "有哪些西北风味的菜品？",
+  "expr": "NONE"
+ },
+ {
+  "id": 548,
+  "query": "云南菜有推荐吗",
+  "rewritten_query": "能推荐几道云南菜吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 549,
+  "query": "想做点贵州菜",
+  "rewritten_query": "有哪些贵州菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 550,
+  "query": "客家菜怎么做",
+  "rewritten_query": "如何制作客家菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 551,
+  "query": "湖北菜有啥",
+  "rewritten_query": "有哪些湖北菜推荐？",
+  "expr": "NONE"
+ },
+ {
+  "id": 552,
+  "query": "清淡口味的来几个",
+  "rewritten_query": "有哪些清淡口味的菜品推荐？",
+  "expr": "NONE"
+ },
+ {
+  "id": 553,
+  "query": "下饭的菜有哪些",
+  "rewritten_query": "有哪些下饭的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 554,
+  "query": "酸甜口的菜谱",
+  "rewritten_query": "有哪些酸甜口味的菜谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 555,
+  "query": "有什么特别开胃的菜",
+  "rewritten_query": "有哪些特别开胃的菜推荐？",
+  "expr": "NONE"
+ },
+ {
+  "id": 556,
+  "query": "想吃点解腻的",
+  "rewritten_query": "有哪些解腻的菜品推荐？",
+  "expr": "NONE"
+ },
+ {
+  "id": 557,
+  "query": "麻辣的那种有没有",
+  "rewritten_query": "有哪些麻辣口味的菜品？",
+  "expr": "NONE"
+ },
+ {
+  "id": 558,
+  "query": "给整点香甜的",
+  "rewritten_query": "有哪些香甜口味的食物？",
+  "expr": "NONE"
+ },
+ {
+  "id": 559,
+  "query": "香辣的菜谱来一波",
+  "rewritten_query": "有哪些香辣口味的菜谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 560,
+  "query": "酸辣味道的怎么做",
+  "rewritten_query": "如何制作酸辣口味的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 561,
+  "query": "想吃点咸鲜的",
+  "rewritten_query": "有哪些咸鲜口味的菜品？",
+  "expr": "NONE"
+ },
+ {
+  "id": 562,
+  "query": "蒜香味足的菜",
+  "rewritten_query": "有哪些蒜香味浓郁的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 563,
+  "query": "酱香型的菜有哪些",
+  "rewritten_query": "有哪些酱香型的菜品？",
+  "expr": "NONE"
+ },
+ {
+  "id": 564,
+  "query": "油炸的酥脆那种",
+  "rewritten_query": "有哪些油炸的酥脆菜品？",
+  "expr": "NONE"
+ },
+ {
+  "id": 565,
+  "query": "不油腻的菜谱推荐",
+  "rewritten_query": "有哪些不油腻的菜品推荐？",
+  "expr": "NONE"
+ },
+ {
+  "id": 566,
+  "query": "别太费时间的菜",
+  "rewritten_query": "有哪些不费时间的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 567,
+  "query": "不要放太多调料的做法",
+  "rewritten_query": "有哪些调料用得少的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 568,
+  "query": "热量别太高的菜",
+  "rewritten_query": "有哪些热量不太高的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 569,
+  "query": "不用油炸的菜谱",
+  "rewritten_query": "有哪些不用油炸的菜谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 570,
+  "query": "别整太甜的",
+  "rewritten_query": "有哪些味道不太甜的菜品推荐？",
+  "expr": "NONE"
+ },
+ {
+  "id": 571,
+  "query": "家里有五花肉，有啥做法",
+  "rewritten_query": "用五花肉可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 572,
+  "query": "弄了点牛肉，咋做好吃",
+  "rewritten_query": "用牛肉可以做什么好吃的？",
+  "expr": "NONE"
+ },
+ {
+  "id": 573,
+  "query": "土豆能整啥花样",
+  "rewritten_query": "用土豆可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 574,
+  "query": "买了条鱼，怎么做好",
+  "rewritten_query": "用鱼可以做哪些菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 575,
+  "query": "剩了点豆腐，做啥",
+  "rewritten_query": "用豆腐可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 576,
+  "query": "家里有鸡胸肉做啥",
+  "rewritten_query": "用鸡胸肉可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 577,
+  "query": "弄了点螃蟹",
+  "rewritten_query": "用螃蟹可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 578,
+  "query": "买了点羊肉",
+  "rewritten_query": "用羊肉可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 579,
+  "query": "有茄子和豆角",
+  "rewritten_query": "用茄子和豆角可以做些什么？",
+  "expr": "NONE"
+ },
+ {
+  "id": 580,
+  "query": "弄了点扇贝",
+  "rewritten_query": "用扇贝可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 581,
+  "query": "鸭血能怎么吃",
+  "rewritten_query": "用鸭血可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 582,
+  "query": "有面粉和鸡蛋",
+  "rewritten_query": "用面粉和鸡蛋可以做什么？",
+  "expr": "NONE"
+ },
+ {
+  "id": 583,
+  "query": "剩了点米饭",
+  "rewritten_query": "用剩米饭可以做什么？",
+  "expr": "NONE"
+ },
+ {
+  "id": 584,
+  "query": "冬瓜除了炖汤还能做啥",
+  "rewritten_query": "用冬瓜可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 585,
+  "query": "买了根山药",
+  "rewritten_query": "用山药可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 586,
+  "query": "弄了点蛤蜊",
+  "rewritten_query": "用蛤蜊可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 587,
+  "query": "有包火锅底料能干嘛",
+  "rewritten_query": "用火锅底料可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 588,
+  "query": "随便推荐几个菜吧",
+  "rewritten_query": "能随便推荐几个菜吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 589,
+  "query": "周末想做顿大餐",
+  "rewritten_query": "有哪些适合周末做大餐的食谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 590,
+  "query": "朋友来家做点啥",
+  "rewritten_query": "朋友来家里吃饭，可以做些什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 591,
+  "query": "有没啥懒人菜",
+  "rewritten_query": "有哪些适合懒人的菜谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 592,
+  "query": "一个人吃饭做啥",
+  "rewritten_query": "一个人吃饭可以做些什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 593,
+  "query": "天热了吃点啥好",
+  "rewritten_query": "天气热适合吃些什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 594,
+  "query": "胃口不好做啥",
+  "rewritten_query": "胃口不好适合做些什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 595,
+  "query": "小孩喜欢吃的菜",
+  "rewritten_query": "有哪些小孩子喜欢吃的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 596,
+  "query": "老人家适合吃啥",
+  "rewritten_query": "有哪些适合老人家吃的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 597,
+  "query": "随便来几个菜 地三鲜 宫保鸡丁",
+  "rewritten_query": "有哪些推荐的菜，比如地三鲜或宫保鸡丁？",
+  "expr": "NONE"
+ },
+ {
+  "id": 598,
+  "query": "有啥素菜 蚝油生菜 干煸四季豆",
+  "rewritten_query": "有哪些素菜推荐，比如蚝油生菜或干煸四季豆？",
+  "expr": "category == \"素菜\""
+ },
+ {
+  "id": 599,
+  "query": "想喝点汤 冬瓜排骨汤 番茄牛腩汤",
+  "rewritten_query": "有什么汤推荐，比如冬瓜排骨汤或番茄牛腩汤？",
+  "expr": "category == \"汤类\""
+ },
+ {
+  "id": 600,
+  "query": "晚上做个饭 可乐鸡翅 蒜蓉西兰花",
+  "rewritten_query": "晚上做饭可以做些什么，比如可乐鸡翅或蒜蓉西兰花？",
+  "expr": "NONE"
+ },
+ {
+  "id": 601,
+  "query": "来点下酒菜 拍黄瓜 油炸花生米",
+  "rewritten_query": "有哪些下酒菜推荐，比如拍黄瓜或油炸花生米？",
+  "expr": "NONE"
+ },
+ {
+  "id": 602,
+  "query": "做点荤菜 红烧排骨 葱爆羊肉",
+  "rewritten_query": "有哪些荤菜推荐，比如红烧排骨或葱爆羊肉？",
+  "expr": "category == \"荤菜\""
+ },
+ {
+  "id": 603,
+  "query": "早饭做啥 豆浆 油条 煎饼果子",
+  "rewritten_query": "早餐做什么好，比如豆浆、油条或煎饼果子？",
+  "expr": "category == \"早餐\""
+ },
+ {
+  "id": 604,
+  "query": "做点下饭菜 鱼香茄子 辣椒炒肉",
+  "rewritten_query": "有哪些下饭菜推荐，比如鱼香茄子或辣椒炒肉？",
+  "expr": "NONE"
+ },
+ {
+  "id": 605,
+  "query": "今晚吃啥 糖醋里脊 干锅花菜 凉拌木耳",
+  "rewritten_query": "今晚吃什么，比如糖醋里脊、干锅花菜或凉拌木耳？",
+  "expr": "NONE"
+ },
+ {
+  "id": 606,
+  "query": "不知道做啥 黄焖鸡 可乐鸡翅",
+  "rewritten_query": "不知道做什么菜好，有什么像黄焖鸡或可乐鸡翅这样的推荐吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 607,
+  "query": "想点菜名 酸辣土豆丝 红烧肉 清蒸鱼",
+  "rewritten_query": "有没有酸辣土豆丝、红烧肉、清蒸鱼这些菜的食谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 608,
+  "query": "家常做法 西红柿炒蛋 青椒肉丝",
+  "rewritten_query": "有哪些家常菜的做法，比如西红柿炒蛋或青椒肉丝？",
+  "expr": "NONE"
+ },
+ {
+  "id": 609,
+  "query": "快手小炒 爆炒猪肝 香干肉丝 韭菜鸡蛋",
+  "rewritten_query": "有哪些快手小炒推荐，比如爆炒猪肝、香干肉丝或韭菜鸡蛋？",
+  "expr": "NONE"
+ },
+ {
+  "id": 610,
+  "query": "来点健康的 西兰花炒虾仁 蒸南瓜",
+  "rewritten_query": "有哪些健康的菜推荐，比如西兰花炒虾仁或蒸南瓜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 611,
+  "query": "整点硬菜 红烧肘子 清蒸鲈鱼 葱烧海参",
+  "rewritten_query": "有哪些硬菜推荐，比如红烧肘子、清蒸鲈鱼或葱烧海参？",
+  "expr": "NONE"
+ },
+ {
+  "id": 612,
+  "query": "煲个汤 山药排骨 老母鸡汤",
+  "rewritten_query": "有什么汤适合煲，比如山药排骨汤或老母鸡汤？",
+  "expr": "category == \"汤类\""
+ },
+ {
+  "id": 613,
+  "query": "炒点素菜 手撕包菜 酸辣白菜",
+  "rewritten_query": "有哪些素菜小炒推荐，比如手撕包菜或酸辣白菜？",
+  "expr": "category == \"素菜\""
+ },
+ {
+  "id": 614,
+  "query": "简单弄点 番茄炒蛋 紫菜蛋花汤",
+  "rewritten_query": "可以简单弄点什么菜，比如番茄炒蛋或紫菜蛋花汤？",
+  "expr": "NONE"
+ },
+ {
+  "id": 615,
+  "query": "来点下酒菜",
+  "rewritten_query": "有哪些适合下酒的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 616,
+  "query": "有啥拿手菜推荐",
+  "rewritten_query": "有哪些拿手菜推荐？",
+  "expr": "NONE"
+ },
+ {
+  "id": 617,
+  "query": "做个夜宵",
+  "rewritten_query": "有哪些适合做夜宵的食谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 618,
+  "query": "减肥餐怎么做",
+  "rewritten_query": "有哪些适合减肥的餐食做法？",
+  "expr": "NONE"
+ },
+ {
+  "id": 619,
+  "query": "整个儿童餐",
+  "rewritten_query": "有哪些适合儿童的饭菜食谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 620,
+  "query": "做个便当菜",
+  "rewritten_query": "有哪些适合带便当的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 621,
+  "query": "宿舍能做啥",
+  "rewritten_query": "在宿舍里可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 622,
+  "query": "微波炉能做的菜",
+  "rewritten_query": "有哪些用微波炉就能做的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 623,
+  "query": "空气炸锅食谱",
+  "rewritten_query": "有哪些适合空气炸锅的食谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 624,
+  "query": "电饭煲能整啥菜",
+  "rewritten_query": "有哪些用电饭煲就能做的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 625,
+  "query": "露营带啥吃的自己做",
+  "rewritten_query": "有哪些适合露营自己做的食物？",
+  "expr": "NONE"
+ },
+ {
+  "id": 626,
+  "query": "拔丝地瓜怎么做",
+  "rewritten_query": "如何制作拔丝地瓜？",
+  "expr": "dish_name LIKE \"%拔丝地瓜%\""
+ },
+ {
+  "id": 627,
+  "query": "教我做粉蒸肉",
+  "rewritten_query": "如何制作粉蒸肉？",
+  "expr": "dish_name LIKE \"%粉蒸肉%\""
+ },
+ {
+  "id": 628,
+  "query": "想学做寿司",
+  "rewritten_query": "如何制作寿司？",
+  "expr": "dish_name LIKE \"%寿司%\""
+ },
+ {
+  "id": 629,
+  "query": "煲仔饭的做法",
+  "rewritten_query": "如何制作煲仔饭？",
+  "expr": "dish_name LIKE \"%煲仔饭%\""
+ },
+ {
+  "id": 630,
+  "query": "酸汤肥牛咋做",
+  "rewritten_query": "如何制作酸汤肥牛？",
+  "expr": "dish_name LIKE \"%酸汤肥牛%\""
+ },
+ {
+  "id": 631,
+  "query": "来个肉末茄子",
+  "rewritten_query": "如何制作肉末茄子？",
+  "expr": "dish_name LIKE \"%肉末茄子%\""
+ },
+ {
+  "id": 632,
+  "query": "羊肉泡馍家常做法",
+  "rewritten_query": "如何制作羊肉泡馍？",
+  "expr": "dish_name LIKE \"%羊肉泡馍%\""
+ },
+ {
+  "id": 633,
+  "query": "教我做炒年糕",
+  "rewritten_query": "如何制作炒年糕？",
+  "expr": "dish_name LIKE \"%炒年糕%\""
+ },
+ {
+  "id": 634,
+  "query": "做个皮蛋瘦肉粥",
+  "rewritten_query": "如何制作皮蛋瘦肉粥？",
+  "expr": "dish_name LIKE \"%皮蛋瘦肉粥%\""
+ },
+ {
+  "id": 635,
+  "query": "口水鸡怎么搞",
+  "rewritten_query": "如何制作口水鸡？",
+  "expr": "dish_name LIKE \"%口水鸡%\""
+ },
+ {
+  "id": 636,
+  "query": "蒜蓉粉丝蒸扇贝",
+  "rewritten_query": "如何制作蒜蓉粉丝蒸扇贝？",
+  "expr": "dish_name LIKE \"%蒜蓉粉丝蒸扇贝%\""
+ },
+ {
+  "id": 637,
+  "query": "来碗馄饨",
+  "rewritten_query": "如何制作馄饨？",
+  "expr": "dish_name LIKE \"%馄饨%\""
+ },
+ {
+  "id": 638,
+  "query": "想学做烧麦",
+  "rewritten_query": "如何制作烧麦？",
+  "expr": "dish_name LIKE \"%烧麦%\""
+ },
+ {
+  "id": 639,
+  "query": "雪媚娘怎么做",
+  "rewritten_query": "如何制作雪媚娘？",
+  "expr": "dish_name LIKE \"%雪媚娘%\""
+ },
+ {
+  "id": 640,
+  "query": "做一个杨枝甘露",
+  "rewritten_query": "如何制作杨枝甘露？",
+  "expr": "dish_name LIKE \"%杨枝甘露%\""
+ },
+ {
+  "id": 641,
+  "query": "佛跳墙自己能做吗",
+  "rewritten_query": "如何在家制作佛跳墙？",
+  "expr": "dish_name LIKE \"%佛跳墙%\""
+ },
+ {
+  "id": 642,
+  "query": "整个烤鱼",
+  "rewritten_query": "如何制作烤鱼？",
+  "expr": "dish_name LIKE \"%烤鱼%\""
+ },
+ {
+  "id": 643,
+  "query": "麻辣香锅做法",
+  "rewritten_query": "如何制作麻辣香锅？",
+  "expr": "dish_name LIKE \"%麻辣香锅%\""
+ },
+ {
+  "id": 644,
+  "query": "想蒸点馒头",
+  "rewritten_query": "如何制作馒头？",
+  "expr": "dish_name LIKE \"%馒头%\""
+ },
+ {
+  "id": 645,
+  "query": "做份凉皮",
+  "rewritten_query": "如何制作凉皮？",
+  "expr": "dish_name LIKE \"%凉皮%\""
+ },
+ {
+  "id": 646,
+  "query": "肉夹馍咋整",
+  "rewritten_query": "如何制作肉夹馍？",
+  "expr": "dish_name LIKE \"%肉夹馍%\""
+ },
+ {
+  "id": 647,
+  "query": "做个鸡蛋灌饼",
+  "rewritten_query": "如何制作鸡蛋灌饼？",
+  "expr": "dish_name LIKE \"%鸡蛋灌饼%\""
+ },
+ {
+  "id": 648,
+  "query": "来份肠粉",
+  "rewritten_query": "如何制作肠粉？",
+  "expr": "dish_name LIKE \"%肠粉%\""
+ },
+ {
+  "id": 649,
+  "query": "日式拉面在家做",
+  "rewritten_query": "如何在家制作日式拉面？",
+  "expr": "dish_name LIKE \"%日式拉面%\""
+ },
+ {
+  "id": 650,
+  "query": "粽子怎么包",
+  "rewritten_query": "如何包粽子？",
+  "expr": "dish_name LIKE \"%粽子%\""
+ },
+ {
+  "id": 651,
+  "query": "做个提子蛋糕",
+  "rewritten_query": "如何制作提子蛋糕？",
+  "expr": "dish_name LIKE \"%提子蛋糕%\""
+ },
+ {
+  "id": 652,
+  "query": "双皮奶的做法",
+  "rewritten_query": "如何制作双皮奶？",
+  "expr": "dish_name LIKE \"%双皮奶%\""
+ },
+ {
+  "id": 653,
+  "query": "想熬个阿胶糕",
+  "rewritten_query": "如何制作阿胶糕？",
+  "expr": "dish_name LIKE \"%阿胶糕%\""
+ },
+ {
+  "id": 654,
+  "query": "焦香酥脆的推荐",
+  "rewritten_query": "有哪些焦香酥脆的菜品？",
+  "expr": "NONE"
+ },
+ {
+  "id": 655,
+  "query": "清爽开胃的凉菜",
+  "rewritten_query": "有哪些清爽开胃的凉菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 656,
+  "query": "软烂入味的肉菜",
+  "rewritten_query": "有哪些软烂入味的肉菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 657,
+  "query": "可以下饭的炒菜",
+  "rewritten_query": "有哪些下饭的炒菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 658,
+  "query": "入口即化的菜",
+  "rewritten_query": "有哪些入口即化的菜品？",
+  "expr": "NONE"
+ },
+ {
+  "id": 659,
+  "query": "鲜嫩多汁的肉",
+  "rewritten_query": "如何做出鲜嫩多汁的肉菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 660,
+  "query": "又麻又辣的来点",
+  "rewritten_query": "有哪些又麻又辣的菜品？",
+  "expr": "NONE"
+ },
+ {
+  "id": 661,
+  "query": "咸甜交织的菜",
+  "rewritten_query": "有哪些咸甜交织的菜品？",
+  "expr": "NONE"
+ },
+ {
+  "id": 662,
+  "query": "想吃不油腻的素菜",
+  "rewritten_query": "有哪些不油腻的素菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 663,
+  "query": "别太咸的菜谱",
+  "rewritten_query": "有哪些不太咸的菜谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 664,
+  "query": "不想放味精的菜",
+  "rewritten_query": "有哪些不用放味精的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 665,
+  "query": "别让我切菜太麻烦的",
+  "rewritten_query": "有哪些不用复杂刀工的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 666,
+  "query": "不要太多步骤的",
+  "rewritten_query": "有哪些制作步骤较少的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 667,
+  "query": "不用烤箱的甜品",
+  "rewritten_query": "有哪些不用烤箱就能做的甜品？",
+  "expr": "NONE"
+ },
+ {
+  "id": 668,
+  "query": "不加油的菜怎么做",
+  "rewritten_query": "有哪些不用油就能做的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 669,
+  "query": "不加糖的饮品",
+  "rewritten_query": "有哪些不加糖的饮品？",
+  "expr": "NONE"
+ },
+ {
+  "id": 670,
+  "query": "别用牛奶的菜",
+  "rewritten_query": "有哪些不用牛奶也能做的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 671,
+  "query": "不要辣椒的做法",
+  "rewritten_query": "有哪些不放辣椒的菜谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 672,
+  "query": "不煎不炸的肉菜",
+  "rewritten_query": "有哪些不煎不炸的肉菜做法？",
+  "expr": "NONE"
+ },
+ {
+  "id": 673,
+  "query": "别太油的蔬菜做法",
+  "rewritten_query": "有哪些不油腻的蔬菜做法？",
+  "expr": "NONE"
+ },
+ {
+  "id": 674,
+  "query": "用三文鱼能做啥",
+  "rewritten_query": "用三文鱼可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 675,
+  "query": "弄了点牛腩",
+  "rewritten_query": "用牛腩可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 676,
+  "query": "买了点猪蹄怎么炖",
+  "rewritten_query": "猪蹄应该怎么炖？",
+  "expr": "NONE"
+ },
+ {
+  "id": 677,
+  "query": "有洋葱和胡萝卜",
+  "rewritten_query": "用洋葱和胡萝卜可以做什么？",
+  "expr": "NONE"
+ },
+ {
+  "id": 678,
+  "query": "剩了几个红薯",
+  "rewritten_query": "用红薯可以做什么？",
+  "expr": "NONE"
+ },
+ {
+  "id": 679,
+  "query": "家里有藕",
+  "rewritten_query": "用藕可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 680,
+  "query": "买了点年糕",
+  "rewritten_query": "用年糕可以做什么？",
+  "expr": "NONE"
+ },
+ {
+  "id": 681,
+  "query": "搞了点墨鱼仔",
+  "rewritten_query": "用墨鱼仔可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 682,
+  "query": "有香蕉和牛奶",
+  "rewritten_query": "用香蕉和牛奶可以做什么？",
+  "expr": "NONE"
+ },
+ {
+  "id": 683,
+  "query": "弄了点羊排",
+  "rewritten_query": "用羊排可以做什么？",
+  "expr": "NONE"
+ },
+ {
+  "id": 684,
+  "query": "有南瓜和糯米粉",
+  "rewritten_query": "用南瓜和糯米粉可以做什么？",
+  "expr": "NONE"
+ },
+ {
+  "id": 685,
+  "query": "买了袋面粉",
+  "rewritten_query": "用面粉可以做什么？",
+  "expr": "NONE"
+ },
+ {
+  "id": 686,
+  "query": "弄了点腊肉",
+  "rewritten_query": "用腊肉可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 687,
+  "query": "有紫薯和山药",
+  "rewritten_query": "用紫薯和山药可以做什么？",
+  "expr": "NONE"
+ },
+ {
+  "id": 688,
+  "query": "剩了点鸡腿",
+  "rewritten_query": "用鸡腿可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 689,
+  "query": "买了块老豆腐",
+  "rewritten_query": "用老豆腐可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 690,
+  "query": "弄了点鱿鱼",
+  "rewritten_query": "用鱿鱼可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 691,
+  "query": "有包意大利面",
+  "rewritten_query": "用意面可以做什么？",
+  "expr": "NONE"
+ },
+ {
+  "id": 692,
+  "query": "买了个大白菜",
+  "rewritten_query": "用大白菜可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 693,
+  "query": "有芝士和吐司",
+  "rewritten_query": "用芝士和吐司可以做什么？",
+  "expr": "NONE"
+ },
+ {
+  "id": 694,
+  "query": "弄了点肥牛卷",
+  "rewritten_query": "用肥牛卷可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 695,
+  "query": "有西蓝花和蘑菇",
+  "rewritten_query": "用西蓝花和蘑菇可以做什么？",
+  "expr": "NONE"
+ },
+ {
+  "id": 696,
+  "query": "买了点带鱼",
+  "rewritten_query": "用带鱼可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 697,
+  "query": "剩了点豆芽",
+  "rewritten_query": "用豆芽可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 698,
+  "query": "有草莓和奶油",
+  "rewritten_query": "用草莓和奶油可以做什么？",
+  "expr": "NONE"
+ },
+ {
+  "id": 699,
+  "query": "弄了点秋葵",
+  "rewritten_query": "用秋葵可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 700,
+  "query": "买了点鸡胗",
+  "rewritten_query": "用鸡胗可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 701,
+  "query": "有红豆和薏米",
+  "rewritten_query": "用红豆和薏米可以做什么？",
+  "expr": "NONE"
+ },
+ {
+  "id": 702,
+  "query": "不知道吃啥好",
+  "rewritten_query": "能推荐一些今天适合做的菜吗？",
+  "expr": "NONE"
+ },
+ {
+  "id": 703,
+  "query": "晚上做个简单的",
+  "rewritten_query": "今晚有哪些简单易做的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 704,
+  "query": "随便吃吃整点啥",
+  "rewritten_query": "随便吃的话有什么推荐？",
+  "expr": "NONE"
+ },
+ {
+  "id": 705,
+  "query": "周末改善下伙食",
+  "rewritten_query": "周末有哪些适合改善伙食的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 706,
+  "query": "家里来客人做啥好",
+  "rewritten_query": "家里来客人时适合做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 707,
+  "query": "懒人做法来一个",
+  "rewritten_query": "有哪些懒人做法的菜谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 708,
+  "query": "独居适合做啥菜",
+  "rewritten_query": "有哪些适合独居做的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 709,
+  "query": "天冷吃点暖和的",
+  "rewritten_query": "天冷适合吃哪些暖和的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 710,
+  "query": "没胃口做点啥开胃",
+  "rewritten_query": "有哪些能开胃的菜可以做？",
+  "expr": "NONE"
+ },
+ {
+  "id": 711,
+  "query": "给小孩做点啥",
+  "rewritten_query": "有哪些适合小孩吃的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 712,
+  "query": "老年人适合的菜",
+  "rewritten_query": "有哪些适合老年人的食谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 713,
+  "query": "半夜饿了做啥",
+  "rewritten_query": "半夜饿了可以做什么吃？",
+  "expr": "NONE"
+ },
+ {
+  "id": 714,
+  "query": "上班带饭做啥",
+  "rewritten_query": "有哪些适合上班带饭的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 715,
+  "query": "宿舍小锅能做啥",
+  "rewritten_query": "在宿舍用小锅可以做什么菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 716,
+  "query": "整个好喝的自制饮料",
+  "rewritten_query": "有哪些好喝的自制饮料？",
+  "expr": "category == \"饮品\""
+ },
+ {
+  "id": 717,
+  "query": "今晚做什么菜 地三鲜 锅包肉",
+  "rewritten_query": "今晚做什么菜？比如地三鲜、锅包肉。",
+  "expr": "NONE"
+ },
+ {
+  "id": 718,
+  "query": "随便搞点 拍黄瓜 炒鸡蛋",
+  "rewritten_query": "随便搞点什么菜？比如拍黄瓜、炒鸡蛋。",
+  "expr": "NONE"
+ },
+ {
+  "id": 719,
+  "query": "有啥素菜推荐 香菇青菜 蚝油生菜",
+  "rewritten_query": "有哪些素菜推荐？比如香菇青菜、蚝油生菜。",
+  "expr": "NONE"
+ },
+ {
+  "id": 720,
+  "query": "煲个啥汤 玉米排骨 萝卜牛腩",
+  "rewritten_query": "煲什么汤好？比如玉米排骨汤、萝卜牛腩汤。",
+  "expr": "NONE"
+ },
+ {
+  "id": 721,
+  "query": "晚上做个饭 红烧鱼 可乐鸡翅 炒青菜",
+  "rewritten_query": "晚上做饭可以做些什么？比如红烧鱼、可乐鸡翅、炒青菜。",
+  "expr": "NONE"
+ },
+ {
+  "id": 722,
+  "query": "想吃点下酒菜 花生米 毛豆",
+  "rewritten_query": "有哪些下酒菜？比如花生米、毛豆。",
+  "expr": "NONE"
+ },
+ {
+  "id": 723,
+  "query": "整点荤菜 糖醋排骨 回锅肉",
+  "rewritten_query": "有哪些荤菜推荐？比如糖醋排骨、回锅肉。",
+  "expr": "NONE"
+ },
+ {
+  "id": 724,
+  "query": "早上吃啥 鸡蛋饼 小米粥",
+  "rewritten_query": "早上吃什么？比如鸡蛋饼、小米粥。",
+  "expr": "NONE"
+ },
+ {
+  "id": 725,
+  "query": "做点下饭菜 鱼香肉丝 麻婆豆腐",
+  "rewritten_query": "有哪些下饭菜？比如鱼香肉丝、麻婆豆腐。",
+  "expr": "NONE"
+ },
+ {
+  "id": 726,
+  "query": "晚上吃啥 宫保鸡丁 蒜蓉生菜 紫菜汤",
+  "rewritten_query": "晚上吃什么？比如宫保鸡丁、蒜蓉生菜、紫菜汤。",
+  "expr": "NONE"
+ },
+ {
+  "id": 727,
+  "query": "想不到做啥 青椒肉丝 番茄炒蛋",
+  "rewritten_query": "想不到做什么菜，青椒肉丝、番茄炒蛋怎么样？",
+  "expr": "NONE"
+ },
+ {
+  "id": 728,
+  "query": "给我来几个菜名 红烧排骨 醋溜白菜",
+  "rewritten_query": "推荐一些菜，比如红烧排骨、醋溜白菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 729,
+  "query": "家常便饭 炒土豆丝 红烧豆腐",
+  "rewritten_query": "有什么家常菜？比如炒土豆丝、红烧豆腐。",
+  "expr": "NONE"
+ },
+ {
+  "id": 730,
+  "query": "简单小炒 辣椒炒肉 蒜薹肉丝",
+  "rewritten_query": "有哪些简单小炒？比如辣椒炒肉、蒜薹肉丝。",
+  "expr": "NONE"
+ },
+ {
+  "id": 731,
+  "query": "来点健康的菜 蒸鱼 白灼虾 拌沙拉",
+  "rewritten_query": "有哪些健康的菜？比如蒸鱼、白灼虾、拌沙拉。",
+  "expr": "NONE"
+ },
+ {
+  "id": 732,
+  "query": "整点清淡的 清炒时蔬 冬瓜汤",
+  "rewritten_query": "有哪些清淡的菜？比如清炒时蔬、冬瓜汤。",
+  "expr": "NONE"
+ },
+ {
+  "id": 733,
+  "query": "煲汤来一个 鸡汤 排骨汤",
+  "rewritten_query": "煲什么汤？比如鸡汤、排骨汤。",
+  "expr": "NONE"
+ },
+ {
+  "id": 734,
+  "query": "炒点素菜 西兰花 空心菜",
+  "rewritten_query": "有哪些素菜小炒？比如西兰花、空心菜。",
+  "expr": "NONE"
+ },
+ {
+  "id": 735,
+  "query": "简单弄个 紫菜蛋花汤 炒饭",
+  "rewritten_query": "简单弄点什么？比如紫菜蛋花汤、炒饭。",
+  "expr": "NONE"
+ },
+ {
+  "id": 736,
+  "query": "做点硬菜 红烧肘子 葱烧海参",
+  "rewritten_query": "有哪些硬菜？比如红烧肘子、葱烧海参。",
+  "expr": "NONE"
+ },
+ {
+  "id": 737,
+  "query": "有啥甜品 芒果班戟 双皮奶",
+  "rewritten_query": "有哪些甜品推荐？比如芒果班戟、双皮奶。",
+  "expr": "NONE"
+ },
+ {
+  "id": 738,
+  "query": "整点小吃 炸鸡柳 煎饼",
+  "rewritten_query": "有哪些小吃可以自己做？比如炸鸡柳、煎饼。",
+  "expr": "NONE"
+ },
+ {
+  "id": 739,
+  "query": "凉菜有啥 凉拌木耳 拍黄瓜",
+  "rewritten_query": "有哪些凉菜可以做？比如凉拌木耳、拍黄瓜。",
+  "expr": "NONE"
+ },
+ {
+  "id": 740,
+  "query": "年夜饭菜单来一份",
+  "rewritten_query": "有哪些适合年夜饭的菜谱推荐？",
+  "expr": "NONE"
+ },
+ {
+  "id": 741,
+  "query": "想整个烧烤",
+  "rewritten_query": "有哪些烧烤食谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 742,
+  "query": "想吃素鸡",
+  "rewritten_query": "如何制作素鸡？",
+  "expr": "dish_name LIKE \"%素鸡%\""
+ },
+ {
+  "id": 743,
+  "query": "香辣蟹的做法",
+  "rewritten_query": "如何制作香辣蟹？",
+  "expr": "dish_name LIKE \"%香辣蟹%\""
+ },
+ {
+  "id": 744,
+  "query": "整个毛血旺",
+  "rewritten_query": "如何制作毛血旺？",
+  "expr": "dish_name LIKE \"%毛血旺%\""
+ },
+ {
+  "id": 745,
+  "query": "想学做春卷",
+  "rewritten_query": "如何制作春卷？",
+  "expr": "dish_name LIKE \"%春卷%\""
+ },
+ {
+  "id": 746,
+  "query": "做个奶茶",
+  "rewritten_query": "如何制作奶茶？",
+  "expr": "dish_name LIKE \"%奶茶%\""
+ },
+ {
+  "id": 747,
+  "query": "冰粉咋做",
+  "rewritten_query": "如何制作冰粉？",
+  "expr": "dish_name LIKE \"%冰粉%\""
+ },
+ {
+  "id": 748,
+  "query": "来个提拉米苏",
+  "rewritten_query": "如何制作提拉米苏？",
+  "expr": "dish_name LIKE \"%提拉米苏%\""
+ },
+ {
+  "id": 749,
+  "query": "做份辣白菜",
+  "rewritten_query": "如何制作辣白菜？",
+  "expr": "dish_name LIKE \"%辣白菜%\""
+ },
+ {
+  "id": 750,
+  "query": "酸梅汤自己熬",
+  "rewritten_query": "如何自己熬制酸梅汤？",
+  "expr": "dish_name LIKE \"%酸梅汤%\""
+ },
+ {
+  "id": 751,
+  "query": "弄点泡菜",
+  "rewritten_query": "如何制作泡菜？",
+  "expr": "dish_name LIKE \"%泡菜%\""
+ },
+ {
+  "id": 752,
+  "query": "想学做花生糖",
+  "rewritten_query": "如何制作花生糖？",
+  "expr": "dish_name LIKE \"%花生糖%\""
+ },
+ {
+  "id": 753,
+  "query": "做个芒果布丁",
+  "rewritten_query": "如何制作芒果布丁？",
+  "expr": "dish_name LIKE \"%芒果布丁%\""
+ },
+ {
+  "id": 754,
+  "query": "煎饼果子来一套",
+  "rewritten_query": "如何制作煎饼果子？",
+  "expr": "dish_name LIKE \"%煎饼果子%\""
+ },
+ {
+  "id": 755,
+  "query": "整个蛋挞",
+  "rewritten_query": "如何制作蛋挞？",
+  "expr": "dish_name LIKE \"%蛋挞%\""
+ },
+ {
+  "id": 756,
+  "query": "想学做酱牛肉",
+  "rewritten_query": "如何制作酱牛肉？",
+  "expr": "dish_name LIKE \"%酱牛肉%\""
+ },
+ {
+  "id": 757,
+  "query": "黄焖鸡米饭做法",
+  "rewritten_query": "如何制作黄焖鸡米饭？",
+  "expr": "dish_name LIKE \"%黄焖鸡%\""
+ },
+ {
+  "id": 758,
+  "query": "来个三杯鸡",
+  "rewritten_query": "如何制作三杯鸡？",
+  "expr": "dish_name LIKE \"%三杯鸡%\""
+ },
+ {
+  "id": 759,
+  "query": "做个担担面",
+  "rewritten_query": "如何制作担担面？",
+  "expr": "dish_name LIKE \"%担担面%\""
+ },
+ {
+  "id": 760,
+  "query": "烤冷面咋做",
+  "rewritten_query": "如何制作烤冷面？",
+  "expr": "dish_name LIKE \"%烤冷面%\""
+ },
+ {
+  "id": 761,
+  "query": "做点曲奇饼干",
+  "rewritten_query": "如何制作曲奇饼干？",
+  "expr": "dish_name LIKE \"%曲奇饼干%\""
+ },
+ {
+  "id": 762,
+  "query": "有哪些素菜推荐",
+  "rewritten_query": "能推荐一些素菜吗？",
+  "expr": "category == \"素菜\""
+ },
+ {
+  "id": 763,
+  "query": "想吃点鱼虾之类的",
+  "rewritten_query": "有哪些鱼虾类的菜谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 764,
+  "query": "天冷想喝汤",
+  "rewritten_query": "有哪些汤类食谱适合天冷喝？",
+  "expr": "category == \"汤类\""
+ },
+ {
+  "id": 765,
+  "query": "下午茶做点啥甜品",
+  "rewritten_query": "有哪些适合下午茶的甜品？",
+  "expr": "category == \"甜品\""
+ },
+ {
+  "id": 766,
+  "query": "明早做啥吃",
+  "rewritten_query": "有哪些早餐食谱？",
+  "expr": "category == \"早餐\""
+ },
+ {
+  "id": 767,
+  "query": "整点米饭面条类的",
+  "rewritten_query": "有哪些主食类的食谱推荐？",
+  "expr": "category == \"主食\""
+ },
+ {
+  "id": 768,
+  "query": "想吃肉了",
+  "rewritten_query": "有哪些荤菜推荐？",
+  "expr": "category == \"荤菜\""
+ },
+ {
+  "id": 769,
+  "query": "夏天想喝点冰的",
+  "rewritten_query": "有哪些自制冰饮的食谱？",
+  "expr": "category == \"饮品\""
+ },
+ {
+  "id": 770,
+  "query": "周末做点饺子冻起来",
+  "rewritten_query": "如何制作适合冷冻的饺子？",
+  "expr": "dish_name LIKE \"%饺子%\""
+ },
+ {
+  "id": 771,
+  "query": "自己做点辣椒酱",
+  "rewritten_query": "有哪些自制辣椒酱的食谱？",
+  "expr": "dish_name LIKE \"%辣椒酱%\""
+ },
+ {
+  "id": 772,
+  "query": "全素宴来一桌",
+  "rewritten_query": "有哪些素菜食谱可以做一桌全素宴？",
+  "expr": "category == \"素菜\""
+ },
+ {
+  "id": 773,
+  "query": "滋补汤品推荐",
+  "rewritten_query": "有哪些滋补的汤类食谱？",
+  "expr": "category == \"汤类\""
+ },
+ {
+  "id": 774,
+  "query": "搞点海鲜大餐",
+  "rewritten_query": "有哪些水产类的海鲜食谱？",
+  "expr": "category == \"水产\""
+ },
+ {
+  "id": 775,
+  "query": "自己榨果汁",
+  "rewritten_query": "有哪些自制果汁的食谱？",
+  "expr": "dish_name LIKE \"%果汁%\""
+ },
+ {
+  "id": 776,
+  "query": "准备点冻货",
+  "rewritten_query": "有哪些适合提前准备并冷冻的食品？",
+  "expr": "NONE"
+ },
+ {
+  "id": 777,
+  "query": "整点火锅底料",
+  "rewritten_query": "有哪些自制火锅底料的食谱？",
+  "expr": "dish_name LIKE \"%火锅底料%\""
+ },
+ {
+  "id": 778,
+  "query": "来点精致甜品",
+  "rewritten_query": "有哪些精致的甜品食谱？",
+  "expr": "category == \"甜品\""
+ },
+ {
+  "id": 779,
+  "query": "中式早餐有哪些",
+  "rewritten_query": "有哪些中式早餐的食谱？",
+  "expr": "category == \"早餐\""
+ },
+ {
+  "id": 780,
+  "query": "就想吃点清淡的主食",
+  "rewritten_query": "有哪些口味清淡的主食食谱？",
+  "expr": "category == \"主食\""
+ },
+ {
+  "id": 781,
+  "query": "纯肉菜有啥",
+  "rewritten_query": "有哪些纯肉类的荤菜？",
+  "expr": "category == \"荤菜\""
+ },
+ {
+  "id": 782,
+  "query": "咸汤圆算啥",
+  "rewritten_query": "咸汤圆属于哪类食物，有哪些做法？",
+  "expr": "dish_name LIKE \"%汤圆%\""
+ },
+ {
+  "id": 783,
+  "query": "调个鸡尾酒",
+  "rewritten_query": "有哪些自制鸡尾酒的食谱？",
+  "expr": "dish_name LIKE \"%鸡尾酒%\""
+ },
+ {
+  "id": 784,
+  "query": "炸点东西当零食",
+  "rewritten_query": "有哪些可以作为零食的油炸食品？",
+  "expr": "NONE"
+ },
+ {
+  "id": 785,
+  "query": "做点沙拉酱",
+  "rewritten_query": "有哪些自制沙拉酱的食谱？",
+  "expr": "dish_name LIKE \"%沙拉酱%\""
+ },
+ {
+  "id": 786,
+  "query": "面包算主食还是甜品",
+  "rewritten_query": "面包属于主食还是甜品，有哪些面包的做法？",
+  "expr": "dish_name LIKE \"%面包%\""
+ },
+ {
+  "id": 787,
+  "query": "有什么入门级新手菜",
+  "rewritten_query": "有哪些入门级的新手菜？",
+  "expr": "difficulty == \"入门\""
+ },
+ {
+  "id": 788,
+  "query": "做菜多年，来个挑战的",
+  "rewritten_query": "有哪些高难度的菜可以挑战？",
+  "expr": "difficulty == \"困难\""
+ },
+ {
+  "id": 789,
+  "query": "不大简单的菜",
+  "rewritten_query": "有哪些不太简单的菜品？",
+  "expr": "difficulty == \"中等\" or difficulty == \"较难\""
+ },
+ {
+  "id": 790,
+  "query": "小白能做的蛋糕",
+  "rewritten_query": "有哪些适合小白制作的蛋糕？",
+  "expr": "dish_name LIKE \"%蛋糕%\" and (difficulty == \"入门\" or difficulty == \"简单\")"
+ },
+ {
+  "id": 791,
+  "query": "零失败的那种",
+  "rewritten_query": "有哪些容易成功、零失败的菜谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 792,
+  "query": "看着简单做起来难的菜",
+  "rewritten_query": "有哪些实际做起来比较难的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 793,
+  "query": "随便炒炒就行的菜",
+  "rewritten_query": "有哪些随便炒炒就能成功的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 794,
+  "query": "考验厨艺的菜谱",
+  "rewritten_query": "有哪些考验厨艺的菜谱？",
+  "expr": "difficulty == \"困难\""
+ },
+ {
+  "id": 795,
+  "query": "半小时能搞定的",
+  "rewritten_query": "有哪些半小时内能完成的简单菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 796,
+  "query": "准备时间长的菜",
+  "rewritten_query": "有哪些需要长时间准备的复杂菜品？",
+  "expr": "NONE"
+ },
+ {
+  "id": 797,
+  "query": "中等难度有啥好的",
+  "rewritten_query": "有哪些中等难度的菜谱推荐？",
+  "expr": "difficulty == \"中等\""
+ },
+ {
+  "id": 798,
+  "query": "初学者也能做的硬菜",
+  "rewritten_query": "有哪些适合初学者的硬菜？",
+  "expr": "difficulty == \"入门\""
+ },
+ {
+  "id": 799,
+  "query": "简单的快手素菜",
+  "rewritten_query": "有哪些简单快手的素菜推荐？",
+  "expr": "category == \"素菜\" and (difficulty == \"入门\" or difficulty == \"简单\")"
+ },
+ {
+  "id": 800,
+  "query": "荤菜里有简单点的吗",
+  "rewritten_query": "有哪些简单的荤菜？",
+  "expr": "category == \"荤菜\" and (difficulty == \"入门\" or difficulty == \"简单\")"
+ },
+ {
+  "id": 801,
+  "query": "高难度水产怎么做",
+  "rewritten_query": "有哪些高难度的水产食谱？",
+  "expr": "category == \"水产\" and (difficulty == \"较难\" or difficulty == \"困难\")"
+ },
+ {
+  "id": 802,
+  "query": "新手学做早餐",
+  "rewritten_query": "有哪些适合新手的早餐食谱？",
+  "expr": "category == \"早餐\" and difficulty == \"入门\""
+ },
+ {
+  "id": 803,
+  "query": "简单好喝的汤",
+  "rewritten_query": "有哪些简单好做的汤？",
+  "expr": "category == \"汤类\" and (difficulty == \"入门\" or difficulty == \"简单\")"
+ },
+ {
+  "id": 804,
+  "query": "来点高难度的主食",
+  "rewritten_query": "有哪些高难度的主食食谱？",
+  "expr": "category == \"主食\" and (difficulty == \"较难\" or difficulty == \"困难\")"
+ },
+ {
+  "id": 805,
+  "query": "半成品加工难不难",
+  "rewritten_query": "半成品加工的制作难度如何？",
+  "expr": "NONE"
+ },
+ {
+  "id": 806,
+  "query": "素菜有没有困难级别的",
+  "rewritten_query": "有哪些困难级别的素菜？",
+  "expr": "category == \"素菜\" and difficulty == \"困难\""
+ },
+ {
+  "id": 807,
+  "query": "简单的海鲜做法",
+  "rewritten_query": "有哪些简单的水产类做法？",
+  "expr": "category == \"水产\" and (difficulty == \"入门\" or difficulty == \"简单\")"
+ },
+ {
+  "id": 808,
+  "query": "入门级饮品调制",
+  "rewritten_query": "有哪些入门级的饮品调制方法？",
+  "expr": "category == \"饮品\" and difficulty == \"入门\""
+ },
+ {
+  "id": 809,
+  "query": "复杂点的荤菜有哪些",
+  "rewritten_query": "有哪些复杂点的荤菜？",
+  "expr": "category == \"荤菜\" and (difficulty == \"较难\" or difficulty == \"困难\")"
+ },
+ {
+  "id": 810,
+  "query": "简单的调料自制",
+  "rewritten_query": "有哪些简单自制的调料？",
+  "expr": "category == \"调料\" and (difficulty == \"入门\" or difficulty == \"简单\")"
+ },
+ {
+  "id": 811,
+  "query": "想挑战高难度汤品",
+  "rewritten_query": "有哪些高难度的汤品可以挑战？",
+  "expr": "category == \"汤类\" and (difficulty == \"较难\" or difficulty == \"困难\")"
+ },
+ {
+  "id": 812,
+  "query": "早餐简单又有营养的",
+  "rewritten_query": "有哪些简单又有营养的早餐？",
+  "expr": "category == \"早餐\" and (difficulty == \"入门\" or difficulty == \"简单\")"
+ },
+ {
+  "id": 813,
+  "query": "难度中等的素菜",
+  "rewritten_query": "有哪些中等难度的素菜？",
+  "expr": "category == \"素菜\" and difficulty == \"中等\""
+ },
+ {
+  "id": 814,
+  "query": "新手适合做啥荤菜",
+  "rewritten_query": "有哪些适合新手的荤菜？",
+  "expr": "category == \"荤菜\" and difficulty == \"入门\""
+ },
+ {
+  "id": 815,
+  "query": "简单的小甜点",
+  "rewritten_query": "有哪些简单的小甜点食谱？",
+  "expr": "category == \"甜品\" and (difficulty == \"入门\" or difficulty == \"简单\")"
+ },
+ {
+  "id": 816,
+  "query": "我想学做川味小炒",
+  "rewritten_query": "如何制作川味小炒？",
+  "expr": "NONE"
+ },
+ {
+  "id": 817,
+  "query": "想搞个粤式茶点",
+  "rewritten_query": "有哪些粤式茶点可以制作？",
+  "expr": "NONE"
+ },
+ {
+  "id": 818,
+  "query": "正宗湘菜做法",
+  "rewritten_query": "如何制作正宗湘菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 819,
+  "query": "有没有东北杀猪菜的做法",
+  "rewritten_query": "如何制作东北杀猪菜？",
+  "expr": "dish_name LIKE \"%杀猪菜%\""
+ },
+ {
+  "id": 820,
+  "query": "闽菜有啥特色菜",
+  "rewritten_query": "有哪些闽菜特色菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 821,
+  "query": "想尝尝上海本帮菜",
+  "rewritten_query": "有哪些上海本帮菜的食谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 822,
+  "query": "来个淮扬菜",
+  "rewritten_query": "有哪些淮扬菜可以尝试？",
+  "expr": "NONE"
+ },
+ {
+  "id": 823,
+  "query": "在家做点韩国料理",
+  "rewritten_query": "有哪些在家能做的韩国料理？",
+  "expr": "NONE"
+ },
+ {
+  "id": 824,
+  "query": "西餐牛排怎么煎",
+  "rewritten_query": "如何煎牛排？",
+  "expr": "dish_name LIKE \"%牛排%\""
+ },
+ {
+  "id": 825,
+  "query": "泰国菜冬阴功怎么做",
+  "rewritten_query": "如何制作冬阴功汤？",
+  "expr": "dish_name LIKE \"%冬阴功%\""
+ },
+ {
+  "id": 826,
+  "query": "印度咖喱做法",
+  "rewritten_query": "如何制作咖喱？",
+  "expr": "dish_name LIKE \"%咖喱%\""
+ },
+ {
+  "id": 827,
+  "query": "日本料理有啥简单的",
+  "rewritten_query": "有哪些简单的日本料理可以自制？",
+  "expr": "NONE"
+ },
+ {
+  "id": 828,
+  "query": "西北面食有教程吗",
+  "rewritten_query": "有哪些西北面食的制作教程？",
+  "expr": "category == \"主食\""
+ },
+ {
+  "id": 829,
+  "query": "云南过桥米线怎么做",
+  "rewritten_query": "如何制作过桥米线？",
+  "expr": "dish_name LIKE \"%过桥米线%\""
+ },
+ {
+  "id": 830,
+  "query": "山东煎饼做法",
+  "rewritten_query": "如何制作煎饼？",
+  "expr": "dish_name LIKE \"%煎饼%\""
+ },
+ {
+  "id": 831,
+  "query": "海南鸡饭教教我",
+  "rewritten_query": "如何制作海南鸡饭？",
+  "expr": "dish_name LIKE \"%海南鸡饭%\""
+ },
+ {
+  "id": 832,
+  "query": "蒙古烤肉自己能做吗",
+  "rewritten_query": "如何制作烤肉？",
+  "expr": "dish_name LIKE \"%烤肉%\""
+ },
+ {
+  "id": 833,
+  "query": "新疆大盘鸡的做法",
+  "rewritten_query": "如何制作大盘鸡？",
+  "expr": "dish_name LIKE \"%大盘鸡%\""
+ },
+ {
+  "id": 834,
+  "query": "来个重口味的菜",
+  "rewritten_query": "有哪些重口味的菜品？",
+  "expr": "NONE"
+ },
+ {
+  "id": 835,
+  "query": "甜辣口的有啥",
+  "rewritten_query": "有哪些甜辣口味的菜品？",
+  "expr": "NONE"
+ },
+ {
+  "id": 836,
+  "query": "想吃鲜香一点的",
+  "rewritten_query": "有哪些鲜香口味的菜品？",
+  "expr": "NONE"
+ },
+ {
+  "id": 837,
+  "query": "有什么菜是酸甜口的",
+  "rewritten_query": "有哪些酸甜口味的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 838,
+  "query": "特辣的那种有没有",
+  "rewritten_query": "有哪些特别辣的菜品？",
+  "expr": "NONE"
+ },
+ {
+  "id": 839,
+  "query": "酱香浓郁的菜",
+  "rewritten_query": "有哪些酱香浓郁的菜品？",
+  "expr": "NONE"
+ },
+ {
+  "id": 840,
+  "query": "做个火锅锅底",
+  "rewritten_query": "如何自制火锅锅底？",
+  "expr": "NONE"
+ },
+ {
+  "id": 841,
+  "query": "备孕吃啥好",
+  "rewritten_query": "有哪些适合备孕期间吃的菜谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 842,
+  "query": "坐月子餐自己做",
+  "rewritten_query": "有哪些适合坐月子自己做的餐食？",
+  "expr": "NONE"
+ },
+ {
+  "id": 843,
+  "query": "健身餐有啥推荐",
+  "rewritten_query": "有哪些适合健身吃的菜谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 844,
+  "query": "素食主义者怎么做",
+  "rewritten_query": "有哪些适合纯素食主义者的菜谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 845,
+  "query": "生酮饮食能做啥",
+  "rewritten_query": "有哪些适合生酮饮食的菜谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 846,
+  "query": "糖尿病人的菜谱",
+  "rewritten_query": "有哪些适合糖尿病人吃的食谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 847,
+  "query": "痛风患者能吃啥",
+  "rewritten_query": "有哪些适合痛风患者的食谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 848,
+  "query": "做点能放的住的小菜",
+  "rewritten_query": "有哪些能放得住的小菜食谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 849,
+  "query": "新手小白想学做菜",
+  "rewritten_query": "有哪些适合新手小白入门学的菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 850,
+  "query": "想做个快手早餐饼 鸡蛋灌饼 手抓饼",
+  "rewritten_query": "有哪些类似鸡蛋灌饼、手抓饼的快手早餐饼推荐？",
+  "expr": "NONE"
+ },
+ {
+  "id": 851,
+  "query": "来点硬菜 大肘子 东坡肉 烤羊排",
+  "rewritten_query": "有哪些类似大肘子、东坡肉、烤羊排的硬菜推荐？",
+  "expr": "NONE"
+ },
+ {
+  "id": 852,
+  "query": "夏天吃啥 凉面 冷馄饨 凉皮",
+  "rewritten_query": "夏天适合吃哪些类似凉面、冷馄饨、凉皮的食物？",
+  "expr": "NONE"
+ },
+ {
+  "id": 853,
+  "query": "做点汤羹 银耳羹 酒酿圆子",
+  "rewritten_query": "有哪些类似银耳羹、酒酿圆子的汤羹可以做？",
+  "expr": "NONE"
+ },
+ {
+  "id": 854,
+  "query": "整点海鲜 白灼虾 葱姜炒蟹",
+  "rewritten_query": "有哪些类似白灼虾、葱姜炒蟹的海鲜做法？",
+  "expr": "NONE"
+ },
+ {
+  "id": 855,
+  "query": "早餐做啥 三明治 牛奶燕麦",
+  "rewritten_query": "早餐可以做哪些类似三明治、牛奶燕麦的食物？",
+  "expr": "NONE"
+ },
+ {
+  "id": 856,
+  "query": "快手菜 辣椒炒肉 可乐鸡翅",
+  "rewritten_query": "有哪些类似辣椒炒肉、可乐鸡翅的快手菜？",
+  "expr": "NONE"
+ },
+ {
+  "id": 857,
+  "query": "蒸菜来几个 粉蒸排骨 蒸蛋羹",
+  "rewritten_query": "有哪些类似粉蒸排骨、蒸蛋羹的蒸菜推荐？",
+  "expr": "NONE"
+ },
+ {
+  "id": 858,
+  "query": "来点凉拌菜 拍黄瓜 洋葱木耳",
+  "rewritten_query": "有哪些类似拍黄瓜、洋葱木耳的凉拌菜推荐？",
+  "expr": "NONE"
+ },
+ {
+  "id": 859,
+  "query": "整点炖菜 小鸡炖蘑菇 红烧牛肉",
+  "rewritten_query": "有哪些类似小鸡炖蘑菇、红烧牛肉的炖菜做法？",
+  "expr": "NONE"
+ },
+ {
+  "id": 860,
+  "query": "做点焖饭 煲仔饭 排骨焖饭",
+  "rewritten_query": "有哪些类似煲仔饭、排骨焖饭的焖饭做法？",
+  "expr": "NONE"
+ },
+ {
+  "id": 861,
+  "query": "搞个一锅出 麻辣烫 部队锅",
+  "rewritten_query": "有哪些类似麻辣烫、部队锅的一锅出食谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 862,
+  "query": "弄点减脂餐 鸡胸肉沙拉 蒸蔬菜",
+  "rewritten_query": "有哪些类似鸡胸肉沙拉、蒸蔬菜的减脂餐？",
+  "expr": "NONE"
+ },
+ {
+  "id": 863,
+  "query": "给娃做辅食 南瓜泥 蔬菜粥",
+  "rewritten_query": "有哪些类似南瓜泥、蔬菜粥且适合宝宝的辅食？",
+  "expr": "NONE"
+ },
+ {
+  "id": 864,
+  "query": "来点甜品 杨枝甘露 芒果糯米饭",
+  "rewritten_query": "有哪些类似杨枝甘露、芒果糯米饭的甜品推荐？",
+  "expr": "NONE"
+ },
+ {
+  "id": 865,
+  "query": "东北锅包肉的做法",
+  "rewritten_query": "如何制作锅包肉？",
+  "expr": "dish_name LIKE \"%锅包肉%\""
+ },
+ {
+  "id": 866,
+  "query": "来个蒜蓉生蚝",
+  "rewritten_query": "如何制作蒜蓉生蚝？",
+  "expr": "dish_name LIKE \"%蒜蓉生蚝%\""
+ },
+ {
+  "id": 867,
+  "query": "想学做油条",
+  "rewritten_query": "如何制作油条？",
+  "expr": "dish_name LIKE \"%油条%\""
+ },
+ {
+  "id": 868,
+  "query": "做份酸辣汤",
+  "rewritten_query": "如何制作酸辣汤？",
+  "expr": "dish_name LIKE \"%酸辣汤%\""
+ },
+ {
+  "id": 869,
+  "query": "整个干煸豆角",
+  "rewritten_query": "如何制作干煸豆角？",
+  "expr": "dish_name LIKE \"%干煸豆角%\""
+ },
+ {
+  "id": 870,
+  "query": "清炒虾仁咋做",
+  "rewritten_query": "如何制作清炒虾仁？",
+  "expr": "dish_name LIKE \"%清炒虾仁%\""
+ },
+ {
+  "id": 871,
+  "query": "烤个披萨",
+  "rewritten_query": "如何制作披萨？",
+  "expr": "dish_name LIKE \"%披萨%\""
+ },
+ {
+  "id": 872,
+  "query": "做个肉蟹煲",
+  "rewritten_query": "如何制作肉蟹煲？",
+  "expr": "dish_name LIKE \"%肉蟹煲%\""
+ },
+ {
+  "id": 873,
+  "query": "手撕鸡怎么做",
+  "rewritten_query": "如何制作手撕鸡？",
+  "expr": "dish_name LIKE \"%手撕鸡%\""
+ },
+ {
+  "id": 874,
+  "query": "整个糖醋里脊",
+  "rewritten_query": "如何制作糖醋里脊？",
+  "expr": "dish_name LIKE \"%糖醋里脊%\""
+ },
+ {
+  "id": 875,
+  "query": "做杯珍珠奶茶",
+  "rewritten_query": "如何制作珍珠奶茶？",
+  "expr": "dish_name LIKE \"%珍珠奶茶%\""
+ },
+ {
+  "id": 876,
+  "query": "弄碗牛肉面",
+  "rewritten_query": "如何制作牛肉面？",
+  "expr": "dish_name LIKE \"%牛肉面%\""
+ },
+ {
+  "id": 877,
+  "query": "蒸个鸡蛋羹",
+  "rewritten_query": "如何制作鸡蛋羹？",
+  "expr": "dish_name LIKE \"%鸡蛋羹%\""
+ },
+ {
+  "id": 878,
+  "query": "烤个羊腿",
+  "rewritten_query": "如何制作烤羊腿？",
+  "expr": "dish_name LIKE \"%烤羊腿%\""
+ },
+ {
+  "id": 879,
+  "query": "做点 sushi 寿司卷",
+  "rewritten_query": "如何制作寿司卷？",
+  "expr": "dish_name LIKE \"%寿司%\""
+ },
+ {
+  "id": 880,
+  "query": "来个水煮牛肉",
+  "rewritten_query": "如何制作水煮牛肉？",
+  "expr": "dish_name LIKE \"%水煮牛肉%\""
+ },
+ {
+  "id": 881,
+  "query": "做个酒酿圆子",
+  "rewritten_query": "如何制作酒酿圆子？",
+  "expr": "dish_name LIKE \"%酒酿圆子%\""
+ },
+ {
+  "id": 882,
+  "query": "整点辣子鸡",
+  "rewritten_query": "如何制作辣子鸡？",
+  "expr": "dish_name LIKE \"%辣子鸡%\""
+ },
+ {
+  "id": 883,
+  "query": "来个韭菜盒子",
+  "rewritten_query": "如何制作韭菜盒子？",
+  "expr": "dish_name LIKE \"%韭菜盒子%\""
+ },
+ {
+  "id": 884,
+  "query": "蒸条鱼吃吃",
+  "rewritten_query": "如何制作蒸鱼？",
+  "expr": "dish_name LIKE \"%蒸鱼%\""
+ },
+ {
+  "id": 885,
+  "query": "做份酸辣粉",
+  "rewritten_query": "如何制作酸辣粉？",
+  "expr": "dish_name LIKE \"%酸辣粉%\""
+ },
+ {
+  "id": 886,
+  "query": "整个麻辣烫",
+  "rewritten_query": "如何制作麻辣烫？",
+  "expr": "dish_name LIKE \"%麻辣烫%\""
+ },
+ {
+  "id": 887,
+  "query": "炸点鸡米花",
+  "rewritten_query": "如何制作鸡米花？",
+  "expr": "dish_name LIKE \"%鸡米花%\""
+ },
+ {
+  "id": 888,
+  "query": "做碗打卤面",
+  "rewritten_query": "如何制作打卤面？",
+  "expr": "dish_name LIKE \"%打卤面%\""
+ },
+ {
+  "id": 889,
+  "query": "来个孜然羊肉",
+  "rewritten_query": "如何制作孜然羊肉？",
+  "expr": "dish_name LIKE \"%孜然羊肉%\""
+ },
+ {
+  "id": 890,
+  "query": "整个可乐鸡翅",
+  "rewritten_query": "如何制作可乐鸡翅？",
+  "expr": "dish_name LIKE \"%可乐鸡翅%\""
+ },
+ {
+  "id": 891,
+  "query": "做份肠粉",
+  "rewritten_query": "如何制作肠粉？",
+  "expr": "dish_name LIKE \"%肠粉%\""
+ },
+ {
+  "id": 892,
+  "query": "来个肉松小贝",
+  "rewritten_query": "如何制作肉松小贝？",
+  "expr": "dish_name LIKE \"%肉松小贝%\""
+ },
+ {
+  "id": 893,
+  "query": "弄个牛排",
+  "rewritten_query": "如何煎制牛排？",
+  "expr": "dish_name LIKE \"%牛排%\""
+ },
+ {
+  "id": 894,
+  "query": "做点泡芙",
+  "rewritten_query": "如何制作泡芙？",
+  "expr": "dish_name LIKE \"%泡芙%\""
+ },
+ {
+  "id": 895,
+  "query": "整个地锅鸡",
+  "rewritten_query": "如何制作地锅鸡？",
+  "expr": "dish_name LIKE \"%地锅鸡%\""
+ },
+ {
+  "id": 896,
+  "query": "来条烤鱼",
+  "rewritten_query": "如何制作烤鱼？",
+  "expr": "dish_name LIKE \"%烤鱼%\""
+ },
+ {
+  "id": 897,
+  "query": "想做点海鲜类的东西",
+  "rewritten_query": "有哪些海鲜类的菜谱推荐？",
+  "expr": "category == \"水产\""
+ },
+ {
+  "id": 898,
+  "query": "有没有纯素肉菜",
+  "rewritten_query": "有哪些纯素的仿荤菜谱？",
+  "expr": "category == \"素菜\""
+ },
+ {
+  "id": 899,
+  "query": "来个滋补汤",
+  "rewritten_query": "有哪些滋补类的汤品推荐？",
+  "expr": "category == \"汤类\""
+ },
+ {
+  "id": 900,
+  "query": "整点硬早点",
+  "rewritten_query": "有哪些硬早点推荐？",
+  "expr": "category == \"早餐\""
+ },
+ {
+  "id": 901,
+  "query": "吃肉想荤菜",
+  "rewritten_query": "有哪些荤菜推荐？",
+  "expr": "category == \"荤菜\""
+ },
+ {
+  "id": 902,
+  "query": "做点饭就是主食类的",
+  "rewritten_query": "有哪些主食类的食谱推荐？",
+  "expr": "category == \"主食\""
+ },
+ {
+  "id": 903,
+  "query": "想吃甜点了",
+  "rewritten_query": "有哪些甜点类的食谱？",
+  "expr": "category == \"甜品\""
+ },
+ {
+  "id": 904,
+  "query": "弄点喝的，饮品",
+  "rewritten_query": "有哪些饮品推荐？",
+  "expr": "category == \"饮品\""
+ },
+ {
+  "id": 905,
+  "query": "做点饺子冻着",
+  "rewritten_query": "有哪些适合冷冻保存的饺子做法？",
+  "expr": "NONE"
+ },
+ {
+  "id": 906,
+  "query": "自制酱料",
+  "rewritten_query": "有哪些自制酱料调料的食谱？",
+  "expr": "category == \"调料\""
+ },
+ {
+  "id": 907,
+  "query": "搞点低脂素菜",
+  "rewritten_query": "有哪些低脂的素菜食谱？",
+  "expr": "category == \"素菜\""
+ },
+ {
+  "id": 908,
+  "query": "来个海鲜汤",
+  "rewritten_query": "有哪些海鲜类的水产汤品？",
+  "expr": "category == \"汤类\""
+ },
+ {
+  "id": 909,
+  "query": "整点下午茶点心",
+  "rewritten_query": "有哪些适合下午茶的甜品？",
+  "expr": "category == \"甜品\""
+ },
+ {
+  "id": 910,
+  "query": "西式早餐搞点",
+  "rewritten_query": "有哪些西式早餐食谱？",
+  "expr": "category == \"早餐\""
+ },
+ {
+  "id": 911,
+  "query": "吃鱼整点水产",
+  "rewritten_query": "有哪些鱼类的水产食谱？",
+  "expr": "category == \"水产\""
+ },
+ {
+  "id": 912,
+  "query": "做个甜汤",
+  "rewritten_query": "有哪些甜汤类的食谱？",
+  "expr": "category == \"汤类\""
+ },
+ {
+  "id": 913,
+  "query": "搞点油炸半成品",
+  "rewritten_query": "有哪些油炸类的半成品加工食谱？",
+  "expr": "category == \"半成品加工\""
+ },
+ {
+  "id": 914,
+  "query": "自己调果茶",
+  "rewritten_query": "有哪些自制果茶的饮品配方？",
+  "expr": "category == \"饮品\""
+ },
+ {
+  "id": 915,
+  "query": "主食想吃饼",
+  "rewritten_query": "有哪些饼类的主食食谱？",
+  "expr": "category == \"主食\""
+ },
+ {
+  "id": 916,
+  "query": "做点开胃凉菜",
+  "rewritten_query": "有哪些开胃的凉菜食谱？",
+  "expr": "NONE"
+ },
+ {
+  "id": 917,
+  "query": "新手容易的菜有哪些",
+  "rewritten_query": "有哪些适合新手容易上手的菜？",
+  "expr": "difficulty == \"入门\""
+ },
+ {
+  "id": 918,
+  "query": "费工夫的菜",
+  "rewritten_query": "有哪些费工夫、步骤繁琐的菜？",
+  "expr": "difficulty == \"较难\" or difficulty == \"困难\""
+ },
+ {
+  "id": 919,
+  "query": "一学就会的",
+  "rewritten_query": "有哪些一学就会的简单菜谱？",
+  "expr": "difficulty == \"入门\" or difficulty == \"简单\""
+ },
+ {
+  "id": 920,
+  "query": "堪比大厨的菜",
+  "rewritten_query": "有哪些做出来堪比大厨的困难菜品？",
+  "expr": "difficulty == \"困难\""
+ },
+ {
+  "id": 921,
+  "query": "需要点基础但不难的",
+  "rewritten_query": "有哪些中等难度的菜品？",
+  "expr": "difficulty == \"中等\""
+ },
+ {
+  "id": 922,
+  "query": "孩子都能做的",
+  "rewritten_query": "有哪些孩子都能参与的入门级菜谱？",
+  "expr": "difficulty == \"入门\""
+ },
+ {
+  "id": 923,
+  "query": "不太容易搞砸的菜",
+  "rewritten_query": "有哪些不容易搞砸的菜谱？",
+  "expr": "difficulty == \"简单\""
+ },
+ {
+  "id": 924,
+  "query": "顶级难度的来一个",
+  "rewritten_query": "有哪些顶级难度的菜品可以挑战？",
+  "expr": "difficulty == \"困难\""
+ },
+ {
+  "id": 925,
+  "query": "没啥经验的做啥",
+  "rewritten_query": "有哪些适合没经验的新手菜谱？",
+  "expr": "difficulty == \"入门\""
+ },
+ {
+  "id": 926,
+  "query": "有挑战但别太难",
+  "rewritten_query": "有哪些中等偏上难度的菜？",
+  "expr": "difficulty == \"中等\" or difficulty == \"较难\""
+ },
+ {
+  "id": 927,
+  "query": "我要做简单的虾",
+  "rewritten_query": "有哪些简单的水产虾类做法？",
+  "expr": "difficulty == \"入门\" or difficulty == \"简单\""
+ },
+ {
+  "id": 928,
+  "query": "高难度荤菜挑战",
+  "rewritten_query": "有哪些高难度的荤菜可以挑战？",
+  "expr": "category == \"荤菜\" and difficulty == \"困难\""
+ },
+ {
+  "id": 929,
+  "query": "入门级简单甜品",
+  "rewritten_query": "有哪些入门级的简单甜品？",
+  "expr": "category == \"甜品\" and difficulty == \"入门\""
+ },
+ {
+  "id": 930,
+  "query": "中等难度的素菜",
+  "rewritten_query": "有哪些中等难度的素菜食谱？",
+  "expr": "category == \"素菜\" and difficulty == \"中等\""
+ },
+ {
+  "id": 931,
+  "query": "新手早餐怎么搞",
+  "rewritten_query": "有哪些新手能做的早餐食谱？",
+  "expr": "category == \"早餐\" and difficulty == \"入门\""
+ },
+ {
+  "id": 932,
+  "query": "简单点的汤就行",
+  "rewritten_query": "有哪些简单的汤类食谱？",
+  "expr": "category == \"汤类\" and (difficulty == \"入门\" or difficulty == \"简单\")"
+ },
+ {
+  "id": 933,
+  "query": "复杂的主食有什么",
+  "rewritten_query": "有哪些复杂难做的主食？",
+  "expr": "category == \"主食\" and (difficulty == \"较难\" or difficulty == \"困难\")"
+ },
+ {
+  "id": 934,
+  "query": "半成品加工新手版",
+  "rewritten_query": "有哪些新手的半成品加工食谱？",
+  "expr": "category == \"半成品加工\" and difficulty == \"入门\""
+ },
+ {
+  "id": 935,
+  "query": "来点微辣的",
+  "rewritten_query": "有哪些微辣口味的菜品？",
+  "expr": "NONE"
+ },
+ {
+  "id": 936,
+  "query": "不想吃肉了",
+  "rewritten_query": "有哪些不含肉的菜品？",
+  "expr": "NONE"
+ },
+ {
+  "id": 937,
+  "query": "太油了，来点清爽的",
+  "rewritten_query": "有哪些清爽不油腻的菜品？",
+  "expr": "NONE"
+ },
+ {
+  "id": 938,
+  "query": "想吃点酸的东西",
+  "rewritten_query": "有哪些酸味突出的菜品？",
+  "expr": "NONE"
+ },
+ {
+  "id": 939,
+  "query": "有啥好吃的",
+  "rewritten_query": "有什么好吃的菜谱可以推荐一下？",
+  "expr": "NONE"
+ }
+]

@@ -19,9 +19,9 @@ train:
   per_device_train_batch_size: 1
   gradient_accumulation_steps: 8
   learning_rate: 2.0e-4
-  max_seq_length: 1024          # query + catalog + 结构化输出，1024 起步
+  max_seq_length: 1536          # 实测最长样本 1225 token（1_build_dataset 报告），留余量
   warmup_ratio: 0.03
   logging_steps: 10
   save_steps: 50
-  bf16: true                    # MPS 支持 bf16
+  bf16: false                   # 冒烟先用 fp32（对齐 huanhuan 跑通配置；MPS+bf16 不稳，优化阶段再试）
   device: mps
