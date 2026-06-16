@@ -59,7 +59,7 @@ class Settings:
         "SILICONFLOW_BASE_URL", "https://api.siliconflow.cn/v1/rerank"
     )
     SILICONFLOW_MODEL: str = os.getenv("SILICONFLOW_MODEL", "BAAI/bge-reranker-v2-m3")
-    RAG_RERANK_THRESHOLD: float = float(os.getenv("RAG_RERANK_THRESHOLD", "0.2"))
+    RAG_RERANK_THRESHOLD: float = float(os.getenv("RAG_RERANK_THRESHOLD", "0.01"))
 
     # RAG 检索参数
     RAG_TOP_K: int = int(os.getenv("RAG_TOP_K", "20"))           # 混合检索召回数
