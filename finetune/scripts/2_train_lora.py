@@ -24,12 +24,20 @@ from transformers import (
     AutoTokenizer,
     DataCollatorForSeq2Seq,
     Trainer,
+    TrainerCallback,
     TrainingArguments,
 )
 
 FT_DIR = Path(__file__).resolve().parents[1]
 CONFIG_PATH = FT_DIR / "configs" / "lora.yaml"
 PROCESSED = FT_DIR / "datasets" / "processed"
+
+# ═══════════════════════════════════════════════════════════════
+#  PyCharm 一键运行：改这里切数据，然后直接点 ▶ 运行即可
+#    True  = 全量 train.jsonl（955 条，正式训练）
+#    False = 冒烟 smoke.jsonl（30 条，快速验证）
+USE_FULL_DATA = True
+# ═══════════════════════════════════════════════════════════════
 
 
 def load_config() -> dict:
@@ -57,22 +65,38 @@ def build_process_func(tokenizer, max_length: int):
     return process
 
 
+class LossCallback(TrainerCallback):
+    """每个 logging step 打印一行清晰的 step/loss/lr，flush 实时落盘（不靠 -u 也可见）。"""
+
+    def on_log(self, args, state, control, logs=None, **kwargs):
+        if logs and "loss" in logs:
+            print(
+                f"[step {state.global_step}/{state.max_steps}] "
+                f"loss={logs['loss']:.4f}  "
+                f"lr={logs.get('learning_rate', 0):.2e}  "
+                f"epoch={logs.get('epoch', 0):.2f}",
+                flush=True,
+            )
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--full", action="store_true",
                         help="全量 train.jsonl（默认冒烟 smoke.jsonl / 1 epoch）")
     args = parser.parse_args()
 
+    full = USE_FULL_DATA or args.full   # PyCharm 直接运行看 USE_FULL_DATA；命令行 --full 也可
+
     cfg = load_config()
     t = cfg["train"]
     base_model = cfg["base_model"]
     max_len = t["max_seq_length"]
 
-    data_file = PROCESSED / ("train.jsonl" if args.full else "smoke.jsonl")
-    epochs = t["num_train_epochs"] if args.full else 1
-    run_name = "full" if args.full else "smoke"
+    data_file = PROCESSED / ("train.jsonl" if full else "smoke.jsonl")
+    epochs = t["num_train_epochs"] if full else 1
+    run_name = "full" if full else "smoke"
     out_dir = FT_DIR / "outputs" / f"qu-lora-{run_name}"
-    logging_steps = t["logging_steps"] if args.full else 1
+    logging_steps = t["logging_steps"] if full else 1
 
     print(f"[cfg] base={base_model}")
     print(f"[cfg] data={data_file.name} epochs={epochs} max_len={max_len} bf16={t.get('bf16')}")
@@ -117,9 +141,11 @@ def main() -> None:
             gradient_checkpointing=True,
             bf16=bool(t.get("bf16", False)),
             report_to="none",
+            disable_tqdm=True,        # 关进度条，改用 LossCallback 输出清晰日志
         ),
         train_dataset=tokenized,
         data_collator=DataCollatorForSeq2Seq(tokenizer=tokenizer, padding=True),
+        callbacks=[LossCallback()],
     )
     trainer.train()
 

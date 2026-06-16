@@ -26,7 +26,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 BASE_MODEL = "/Users/wenzhouzhou/Qwen2.5-3B-Instruct"
 OUTPUTS = FT_DIR / "outputs"
 TEST_FILE = FT_DIR / "datasets" / "processed" / "test.jsonl"
-N_EVAL = 20
+N_EVAL = 200   # 评估全部 held-out test（106 条；取 min 即全量）
 
 CATALOG = {
     "recipe_chunks": {
