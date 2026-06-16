@@ -86,42 +86,44 @@ cp .env.example .env
 # 编辑 .env，填入你的 API Key
 ```
 
-### 4. 启动基础设施
+### 4. 启动
+
+#### 方式 A：Docker 一键全栈（推荐）
+
+一条命令拉起 FastAPI 应用 + PostgreSQL + Redis + Milvus：
 
 ```bash
-# PostgreSQL + Redis
 docker compose up -d
-
-# Milvus Standalone（参考 https://milvus.io/docs/install_standalone-docker.md）
-# 或使用 .milvus/standalone/docker-compose.yml
+# 首次会 build 应用镜像 + 拉取 Milvus 等镜像，耐心等几分钟
 ```
 
-### 5. 安装依赖 & 初始化数据库
+应用启动时**自动执行数据库迁移**。**首次**需灌入菜谱到 Milvus（一次性）：
 
 ```bash
+docker compose run --rm -v "$PWD/data:/app/data" app python scripts/ingest_recipes.py
+```
+
+就绪后访问：
+
+- API 文档：http://localhost:8000/docs
+- 健康检查：http://localhost:8000/health
+
+> 默认查询理解走 DeepSeek（`QU_BACKEND=deepseek`）。想替换成本地微调模型，见 [finetune/](finetune/)。
+
+#### 方式 B：本地开发
+
+```bash
+# 只起依赖服务
+docker compose up -d postgres redis etcd minio standalone
+
+# 装依赖 + 迁移 + 灌库
 pip install -r requirements.txt
-
-# 数据库迁移
 alembic upgrade head
-
-# 首次灌入菜谱到 Milvus
 python scripts/ingest_recipes.py
-```
 
-### 6. 启动服务
-
-**方式 A：Streamlit Web 界面**
-
-```bash
-streamlit run streamlit_app.py
-# 浏览器打开 http://localhost:8501
-```
-
-**方式 B：FastAPI 后端 API**
-
-```bash
-uvicorn app.main:app --reload --port 8000
-# API 文档 http://localhost:8000/docs
+# 启动（二选一）
+uvicorn app.main:app --reload --port 8000   # FastAPI → http://localhost:8000/docs
+streamlit run streamlit_app.py               # Streamlit → http://localhost:8501
 ```
 
 ---
