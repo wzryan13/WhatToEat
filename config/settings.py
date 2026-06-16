@@ -24,6 +24,11 @@ class Settings:
     LLM_MODEL: str = os.getenv("LLM_MODEL", "deepseek-chat")
     MODEL_NAME: str = LLM_MODEL
 
+    # ── 查询理解后端（deepseek 云端 / local 本地微调模型）────────
+    QU_BACKEND: str = os.getenv("QU_BACKEND", "deepseek")  # "deepseek" | "local"
+    QU_LOCAL_BASE_URL: str = os.getenv("QU_LOCAL_BASE_URL", "http://localhost:1234/v1")
+    QU_LOCAL_MODEL: str = os.getenv("QU_LOCAL_MODEL", "qu-finetuned")
+
     # ── 记忆系统 ──────────────────────────────────────────────
     MEMORY_ENABLED: bool = os.getenv("MEMORY_ENABLED", "true").lower() != "false"
     SESSION_TTL_HOURS: int = int(os.getenv("SESSION_TTL_HOURS", "4"))

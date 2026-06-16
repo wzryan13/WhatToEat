@@ -1,0 +1,27 @@
+# LoRA 微调配置 — Qwen2.5-3B-Instruct / 查询理解蒸馏（方案 B）
+# 参考 huanhuan demo 跑通的 LoRA 配置，按本任务微调。
+
+# 本地现成模型（无需重新下载）
+base_model: /Users/wenzhouzhou/Qwen2.5-3B-Instruct
+output_dir: ./outputs
+
+# LoRA（沿用 huanhuan 验证过的设置）
+lora:
+  r: 8
+  lora_alpha: 32
+  lora_dropout: 0.1
+  target_modules: [q_proj, k_proj, v_proj]   # TODO: 任务难时可加 o_proj / gate/up/down_proj
+  task_type: CAUSAL_LM
+
+# 训练超参（M4 / MPS 起步值，按显存与收敛情况调）
+train:
+  num_train_epochs: 1
+  per_device_train_batch_size: 2
+  gradient_accumulation_steps: 6
+  learning_rate: 1.0e-4
+  max_seq_length: 1536          # 实测最长样本 1225 token（1_build_dataset 报告），留余量
+  warmup_ratio: 0.03
+  logging_steps: 1            # 每步打印 loss（配合 python -u 无缓冲，实时落盘可见）
+  save_steps: 50
+  bf16: false                   # MPS 实测：bf16 不报错但 loss 异常(4.0 vs fp32 0.86)且不提速 → 弃用
+  device: mps
