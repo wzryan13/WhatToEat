@@ -14,6 +14,7 @@
 - **Milvus 混合检索 + 重排** — Dense embedding + BM25 → RRF 融合 → Cross-encoder rerank
 - **FastAPI 后端 API** — RESTful + SSE 流式输出，前后端分离架构，支持 Alembic 数据库迁移
 - **可视化 Agent 路由** — Streamlit 侧栏实时展示当前请求经过的每一个图节点
+- **查询理解可换本地模型** — 将 DeepSeek 的查询理解节点蒸馏到本地 Qwen2.5-3B（LoRA），q8 量化部署后单次延迟 **15s→1.6s**（追平云端）、推理成本归零，详见 [finetune/](finetune/)
 
 ---
 
@@ -32,6 +33,7 @@
 | 记忆存储 | PostgreSQL 16（asyncpg） |
 | 缓存 | Redis 7 |
 | Web 前端 | Streamlit |
+| 微调 / 部署 | HF + peft（LoRA）/ GGUF q8 量化 / llama.cpp · LM Studio |
 
 ---
 
@@ -245,6 +247,10 @@ data: {"type": "done"}
 │   └── user_profile.py            # 用户画像管理
 ├── scripts/
 │   └── ingest_recipes.py          # 一次性灌入菜谱到 Milvus
+├── finetune/                      # 查询理解微调子项目（蒸馏 DeepSeek → 本地 Qwen2.5-3B）
+│   ├── scripts/                   #   1_build_dataset→2_train_lora→3_infer→4_merge→5_bench
+│   ├── datasets/                  #   蒸馏数据（raw 标注 / processed jsonl）
+│   └── configs/lora.yaml          #   LoRA 超参
 ├── tests/                         # 测试
 │   ├── api/                       #   FastAPI 端点测试
 │   └── test_precise_filter.py     #   RAG 精确过滤测试
@@ -289,6 +295,27 @@ pytest tests/api/
 # RAG 评估
 python evals/run_rag_eval.py
 ```
+
+---
+
+## 本地模型（可选）
+
+查询理解节点（查询改写 + 元数据过滤）可从云端 DeepSeek 切换为**本地微调模型**，延迟和成本大幅下降：
+
+| 后端 | 单次延迟 | 推理成本 |
+|------|---------|---------|
+| DeepSeek（默认） | ~2s | 按 token 计费 |
+| 本地 Qwen2.5-3B（q8 量化） | **~1.6s** | 0 |
+
+用 `llama.cpp` / LM Studio / ollama 起一个 OpenAI 兼容 endpoint 加载 GGUF，然后切换后端：
+
+```bash
+export QU_BACKEND=local
+export QU_LOCAL_BASE_URL=http://localhost:1234/v1   # LM Studio 默认
+export QU_LOCAL_MODEL=qu-finetuned
+```
+
+模型如何训练 / 量化 / 评估，见 [finetune/](finetune/)。
 
 ---
 
