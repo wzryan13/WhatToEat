@@ -11,6 +11,7 @@ metadata_filter 依赖 rewrite 的输出，形成 ~2s 的串行等待。
 - 过滤：精确约束，只用 category/dish_name/difficulty，不确定就返回 null（弃权）
 """
 
+import json
 import logging
 import re
 from pathlib import Path
@@ -19,10 +20,35 @@ from typing import Optional, Tuple
 from pydantic import BaseModel, Field, model_validator
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_deepseek import ChatDeepSeek
+from openai import AsyncOpenAI
 
 from config.settings import settings
 
 logger = logging.getLogger(__name__)
+
+
+# student（本地微调模型）专用：训练时 prompt 末尾的 JSON 格式指令（与 finetune 训练一致）
+JSON_DIRECTIVE = (
+    "\n\n【输出格式·严格】只输出一个 JSON 对象，形如 "
+    '{"rewritten_query": "改写后的完整句子", "filter_expr": "<Milvus 过滤表达式>"}，'
+    "无法可靠生成过滤时 filter_expr 取 null。不要输出任何解释、复述或多余文字。"
+)
+
+
+def _parse_json(text: str) -> dict:
+    """从模型输出里提取 JSON 对象（容错 markdown fence / 前后多余文本）。"""
+    text = (text or "").strip()
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        pass
+    match = re.search(r"\{.*\}", text, re.DOTALL)
+    if match:
+        try:
+            return json.loads(match.group(0))
+        except json.JSONDecodeError:
+            pass
+    return {}
 
 
 # ── 结构化输出模型 ──────────────────────────────────────────
@@ -170,8 +196,15 @@ class QueryUnderstandingModule:
     """单次 LLM 调用完成查询改写 + 元数据过滤表达式生成。"""
 
     def __init__(self):
-        self._llm = ChatDeepSeek(model=settings.MODEL_NAME, temperature=0.0)
+        self.backend = settings.QU_BACKEND
         self.reference_material = _load_reference_material()
+        if self.backend == "local":
+            # 本地微调模型（OpenAI 兼容 endpoint，如 LM Studio server）
+            self._client = AsyncOpenAI(
+                base_url=settings.QU_LOCAL_BASE_URL, api_key="lm-studio"
+            )
+        else:
+            self._llm = ChatDeepSeek(model=settings.MODEL_NAME, temperature=0.0)
 
     async def understand(
         self,
@@ -191,6 +224,9 @@ class QueryUnderstandingModule:
             if metadata_catalog
             else "（无可用元数据，filter_expr 一律返回 null）"
         )
+
+        if self.backend == "local":
+            return await self._understand_local(query, metadata_schema)
 
         structured_llm = self._llm.with_structured_output(QueryUnderstandingOutput)
         prompt = QUERY_UNDERSTANDING_PROMPT.format_prompt(
@@ -215,4 +251,33 @@ class QueryUnderstandingModule:
             logger.info("查询改写: '%s' -> '%s'", query, rewritten)
         logger.info("生成元数据过滤表达式: %s", filter_expr or "NONE")
 
+        return rewritten, filter_expr
+
+    async def _understand_local(
+        self, query: str, metadata_schema: str
+    ) -> Tuple[str, Optional[str]]:
+        """本地微调模型后端：用训练时的 prompt（+JSON 指令）调本地 endpoint，解析 JSON。"""
+        prompt = QUERY_UNDERSTANDING_PROMPT.format_messages(
+            query=query,
+            reference_material=self.reference_material,
+            metadata_schema=metadata_schema,
+        )
+        content = prompt[0].content + JSON_DIRECTIVE
+        try:
+            resp = await self._client.chat.completions.create(
+                model=settings.QU_LOCAL_MODEL,
+                messages=[{"role": "user", "content": content}],
+                temperature=0.0,
+                max_tokens=256,
+            )
+            data = _parse_json(resp.choices[0].message.content or "")
+        except Exception as exc:
+            logger.warning("本地查询理解失败，逐字段兜底: %s", exc)
+            return query, None
+
+        rewritten = (data.get("rewritten_query") or "").strip() or query
+        filter_expr = _clean_expression(data.get("filter_expr"))
+        if rewritten != query:
+            logger.info("查询改写(local): '%s' -> '%s'", query, rewritten)
+        logger.info("生成元数据过滤表达式(local): %s", filter_expr or "NONE")
         return rewritten, filter_expr
